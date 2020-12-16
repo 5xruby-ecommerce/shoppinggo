@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_102436) do
+ActiveRecord::Schema.define(version: 2020_12_16_102922) do
 
   create_table "orders", force: :cascade do |t|
     t.bigint "sum"
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(version: 2020_12_16_102436) do
     t.index ["user_id"], name: "index_shops_on_user_id"
   end
 
+  create_table "sub_orders", force: :cascade do |t|
+    t.bigint "sum"
+    t.integer "status"
+    t.text "comment"
+    t.integer "order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_sub_orders_on_order_id"
+  end
+
   add_foreign_key "orders", "users"
   add_foreign_key "shops", "users"
+  add_foreign_key "sub_orders", "orders"
 end
