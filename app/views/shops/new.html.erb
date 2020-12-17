@@ -1,0 +1,9 @@
+<h1>開店資料</h1>
+
+<%= form_for @shop do |f| %>
+<%= f.label :name, "店名" %>
+<%= f.text_field :name %><br/>
+<%= f.label :tel, "電話" %>
+<%= f.text_field :tel %><br/>
+<%= f.submit %>
+<% end %>
