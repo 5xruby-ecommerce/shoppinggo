@@ -1,10 +1,12 @@
 class ShopsController < ApplicationController
 
+  def index
+    @products = Product.all
+  end
+
   def new
     @shop = Shop.new
   end
-
-
 
   def create
     @shop = Shop.new(shop_params)

@@ -1,0 +1,30 @@
+<h1>賣家中心</h1>
+<%= notice %>
+
+<h3>商品列表</h3>
+<%= link_to '新增商品', new_product_path %>
+
+<table>
+  <thead>
+    <tr>
+        <td><%= "商品名稱" %></td>
+        <td><%= "商品描述" %></td>
+        <td><%= "商品數量" %></td>
+        <td><%= "商品價格" %></td>
+        <td><%= "商品設定" %></td>
+    <tr>
+  </thead>
+
+  <tbody>
+      <% @products.each do |product|%>
+    <tr>
+        <td><%= product.name %></td>
+        <td><%= product.content %></td>
+        <td><%= product.quantity %></td>
+        <td><%= product.price %></td>
+        <td><%= link_to "編輯商品", edit_product_path(product) %></td>
+        <td><%= link_to "刪除商品", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"}  %></td>
+    <tr>
+      <% end %>
+  </tbody>
+</table>
