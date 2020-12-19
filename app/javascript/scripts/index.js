@@ -1,0 +1,1 @@
+require('./shopitem.js')
