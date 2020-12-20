@@ -38,12 +38,12 @@ class Cart
     { "items" => items}
   end 
 
-  def from_hash(hash)
+  def self.from_hash(hash)
     if hash && hash["items"]
       items = hash["items"].map { |item| CartItem.new(item["item_id"], item["quantity"])}
-      cart = Cart.new(items)
+      Cart.new(items)
     else
-      cart = Cart.new
+      Cart.new
     end 
   end
 end

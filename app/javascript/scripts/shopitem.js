@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   minusbtn = document.querySelector(".minus");
   amount = document.querySelector(".inputamount");
   cart = document.querySelector(".cart-btn");
-  console.log(amount.value)
 
   plusbtn.addEventListener('click', () => {
     amount.value = parseInt(amount.value) + 1;
