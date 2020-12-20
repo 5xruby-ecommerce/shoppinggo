@@ -30,7 +30,6 @@ export default class extends Controller {
     const id = this.data.get('id');
     const additemController = document.querySelector('.content')
     const amount = { amount: this.amountTarget.value }
-
     magicRails.ajax({
       url:  `/carts/add_item/${id}`,
       type: 'post',
