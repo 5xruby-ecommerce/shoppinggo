@@ -14,6 +14,6 @@ class CartItem
   end
 
   def total_price
-    @quantity * product.price
+    @quantity.to_i * product.price
   end
 end 

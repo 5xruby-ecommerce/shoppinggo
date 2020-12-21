@@ -1,6 +1,7 @@
 <%= link_to '首頁', root_path %>
 <% if user_signed_in? %>
   <%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %>
+  <li><%= link_to '購物車icon' , carts_path %> (<%= current_cart.items.count %>) / <%= current_cart.total_price %> </li>
   <% if current_user.shop.blank? %>
     <%= link_to '我要開店', new_shop_path %>
   <% else %>
