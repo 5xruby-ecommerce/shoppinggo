@@ -1,0 +1,13 @@
+<h1>編輯商品</h1>
+
+<%= form_for @product do |f| %>
+  <%= f.label :name, "商品名稱" %>
+  <%= f.text_field :name %><br/>
+  <%= f.label :content, "商品描述" %>
+  <%= f.text_field :content %><br/>
+  <%= f.label :quantity, "商品數量" %>
+  <%= f.text_field :quantity %><br/>
+  <%= f.label :price, "商品價格" %>
+  <%= f.text_field :price %><br/>
+  <%= f.submit "更新商品" %>
+<% end %>
