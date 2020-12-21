@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
   def new
     @product = Product.new
   end
-
+  
+  def show
+    @product = Product.find(params[:id])
+  end 
+  
   def create
     @product = Product.new(product_params)
 
@@ -46,4 +51,6 @@ class ProductsController < ApplicationController
   def product_params
     params.require(:product).permit(:name, :content, :quantity, :price)
   end
+
+
 end
