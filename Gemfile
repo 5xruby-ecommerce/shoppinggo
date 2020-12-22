@@ -34,6 +34,7 @@ gem 'aasm'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-github'
 gem 'figaro'
 
 group :development, :test do

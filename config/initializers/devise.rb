@@ -17,6 +17,7 @@ Devise.setup do |config|
   # config.secret_key = '37c16b580058f3d4628df6654a055be3d2c80120dc08a45aca90f368c5cbdd44e619043b6c0eac14c9b026fe3850209b0c342be63382e2dec0f55c4edce18da3'
   config.omniauth :facebook, ENV['facebook_client_id'], ENV['facebook_client_secret'], scope: "public_profile,email", info_fields: "email,name"
   config.omniauth :google_oauth2, ENV["google_client_id"], ENV["google_client_secret"],{access_type: "offline", approval_prompt: ""}
+  config.omniauth :github, ENV["github_client_id"], ENV["github_client_secret"], scope: "user,public_repo"
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
