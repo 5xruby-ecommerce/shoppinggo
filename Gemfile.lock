@@ -307,7 +307,6 @@ DEPENDENCIES
   omniauth-github
   omniauth-google-oauth2
   pg
-
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
   rspec-rails

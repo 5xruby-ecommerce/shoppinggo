@@ -10,9 +10,8 @@ class ShopsController < ApplicationController
   end
 
   def create
-    @shop = Shop.new(shop_params)
-
-    if current_user.build_shop(shop_params)
+    @shop = current_user.build_shop(shop_params)
+    if @shop.save
       redirect_to root_path, notice: '註冊成功'
     else
       render :new, notice: '註冊失敗'
