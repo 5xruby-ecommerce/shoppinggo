@@ -16,7 +16,7 @@
       <td><%= item.product.price %></td>
       <td><%= item.total_price %></td>
       <td>
-        <%= link_to '取消', carts_path, method: 'delete', data: { confidrm: '確認刪除', hh: 1}%>
+        <%= link_to '取消', carts_path(item: item.product.id), method: 'delete', data: { confidrm: '確認刪除'}%>
       </td>
     </tr>
     <% end %>

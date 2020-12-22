@@ -19,11 +19,10 @@ class CartsController < ApplicationController
   end
 
   def destroy
-    # @items = item.find_by(id: params[:id])
-    #     @items.destroy if @items
-    #     redirect_to carts_path, notice: "此筆已刪除!"
-    byebug
-    session[:cartgo] = nil
+    cart = {
+      "items" => session[:cartgo]["items"].filter { |x| x["item_id"] != params[:item].to_i }
+    } 
+    session[:cartgo] = cart
     redirect_to root_path, notice: "購物車已清空"
   end
 end

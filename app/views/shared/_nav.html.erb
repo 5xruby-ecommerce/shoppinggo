@@ -1,7 +1,9 @@
 <%= link_to '首頁', root_path %>
 
 
-
+<%= link_to carts_path do %>
+  <li><i class="fas fa-cart-plus"></i></i>(<%= current_cart.items.count %>) / <%= current_cart.total_price %> </li>
+<% end %>
 
 
 <% if user_signed_in? %>
