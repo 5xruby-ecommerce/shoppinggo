@@ -23,6 +23,6 @@ class CartsController < ApplicationController
       "items" => session[:cartgo]["items"].filter { |x| x["item_id"] != params[:item].to_i }
     } 
     session[:cartgo] = cart
-    redirect_to root_path, notice: "購物車已清空"
+    redirect_to carts_path, notice: "已刪除訂單"
   end
 end
