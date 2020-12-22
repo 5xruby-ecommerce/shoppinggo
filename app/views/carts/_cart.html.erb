@@ -5,6 +5,7 @@
       <td>數量</td>
       <td>單價</td>
       <td>小計</td>
+      <td>處理</td>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,9 @@
       <td><%= item.quantity %></td>
       <td><%= item.product.price %></td>
       <td><%= item.total_price %></td>
+      <td>
+        <%= link_to '取消', carts_path, method: 'delete', data: { confidrm: '確認刪除', hh: 1}%>
+      </td>
     </tr>
     <% end %>
   </tbody>

@@ -9,6 +9,9 @@ class CartsController < ApplicationController
   end
 
   def show
+    if not current_user
+      redirect_to user_session_path
+    end
   end
 
   def checkout
@@ -16,6 +19,10 @@ class CartsController < ApplicationController
   end
 
   def destroy
+    # @items = item.find_by(id: params[:id])
+    #     @items.destroy if @items
+    #     redirect_to carts_path, notice: "此筆已刪除!"
+    byebug
     session[:cartgo] = nil
     redirect_to root_path, notice: "購物車已清空"
   end
