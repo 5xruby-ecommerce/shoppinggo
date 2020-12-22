@@ -12,6 +12,8 @@
 
 ActiveRecord::Schema.define(version: 2020_12_22_103243) do
 
+
+
   create_table "order_items", force: :cascade do |t|
     t.string "category"
     t.integer "quantity"
@@ -30,6 +32,11 @@ ActiveRecord::Schema.define(version: 2020_12_22_103243) do
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+
+
+    t.string "state", default: "pending"
+    t.index ["state"], name: "index_orders_on_state"
+
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -76,12 +83,14 @@ ActiveRecord::Schema.define(version: 2020_12_22_103243) do
     t.string "role", default: "user"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+
     t.string "fb_uid"
     t.string "fb_token"
     t.string "google_uid"
     t.string "google_token"
     t.string "github_uid"
     t.string "github_token"
+
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

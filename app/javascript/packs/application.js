@@ -17,3 +17,4 @@ require("scripts")
 // const imagePath = (name) => images(name, true)
 
 import "controllers"
+import "@fortawesome/fontawesome-free/css/all.css"
