@@ -3,8 +3,8 @@ import magicRails from '@rails/ujs'
 
 
 export default class extends Controller {
-  static targets = [ "amount", "additem" ]
-  static values = { number: Number }
+  static targets = [ "amount", "additem", "totalprice" , 'price']
+  static values = { number: Number, totalprice: Number }
  
 
   connect() {
@@ -23,7 +23,7 @@ export default class extends Controller {
 
   numberValueChanged() {
     this.amountTarget.value = this.numberValue
-    console.log(this.amountTarget)
+    this.totalpriceTarget.textContent = Number(this.priceTarget.textContent) * Number(this.amountTarget.value)
   }
 
 

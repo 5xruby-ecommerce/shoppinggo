@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     <% cart.items.each do |item| %>
-      <tr class="content" data-controller="addtocart" data-addtocart-id="<%= item.product.id %>" data-addtocart-number-value=<%= item.quantity %>>
+      <tr class="content" data-controller="addtocart" data-addtocart-id="<%= item.product.id %>" data-addtocart-number-value=<%= item.quantity %> data-addtocart-totaprice-value= <%= item.product.price * item.quantity %> >
           <td><img src="https://picsum.photos/100/100/?random=1"></td>
           <td><%= item.product.name %></td>
             <td>
@@ -21,8 +21,8 @@
                 <button class="plus" data-action="click->addtocart#plusbtn">+</button>
               </div>
             </td>
-            <td><%= item.product.price %></td>
-            <td><%= item.total_price %></td>
+            <td data-addtocart-target="price"><%= item.product.price %></td>
+            <td data-addtocart-target="totalprice"></td>
             <td>
               <%= link_to '取消', carts_path(item: item.product.id), method: 'delete', data: { confidrm: '確認刪除'}%>
             </td>
