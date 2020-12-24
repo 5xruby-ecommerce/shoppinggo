@@ -63,6 +63,21 @@ export default class extends Controller {
         console.log(err);
       }
     })
-
   }
+
+  destroy(e) {
+
+    const id = this.data.get('id')
+    magicRails.ajax({
+      url: `/carts/destroy/${id}`,
+      type: 'delete',
+      success: (resp) => {
+        console.log(resp,'success', id)
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
 }

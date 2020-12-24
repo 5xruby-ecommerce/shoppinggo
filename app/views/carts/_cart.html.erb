@@ -24,7 +24,9 @@
             <td data-addtocart-target="price"><%= item.product.price %></td>
             <td data-addtocart-target="totalprice" class="item_total_price"></td>
             <td>
-              <%= link_to '取消', carts_path(item: item.product.id), method: 'delete', data: { confirm: '確認刪除'}%>
+              <!-- <%= link_to '取消', carts_path(item: item.product.id), method: 'delete', data: { confirm: '確認刪除'}%> -->
+              <!-- <%= link_to '取消', data: {action: "addtocart#destroy"} %> -->
+              <p href='#' data-action="click->addtocart#destroy">取消</p>
             </td>
       </tr>
     <% end %>

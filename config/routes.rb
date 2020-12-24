@@ -8,11 +8,16 @@ Rails.application.routes.draw do
   resources :products
 
 
-  resource :carts, only:[:show, :destroy] do
+  # resource :carts, only:[:show, :destroy] do
+  #   post 'add_item/:id', action: 'add_item', as: 'add_item'
+  #   get :checkout
+  #   get :cancel
+  # end
+  resource :carts, only:[:show] do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
     get :checkout
     get :cancel
+    delete 'destroy/:id', action: 'destroy', as: 'destroy'
   end
-
 
 end

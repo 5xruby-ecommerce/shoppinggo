@@ -29,8 +29,16 @@ class CartsController < ApplicationController
   end
 
   def destroy
-    result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:item].to_i }
+    # p '-----------------------'
+    # p params
+    # p '-----------------------'
+    # result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:item].to_i }
+    # session[:cartgo] = { 'items' => result_ary }
+    # render json: { p: params }
+    # redirect_to carts_path, notice: "已刪除訂單"
+    result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:id].to_i }
     session[:cartgo] = { 'items' => result_ary }
-    redirect_to carts_path, notice: "已刪除訂單"
+    # render json: { p: params }
+    redirect_to carts_path, notice: "已刪除訂單" 
   end
 end
