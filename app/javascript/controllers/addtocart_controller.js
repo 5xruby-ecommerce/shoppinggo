@@ -22,7 +22,6 @@ export default class extends Controller {
 
   numberValueChanged() {
     this.amountTarget.value = this.numberValue
-    console.log(this.amountTarget.value)
   }
 
 
