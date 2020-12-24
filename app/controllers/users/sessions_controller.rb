@@ -13,6 +13,11 @@ class Users::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def creates
+    redirect_to after_sign_in_path_for
+  end
+
+
   # DELETE /resource/sign_out
   # def destroy
   #   super

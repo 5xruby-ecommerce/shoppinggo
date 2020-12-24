@@ -1,11 +1,16 @@
 class CartsController < ApplicationController
-  def add_item
-    product = Product.find(params[:id])
-    quantity = JSON.parse(params.keys.first)["amount"].to_i
-    current_cart.add_item(product.id, quantity)
-    session[:cartgo] = current_cart.serialize
 
-    redirect_to root_path, notice: '已加入購物車'
+  # before_action :authenticate_user! ,only:[:add_item]
+  def add_item
+    if current_user
+      product = Product.find(params[:id])
+      quantity = JSON.parse(params.keys.first)["amount"].to_i
+      current_cart.add_item(product.id, quantity)
+      session[:cartgo] = current_cart.serialize
+      redirect_to root_path, notice: '已加入購物車'
+    else
+      redirect_to user_session_path
+    end
   end
 
   def show
