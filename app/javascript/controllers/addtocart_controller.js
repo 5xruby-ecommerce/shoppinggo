@@ -5,6 +5,7 @@ import magicRails from '@rails/ujs'
 export default class extends Controller {
   static targets = [ "amount", "additem" ]
   static values = { number: Number }
+ 
 
   connect() {
     this.numberValueChanged()
@@ -22,7 +23,7 @@ export default class extends Controller {
 
   numberValueChanged() {
     this.amountTarget.value = this.numberValue
-    console.log(this.amountTarget.value)
+    console.log(this.amountTarget)
   }
 
 

@@ -27,11 +27,5 @@ class CartsController < ApplicationController
     result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:item].to_i }
     session[:cartgo] = { 'items' => result_ary }
     redirect_to carts_path, notice: "已刪除訂單"
-
-    # cart = {
-    #   "items" => (session[:cartgo]["items"].filter { |x| x["item_id"] != params[:item].to_i })
-    # } 
-    # session[:cartgo] = cart
-    # redirect_to carts_path, notice: "已刪除訂單"
   end
 end
