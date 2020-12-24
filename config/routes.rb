@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     get :checkout
     get :cancel
     delete 'destroy/:id', action: 'destroy', as: 'destroy'
+    post 'update_item/:id', action: 'update_item', as: 'update_item'
   end
 
 end

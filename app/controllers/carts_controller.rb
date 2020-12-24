@@ -13,6 +13,17 @@ class CartsController < ApplicationController
     end
   end
 
+  def update_item
+    if current_user
+      product = Product.find(params[:id])
+      quantity = JSON.parse(params.keys.first)["amount"].to_i
+      current_cart.add_item(product.id, quantity)
+      session[:cartgo] = current_cart.serialize
+    else
+      redirect_to user_session_path
+    end
+  end
+
   def show
     if not current_user
       redirect_to user_session_path
