@@ -15,5 +15,6 @@ require("scripts")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+// import '../components/App'
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"

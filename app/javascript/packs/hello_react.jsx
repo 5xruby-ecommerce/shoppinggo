@@ -4,24 +4,13 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from '../components/App'
-// import PropTypes from 'prop-types'
+import App from '../components'
 
-// const Hello = props => (
-//   <div>Hello {props.name}!</div>
-// )
+// document.addEventListener('DOMContentLoaded', () => {
+//   ReactDOM.render(
+//     <App />,
+//     document.body.appendChild(document.createElement('div')),
+//   )
+// })
 
-// Hello.defaultProps = {
-//   name: 'oooo'
-// }
 
-// Hello.propTypes = {
-//   name: PropTypes.string
-// }
-
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <App />,
-    document.body.appendChild(document.createElement('div')),
-  )
-})
