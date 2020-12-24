@@ -1,9 +1,13 @@
 <%= link_to '首頁', root_path %>
+
+
+<%= link_to carts_path do %>
+  <li><i class="fas fa-cart-plus"></i></i>(<%= current_cart.items.count %>) / <%= current_cart.total_price %> </li>
+<% end %>
+
+
 <% if user_signed_in? %>
   <%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %>
-  <%= link_to carts_path do %>
-    <li><i class="fas fa-cart-plus"></i></i>(<%= current_cart.items.count %>) / <%= current_cart.total_price %> </li>
-  <% end %>
   <% if current_user.shop.blank? %>
     <%= link_to '我要開店', new_shop_path %>
   <% else %>

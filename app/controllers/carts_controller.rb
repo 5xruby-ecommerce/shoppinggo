@@ -9,14 +9,23 @@ class CartsController < ApplicationController
   end
 
   def show
+    if not current_user
+      redirect_to user_session_path
+    end
   end
 
   def checkout
     @order = Order.new
   end
 
-  def destroy
+  def cancel
     session[:cartgo] = nil
-    redirect_to root_path, notice: "購物車已清空"
+    redirect_to root_path, notice: '購物車已清除'
+  end
+
+  def destroy
+    result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:item].to_i }
+    session[:cartgo] = { 'items' => result_ary }
+    redirect_to carts_path, notice: "已刪除訂單"
   end
 end
