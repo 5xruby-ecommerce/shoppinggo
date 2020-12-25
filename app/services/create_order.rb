@@ -2,7 +2,7 @@ require 'net/http'
 
 class CreateOrder
 
-  def initilaize(params={}) # 建立空陣列，產生訂單時接資料
+  def initialize(params={}) # 建立空陣列，產生訂單時接資料
     @params = params
   end
 
@@ -20,10 +20,10 @@ class CreateOrder
     # 基本參數
     {
       'MerchantID' => '2000132',
-      'MerchantTradeNo' => 'ShoppingGo001'
-      'MerchantTradeDate' => Time.now.to_i.to_s,
+      'MerchantTradeNo' => 'ShoppingGo002',
+      'MerchantTradeDate' => Time.zone.now.strftime('%Y/%m/%d %T'),
       'PaymentType' => 'aio',
-      'TotalAmount' => '5000'
+      'TotalAmount' => '5',
       'TradeDesc' => '123',
       'ItemName' => 'Ruby',
       'ReturnURL' => 'http://localhost:3000/carts',
@@ -34,7 +34,8 @@ class CreateOrder
   end
 
   def create(params)
-    params['CheckMacValue'] = compute_check_mac_value(params)
+    params['CheckMacValue'] = compute_check_mac_value(params) # 計算檢查碼
+
     uri = URI(url)
     # 送出 Post request 到綠界，並取得回應內容
     response = Net::HTTP.post_form(uri, params)
@@ -46,16 +47,16 @@ class CreateOrder
     params = params.dup
 
     # 某些參數需要先進行 url encode
-    %w[CustomerName CustomerAddr CustomerEmail].each do |key|
+    %w[MerchantID MerchantTradeNo MerchantTradeDate PaymentType TotalAmount TradeDesc ItemName ReturnURL ClientBackURL ChoosePayment EncryptType].each do |key|
       next if params[key].nil?
       params[key] = urlencode_dot_net(params[key])
     end
 
     # 某些參數不需要參與 CheckMacValue 的計算
-    exclude_keys = %w[InvoiceRemark ItemName ItemWord ItemRemark]
-    params = params.reject do |k, _v|
-      exclude_keys.include? k
-    end
+    # exclude_keys = %w[InvoiceRemark ItemName ItemWord ItemRemark]
+    # params = params.reject do |k, _v|
+    #   exclude_keys.include? k
+    # end
 
     # 轉成 query_string
     query_string = to_query_string(params)
@@ -71,11 +72,14 @@ class CreateOrder
     # url encode 後轉小寫
     encoded_data = CGI.escape(raw_data).downcase
     # 調整成跟 ASP.NET 一樣的結果
+    encoded_data.gsub!('%2d', '-')
+    encoded_data.gsub!('%5f', '_')
+    encoded_data.gsub!('%2e', '.')
     encoded_data.gsub!('%21', '!')
     encoded_data.gsub!('%2a', '*')
     encoded_data.gsub!('%28', '(')
     encoded_data.gsub!('%29', ')')
-    encoded_data.gsub!('%20', ' ')
+    encoded_data.gsub!('%20', '+')
     encoded_data
   end
 
