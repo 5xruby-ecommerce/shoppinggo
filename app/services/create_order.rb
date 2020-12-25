@@ -6,6 +6,28 @@ class CreateOrder
     @params = params
   end
 
+  def check_mac_value
+    compute_check_mac_value(@params)
+  end
+
+  def test
+    expect(
+      {
+        'TradeDesc' => '促銷方案',
+        'PaymentType' => 'aio',
+        'MerchantTradeDate' => '2013/03/12 15:30:23',
+        'MerchantTradeNo' => 'ecpay20130312153023',
+        'MerchantID' => '2000132',
+        'ReturnURL' => 'https://www.ecpay.com.tw/receive.php',
+        'ItemName' => 'Apple iphone 7 手機殼',
+        'TotalAmount' => '1000',
+        'ChoosePayment' => 'ALL',
+        'EncryptType' => '1'
+      },
+      'CFA9BDE377361FBDD8F160274930E815D1A8A2E3E80CE7D404C45FC9A0A1E407'
+    )
+      end
+
   def run
     create(sample_params)
   end
@@ -47,10 +69,10 @@ class CreateOrder
     params = params.dup
 
     # 某些參數需要先進行 url encode
-    %w[MerchantID MerchantTradeNo MerchantTradeDate PaymentType TotalAmount TradeDesc ItemName ReturnURL ClientBackURL ChoosePayment EncryptType].each do |key|
-      next if params[key].nil?
-      params[key] = urlencode_dot_net(params[key])
-    end
+    # %w[MerchantID MerchantTradeNo MerchantTradeDate PaymentType TotalAmount TradeDesc ItemName ReturnURL ClientBackURL ChoosePayment EncryptType].each do |key|
+    #   next if params[key].nil?
+    #   params[key] = urlencode_dot_net(params[key])
+    # end
 
     # 某些參數不需要參與 CheckMacValue 的計算
     # exclude_keys = %w[InvoiceRemark ItemName ItemWord ItemRemark]
@@ -62,8 +84,10 @@ class CreateOrder
     query_string = to_query_string(params)
     # 加上 HashKey 和 HashIV
     query_string = "HashKey=5294y06JbISpM5x9&#{query_string}&HashIV=v77hoKGq4kWxNNIS"
+    p "query_string: #{query_string}"
     # 進行 url encode
     raw = urlencode_dot_net(query_string)
+    p "raw: #{raw}"
     # 套用 SHA256 後轉大寫
     Digest::SHA256.hexdigest(raw).upcase
   end
@@ -96,12 +120,17 @@ class CreateOrder
     params.join('&')
   end
 
+  def expect(a, b)
+    @params = a
+    rs = check_mac_value
+    puts rs
+    puts rs == b
+  end
 end
 
 
 
-
-
+# TradeDesc=促銷方案&PaymentType=aio&MerchantTradeDate=2013/03/1215:30:23&MerchantTradeNo=ecpay20130312153023&MerchantID=2000132&ReturnURL=https://www.ecpay.com.tw/receive.php&ItemName=Apple iphone 7 手機殼&TotalAmount=1000&ChoosePayment=ALL&EncryptType=1
 
 
 
