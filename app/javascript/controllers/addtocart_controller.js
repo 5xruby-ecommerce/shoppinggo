@@ -6,7 +6,6 @@ export default class extends Controller {
   static targets = [ "amount"]
   static values = { number: Number }
  
-
   connect() {
     this.numberValueChanged()
   }
@@ -25,15 +24,11 @@ export default class extends Controller {
     this.numberValue = Number(this.amountTarget.value)
   }
 
-
-
-
   numberValueChanged() {
     if (this.numberValue !== NaN || this.numberValue != '') {
       this.amountTarget.value = this.numberValue
     }
   }
-
 
   add_item(e) {
     const id = this.data.get('id');

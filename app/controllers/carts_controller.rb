@@ -19,6 +19,9 @@ class CartsController < ApplicationController
       quantity = JSON.parse(params.keys.first)["amount"].to_i
       current_cart.add_item(product.id, quantity)
       session[:cartgo] = current_cart.serialize
+      render json: {status: 'ok', 
+                    count: current_cart.items.count, total_price: current_cart.total_price
+      }
     else
       redirect_to user_session_path
     end
@@ -40,16 +43,8 @@ class CartsController < ApplicationController
   end
 
   def destroy
-    # p '-----------------------'
-    # p params
-    # p '-----------------------'
-    # result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:item].to_i }
-    # session[:cartgo] = { 'items' => result_ary }
-    # render json: { p: params }
-    # redirect_to carts_path, notice: "已刪除訂單"
     result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:id].to_i }
     session[:cartgo] = { 'items' => result_ary }
-    # render json: { p: params }
     redirect_to carts_path, notice: "已刪除訂單" 
   end
 end

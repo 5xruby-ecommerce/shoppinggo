@@ -1,3 +1,10 @@
+<style>
+  .input_amount[type="number"]::-webkit-inner-spin-button,
+  .input_amount[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>
 <table>
   <thead>
     <tr>
@@ -17,16 +24,14 @@
             <td>
               <div class="amount">
                 <button class="minus" data-action="click->updatecart#minusbtn">-</button>
-                <input type="text" class="input_amount" data-updatecart-target="amount" data-action="input->updatecart#changequantity">
+                <input type="number" class="input_amount" data-updatecart-target="amount " data-action="input->updatecart#changequantity">
                 <button class="plus" data-action="click->updatecart#plusbtn">+</button>
               </div>
             </td>
             <td data-updatecart-target="price"><%= item.product.price %></td>
             <td data-updatecart-target="totalprice" class="item_total_price"></td>
             <td>
-              <!-- <%= link_to '取消', carts_path(item: item.product.id), method: 'delete', data: { confirm: '確認刪除'}%> -->
-              <!-- <%= link_to '取消', data: {action: "updatecart#destroy"} %> -->
-              <p href='#' data-action="click->updatecart#destroy">取消</p>
+              <a href='#' data-action="click->updatecart#destroy">取消</ㄇ>
             </td>
       </tr>
     <% end %>

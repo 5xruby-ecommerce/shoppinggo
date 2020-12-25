@@ -1,9 +1,11 @@
 <%= link_to '首頁', root_path %>
 <%= link_to carts_path do %>
     <% if current_user %>    
-      <li><i class="fas fa-cart-plus"></i></i>(<%= current_cart.items.count %>) / <%= current_cart.total_price %> </li>
+      <li data-controller="navcart" data-action="plusbtn@window->navcart#update">
+        <i class="fas fa-cart-plus"></i> <span class="cartCount" data-navcart-target="cartcount">(<%= current_cart.items.count %>)</span> / <span class="cartTotalPrice" data-navcart-target="carttotalprice"><%= current_cart.total_price.to_i %> </span>
+      </li>
     <% else %>
-      <li><i class="fas fa-cart-plus"></i></i>(0) / 0</li>
+      <li><i class="fas fa-cart-plus"></i>(0) / 0</li>
     <% end %>
 <% end %>
 <% if user_signed_in? %>
