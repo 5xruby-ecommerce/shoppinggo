@@ -18,3 +18,4 @@ require("scripts")
 import '../components'
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"
+import 'stylesheets'
