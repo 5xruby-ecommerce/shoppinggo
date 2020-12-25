@@ -1,3 +1,5 @@
+<div id="root"></div>
+
 <%= link_to '首頁', root_path %>
 <% if user_signed_in? %>
   <%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %>

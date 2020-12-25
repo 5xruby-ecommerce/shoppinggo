@@ -4,16 +4,15 @@
     <title>Shoppinggo</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <%= javascript_pack_tag 'hello_react' %>
+    <%= render "shared/nav" %>
+    <%# <div id="root"></div> %>
+    <div id="bread"></div>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <%= render "shared/nav" %>
     <%= yield %>
   </body>
 </html>
