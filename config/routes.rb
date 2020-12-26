@@ -3,10 +3,13 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   root 'pages#home'
+  
+   devise_scope :user do
+     get 'payment', to: 'devise/registrations#payment'
+   end
 
   resources :shops
   resources :products
-
 
   resource :carts, only:[:show, :destroy] do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
