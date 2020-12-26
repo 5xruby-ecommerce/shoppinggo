@@ -18,4 +18,7 @@ require("scripts")
 import '../components'
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"
-import 'stylesheets'
+
+//tailwind
+import 'stylesheet'
+import "tailwindcss/tailwind.css"
