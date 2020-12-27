@@ -13,14 +13,6 @@ function updateCartTotal() {
   // carttotal.textContent = items.reduce((total, item) => {total += Number(item.textContent)})
 }
 
-function inputValid() {
-  let inputAmount = document.querySelector('.input_amount')
-  inputAmount.addEventListener('input', () => {
-    if (typeof inputAmount.value !== 'number') {
-      inputAmount.value = 0
-    }
-  })
-}
 
 export default class extends Controller {
   static targets = [ "amount", "additem", "totalprice" , 'price']
@@ -87,11 +79,13 @@ export default class extends Controller {
   }
 
   changequantity(e) {
+    console.log("target value: ",this.amountTarget.value)
+    console.log("number value",this.numberValue)
     const id = this.data.get('id');
     let varyamount = Number(this.amountTarget.value) - this.numberValue 
-    const amount = { amount: varyamount }
-
+    console.log(varyamount)
     this.numberValue = Number(this.amountTarget.value) 
+    const amount = { amount: varyamount }
     magicRails.ajax({
       url:  `/carts/update_item/${id}`,
       type: 'post',
