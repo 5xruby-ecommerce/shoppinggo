@@ -1,10 +1,11 @@
 import { Controller } from "stimulus"
 import magicRails from '@rails/ujs'
 
-
 export default class extends Controller {
-  static targets = [ "amount"]
-  static values = { number: Number }
+  static targets = [ "amount", "coupon"]
+  static values = { number: Number, 
+                    coupon: Number
+                  }
  
   connect() {
     this.numberValueChanged()
@@ -47,5 +48,30 @@ export default class extends Controller {
         console.log(err);
       }
     })
+  }
+
+  receivecoupon(e) {
+    // console.log(e.target.getAttribute('name'))
+    // const user_id = e.target.getAttribute('name')
+    const key = { coupon_key: e.target.getAttribute('key') }
+    console.log(key)
+
+    magicRails.ajax({
+      url: `/users/add_coupon`,
+      type: 'post',
+      contentType: 'application/json',
+      data: JSON.stringify(key),
+      success: (resp) => {
+        console.log(resp)
+        // resp: {coupon_taken: 'taken'} 
+
+        let coupon = document.querySelector(`div[data-key="${key['coupon_key']}"]`)
+        coupon.classList.toggle('taken')
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+
   }
 }

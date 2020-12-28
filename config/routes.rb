@@ -11,6 +11,11 @@ Rails.application.routes.draw do
 
   get :search, to: 'products#search'
 
+  resources :users do
+    collection do 
+      post :add_coupon
+    end
+  end
   resources :coupons do
     collection do
       get :list
