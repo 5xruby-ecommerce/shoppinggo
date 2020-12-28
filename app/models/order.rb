@@ -3,7 +3,7 @@
 class Order < ApplicationRecord
   belongs_to :user
   has_many :sub_order
-  
+
   include AASM
 
   aasm(column: 'state', no_direct_assignment: true) do

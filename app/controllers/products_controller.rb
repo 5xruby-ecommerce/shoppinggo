@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
+
+  before_action :find_product, only: [:show, :edit, :update, :destroy]
+
   def new
     @product = Product.new
   end
-  
+
   def show
-    @product = Product.find(params[:id])
-  end 
-  
+  end
+
   def create
     @product = Product.new(product_params)
 
@@ -20,11 +22,9 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    find_product
   end
 
   def update
-    find_product
     if @product.update(product_params)
       redirect_to shops_path, notice: '更新商品成功'
     else
@@ -33,7 +33,6 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    find_product
     if @product.destroy
       redirect_to shops_path, notice: '已刪除商品'
     else
@@ -50,6 +49,5 @@ class ProductsController < ApplicationController
   def product_params
     params.require(:product).permit(:name, :content, :quantity, :price)
   end
-
 
 end
