@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations" }
   root 'pages#home'
   
    devise_scope :user do
-     get 'payment', to: 'devise/registrations#payment'
+     get 'payment', to: 'user/registrations#payment'
    end
 
   resources :shops
@@ -16,6 +16,5 @@ Rails.application.routes.draw do
     get :checkout
     get :cancel
   end
-
 
 end

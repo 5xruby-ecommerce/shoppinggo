@@ -1,12 +1,20 @@
 <h2>帳戶管理</h2>
 <%= link_to '我的檔案', edit_user_registration_path %>
+<%= link_to '新增銀行卡', payment_path %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
+  <%= image_tag resource.image.url if resource.image.url.present? %>
+  
   <div class="field">
-     <%= f.label :name %><br />
-     <%= f.text_field :name, autofocus: true %>
+    <%= f.label :我的頭像 %>
+    <%= f.file_field :image, id: :user_image, class: "form-control" %>
+  </div>
+
+  <div class="field">
+     <%= f.label :姓名 %><br />
+     <%= f.text_field :name%>
   </div>
 
   <div class="field">
@@ -17,16 +25,6 @@
   <div class="field">
      <%= f.label :手機號碼 %><br />
      <%= f.telephone_field :phone, autofocus: true %>
-  </div>
-
-  <div class="field">
-     <%= f.label :生日 %><br />
-     <%= f.date_field :birth, autofocus: true %>
-  </div>
-
-  <div class="field">
-     <%= f.label :銀行帳戶 %><%= link_to '新增銀行卡', payment_path %><br />
-     <%= f.text_field :user_account, autofocus: true %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
