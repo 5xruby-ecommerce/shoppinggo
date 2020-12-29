@@ -35,6 +35,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-github'
 gem 'figaro'
+gem 'fog-aws', '~> 3.7'
 gem 'pg'
 
 group :development, :test do
