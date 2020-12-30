@@ -6,13 +6,23 @@ Rails.application.routes.draw do
 
   resources :shops
   resources :products
+  resources :coupons do
+    collection do
+      get :list
+    end
+  end
 
-
-  resource :carts, only:[:show, :destroy] do
+  # resource :carts, only:[:show, :destroy] do
+  #   post 'add_item/:id', action: 'add_item', as: 'add_item'
+  #   get :checkout
+  #   get :cancel
+  # end
+  resource :carts, only:[:show] do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
     get :checkout
     get :cancel
+    delete 'destroy/:id', action: 'destroy', as: 'destroy'
+    post 'update_item/:id', action: 'update_item', as: 'update_item'
   end
-
 
 end
