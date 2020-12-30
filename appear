@@ -1,0 +1,22 @@
+[33m425e9f6[m[33m ([m[1;36mHEAD -> [m[1;32mreact[m[33m, [m[1;31morigin/react[m[33m)[m HEAD@{0}: reset: moving to 425e9f6
+[33me6bec3f[m HEAD@{1}: commit: badRWD
+[33m425e9f6[m[33m ([m[1;36mHEAD -> [m[1;32mreact[m[33m, [m[1;31morigin/react[m[33m)[m HEAD@{2}: commit: addProductLoginRoot
+[33m6451b24[m HEAD@{3}: commit: addTailwind
+[33m15fd9c6[m[33m ([m[1;32mtailwind[m[33m)[m HEAD@{4}: reset: moving to 15fd9c6
+[33m92317f3[m HEAD@{5}: reset: moving to 92317f3
+[33m15fd9c6[m[33m ([m[1;32mtailwind[m[33m)[m HEAD@{6}: reset: moving to 15fd9c6
+[33m15fd9c6[m[33m ([m[1;32mtailwind[m[33m)[m HEAD@{7}: reset: moving to 15fd9c6
+[33me0039f8[m HEAD@{8}: commit: ?
+[33m15fd9c6[m[33m ([m[1;32mtailwind[m[33m)[m HEAD@{9}: reset: moving to 15fd9c6
+[33m15fd9c6[m[33m ([m[1;32mtailwind[m[33m)[m HEAD@{10}: reset: moving to 15fd9c6
+[33m15fd9c6[m[33m ([m[1;32mtailwind[m[33m)[m HEAD@{11}: checkout: moving from tailwind to react
+[33m15fd9c6[m[33m ([m[1;32mtailwind[m[33m)[m HEAD@{12}: checkout: moving from react to tailwind
+[33m15fd9c6[m[33m ([m[1;32mtailwind[m[33m)[m HEAD@{13}: commit: reactnonono
+[33m92317f3[m HEAD@{14}: commit: addantinstall
+[33m7f5ceef[m HEAD@{15}: commit: addReact
+[33m563218e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mthirdPartyLogin[m[33m)[m HEAD@{16}: checkout: moving from thirdPartyLogin to react
+[33m563218e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mthirdPartyLogin[m[33m)[m HEAD@{17}: pull origin main: Fast-forward
+[33m0737756[m[33m ([m[1;31morigin/thirdPartyLogin[m[33m)[m HEAD@{18}: commit: add_github_login
+[33m1d10e31[m HEAD@{19}: commit: thirdPartyLogin
+[33m132c79c[m[33m ([m[1;32mmain[m[33m)[m HEAD@{20}: checkout: moving from main to thirdPartyLogin
+[33m132c79c[m[33m ([m[1;32mmain[m[33m)[m HEAD@{21}: clone: from git@github.com:5xruby-ecommerce/shoppinggo.git

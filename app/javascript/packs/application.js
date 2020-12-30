@@ -21,4 +21,4 @@ import "@fortawesome/fontawesome-free/css/all.css"
 
 //tailwind
 import 'stylesheet'
-import "tailwindcss/tailwind.css"
+// import "tailwindcss/tailwind.css"
