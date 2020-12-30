@@ -19,6 +19,10 @@
     "react-dom": "^17.0.1",
     "stimulus": "^2.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.5.1",
+    "stimulus": "^2.0.0",
+    "tempusdominus-bootstrap-4": "^5.39.0",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",

@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
   
   def create
     @product = Product.new(product_params)
-
+    @product.shop = current_user.shop
     if @product.save
       redirect_to shops_path, notice: '新增商品成功'
     else

@@ -313,4 +313,7 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
   
  
+
+  config.scoped_views = true
+
 end

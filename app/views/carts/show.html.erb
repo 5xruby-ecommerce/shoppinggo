@@ -3,5 +3,5 @@
 <%= render 'cart', cart: current_cart %>
 
 <%= link_to '繼續購買', root_path %>
-<%= link_to '清空購物車', carts_path, method: 'delete' %>
+<%= link_to '清空購物車', cancel_carts_path %>
 <%= link_to '結帳', checkout_carts_path if not current_cart.empty? %>

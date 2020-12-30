@@ -11,6 +11,29 @@
   </div>
 
   <div class="input-devise">
+  <div class="field">
+     <%= f.label :name %><br />
+     <%= f.text_field :name%>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+     <%= f.label :手機號碼 %><br />
+     <%= f.telephone_field :phone, autofocus: true %>
+  </div>
+
+  <div class="field">
+     <%= f.label :生日 %><br />
+     <%= f.date_field :birth, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+
     <% if @minimum_password_length %>
     <em><%= @minimum_password_length %></em>
     <%= f.password_field :password, autocomplete: "new-password",placeholder:"characters minimum" %>

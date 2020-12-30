@@ -48,3 +48,25 @@
     console.log("hello")
   })
 </script>
+<%= link_to '首頁', root_path %>
+<%= link_to carts_path do %>
+    <% if current_user %>    
+      <li data-controller="navcart" data-action="plusbtn@window->navcart#update">
+        <i class="fas fa-cart-plus"></i> <span class="cartCount" data-navcart-target="cartcount">(<%= current_cart.items.count %>)</span> / <span class="cartTotalPrice" data-navcart-target="carttotalprice"><%= current_cart.total_price.to_i %> </span>
+      </li>
+    <% else %>
+      <li><i class="fas fa-cart-plus"></i>(0) / 0</li>
+    <% end %>
+<% end %>
+<% if user_signed_in? %>
+  <%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %>
+  <%= link_to '會員中心', edit_user_registration_path %>
+  <% if current_user.shop.blank? %>
+    <%= link_to '我要開店', new_shop_path %>
+  <% else %>
+    <%= link_to '賣家中心', shops_path %>
+  <% end %>
+<% else %>
+  <%= link_to '註冊', new_user_registration_path  %>
+  <%= link_to '登入',  new_user_session_path  %>
+<% end %>
