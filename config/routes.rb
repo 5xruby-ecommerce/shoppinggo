@@ -12,6 +12,6 @@ Rails.application.routes.draw do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
     get :checkout
   end
-
+  
 
 end

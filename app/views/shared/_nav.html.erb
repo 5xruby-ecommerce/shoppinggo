@@ -1,18 +1,22 @@
 
-<nav class='flex w-full items-center bg-gray-800 px-10 text-white flex-wrap'>
+<nav class='flex w-full items-center bg-gray-800 px-2 lg:px-10 text-white flex-wrap'>
   <div>
     <%= link_to root_path do %>
       <%= image_tag "logo.png" , class:'w-20 lg:w-32' %>
     <% end %>
   </div>
 
-  <div class='lg:px-40 flex-grow mx-12 w-1/5 sm:4/5 '>
-     <div class="relative  text-black bg-white rounded-full">
-      <span class="absolute inset-y-0 right-0 flex items-center pl-4 bg-pink-400 p-2 rounded-full m-1 text-white w-10">
-        <i class="fas fa-search absolute right-3 "></i>
-      </span>
-      <input type='text' class='text-lg	rounded-full w-full px-4 py-2 text-black search_input' placeholder="搜尋商品" >
-    </div>
+  <div class='lg:px-20 flex-grow mx-12 w-1/5 sm:3/5 '>
+    <%= form_tag products_path, method: :get do %>
+      <div class="relative  text-black bg-white rounded-full">
+        <span class="absolute inset-y-0 right-0 flex items-center pl-4 bg-pink-400 p-2 rounded-full m-1 text-white w-10">
+          <%= button_tag(type: "submit", class: "absolute right-3 focus:outline-none") do %>
+            <i class="fas fa-search"></i>
+          <% end %>
+        </span>
+        <%= text_field_tag :search, params[:search], placeholder: "搜尋商品",class:'text-lg	rounded-full w-full px-4 py-2 text-black' %>
+      </div>
+    <% end %>
   </div>
 
   <button class='hidden'>
@@ -38,6 +42,9 @@
     </div>
   </div>
 </nav>
-
-
-
+    
+<script>
+  document.querySelector('.fas').addEventListener('click',(e)=>{
+    console.log("hello")
+  })
+</script>
