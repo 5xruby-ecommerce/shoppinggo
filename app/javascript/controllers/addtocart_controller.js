@@ -50,10 +50,7 @@ export default class extends Controller {
   }
 
   receivecoupon(e) {
-    // console.log(e.target.getAttribute('name'))
-    // const user_id = e.target.getAttribute('name')
     const key = { coupon_key: e.target.getAttribute('key') }
-    console.log(key)
 
     magicRails.ajax({
       url: `/users/add_coupon`,
@@ -62,10 +59,9 @@ export default class extends Controller {
       data: JSON.stringify(key),
       success: (resp) => {
         console.log(resp)
-        // resp: {coupon_taken: 'taken'} 
 
         let coupon = document.querySelector(`div[data-key="${key['coupon_key']}"]`)
-        coupon.classList.toggle('taken')
+        coupon.classList.add('taken')
       },
       error: (err) => {
         console.log(err)

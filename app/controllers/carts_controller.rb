@@ -4,7 +4,8 @@ class CartsController < ApplicationController
   def add_item
     if current_user
       product = Product.find(params[:id])
-      quantity = JSON.parse(params.keys.first)["amount"].to_i
+      # quantity = JSON.parse(params.keys.first)["amount"].to_i
+      quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
       current_cart.add_item(product.id, quantity)
       session[:cartgo] = current_cart.serialize
       redirect_to root_path, notice: '已加入購物車'

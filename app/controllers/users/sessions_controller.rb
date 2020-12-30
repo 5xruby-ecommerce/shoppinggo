@@ -14,7 +14,8 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   def creates
-    redirect_to after_sign_in_path_for
+    # redirect_to after_sign_in_path_for
+    # redirect_to root_path
   end
 
 

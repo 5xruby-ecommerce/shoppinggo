@@ -20,8 +20,8 @@
         <td><%= coupon.discount_rule %></td>
         <td><%= coupon.discount_amount %></td>
         <td><%= coupon.min_consumption %></td>
-        <td><%= coupon.discount_start %></td>
-        <td><%= coupon.discount_end %></td>
+        <td><%= coupon_TimeWithZone_convert(coupon.discount_start) %></td>
+        <td><%= coupon_TimeWithZone_convert(coupon.discount_end) %></td>
         <td><%= coupon.amount %></td>
         <td><%= link_to '編輯', edit_coupon_path(coupon) %></td>
         <td><%= link_to '真刪除', coupon_path(coupon), method: :delete%></td>
