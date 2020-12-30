@@ -1,3 +1,10 @@
+<style>
+  .input_amount[type="number"]::-webkit-inner-spin-button,
+  .input_amount[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>
 <table>
   <thead>
     <tr>
@@ -11,20 +18,20 @@
   </thead>
   <tbody>
     <% cart.items.each do |item| %>
-      <tr class="content" data-controller="addtocart" data-addtocart-id="<%= item.product.id %>" data-addtocart-number-value=<%= item.quantity %> data-addtocart-totaprice-value= <%= item.product.price * item.quantity %> >
+      <tr class="content" data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value=<%= item.quantity %> data-updatecart-totaprice-value= 0 >
           <td><img src="https://picsum.photos/100/100/?random=1"></td>
           <td><%= item.product.name %></td>
             <td>
               <div class="amount">
-                <button class="minus" data-action="click->addtocart#minusbtn">-</button>
-                <input type="text" class="inputamount" data-addtocart-target="amount">
-                <button class="plus" data-action="click->addtocart#plusbtn">+</button>
+                <button class="minus" data-action="click->updatecart#minusbtn">-</button>
+                <input type="number" class="input_amount" data-updatecart-target="amount " data-action="input->updatecart#changequantity">
+                <button class="plus" data-action="click->updatecart#plusbtn">+</button>
               </div>
             </td>
-            <td data-addtocart-target="price"><%= item.product.price %></td>
-            <td data-addtocart-target="totalprice"></td>
+            <td data-updatecart-target="price"><%= item.product.price %></td>
+            <td data-updatecart-target="totalprice" class="item_total_price"></td>
             <td>
-              <%= link_to '取消', carts_path(item: item.product.id), method: 'delete', data: { confidrm: '確認刪除'}%>
+              <a href='#' data-action="click->updatecart#destroy">取消</ㄇ>
             </td>
       </tr>
     <% end %>
@@ -32,7 +39,7 @@
   <tfoot>
     <tr>
       <td colspan="3">總價</td>
-      <td><%= cart.total_price %></td>
+      <td class="cart_total"><%= cart.total_price %></td>
     </tr>
   </tfoot>
 </table>
