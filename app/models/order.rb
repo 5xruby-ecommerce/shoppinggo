@@ -18,4 +18,7 @@ class Order < ApplicationRecord
       transitions from: [:paid, :deliver, :pending], to: :cancelled
     end
   end
+
+
+
 end

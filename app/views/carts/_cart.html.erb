@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <td>商品名稱</td>
+      <td>商品描述</td>
       <td>數量</td>
       <td>單價</td>
       <td>小計</td>
@@ -11,6 +12,7 @@
     <% cart.items.each do |item| %>
     <tr>
       <td><%= item.product.name %></td>
+      <td><%= item.product.content %></td>
       <td><%= item.quantity %></td>
       <td><%= item.product.price %></td>
       <td><%= item.total_price %></td>

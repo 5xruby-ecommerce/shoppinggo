@@ -6,27 +6,27 @@ class CreateOrder
     @params = params
   end
 
-  def check_mac_value
-    compute_check_mac_value(@params)
+  def check_mac_value  # 建立檢查碼
+    compute_check_mac_value(@params)  # 組合檢查碼
   end
 
-  def test
-    expect(
-      {
-        'TradeDesc' => '促銷方案',
-        'PaymentType' => 'aio',
-        'MerchantTradeDate' => '2013/03/12 15:30:23',
-        'MerchantTradeNo' => 'ecpay20130312153023',
-        'MerchantID' => '2000132',
-        'ReturnURL' => 'https://www.ecpay.com.tw/receive.php',
-        'ItemName' => 'Apple iphone 7 手機殼',
-        'TotalAmount' => '1000',
-        'ChoosePayment' => 'ALL',
-        'EncryptType' => '1'
-      },
-      'CFA9BDE377361FBDD8F160274930E815D1A8A2E3E80CE7D404C45FC9A0A1E407'
-    )
-      end
+  # def test
+  #   expect(
+  #     {
+  #       'TradeDesc' => '促銷方案',
+  #       'PaymentType' => 'aio',
+  #       'MerchantTradeDate' => '2013/03/12 15:30:23',
+  #       'MerchantTradeNo' => 'ecpay20130312153023',
+  #       'MerchantID' => '2000132',
+  #       'ReturnURL' => 'https://www.ecpay.com.tw/receive.php',
+  #       'ItemName' => 'Apple iphone 7 手機殼',
+  #       'TotalAmount' => '1000',
+  #       'ChoosePayment' => 'ALL',
+  #       'EncryptType' => '1'
+  #     },
+  #     'CFA9BDE377361FBDD8F160274930E815D1A8A2E3E80CE7D404C45FC9A0A1E407'
+  #   )
+  #     end
 
   def run
     create(sample_params)
@@ -42,14 +42,14 @@ class CreateOrder
     # 基本參數
     {
       'MerchantID' => '2000132',
-      'MerchantTradeNo' => 'ShoppingGo002',
+      'MerchantTradeNo' => 'shoppinggoA000003',
       'MerchantTradeDate' => Time.zone.now.strftime('%Y/%m/%d %T'),
       'PaymentType' => 'aio',
       'TotalAmount' => '5',
       'TradeDesc' => '123',
       'ItemName' => 'Ruby',
-      'ReturnURL' => 'http://localhost:3000/carts',
-      'ClientBackURL' => 'http://localhost:3000/carts',
+      'ReturnURL' => 'http://localhost:3000/carts/checkout',
+      'ClientBackURL' => 'http://localhost:3000/carts/checkout',
       'ChoosePayment' => 'Credit',
       'EncryptType' => '1'
     }
@@ -67,18 +67,6 @@ class CreateOrder
   def compute_check_mac_value(params)
     # 先將參數備份
     params = params.dup
-
-    # 某些參數需要先進行 url encode
-    # %w[MerchantID MerchantTradeNo MerchantTradeDate PaymentType TotalAmount TradeDesc ItemName ReturnURL ClientBackURL ChoosePayment EncryptType].each do |key|
-    #   next if params[key].nil?
-    #   params[key] = urlencode_dot_net(params[key])
-    # end
-
-    # 某些參數不需要參與 CheckMacValue 的計算
-    # exclude_keys = %w[InvoiceRemark ItemName ItemWord ItemRemark]
-    # params = params.reject do |k, _v|
-    #   exclude_keys.include? k
-    # end
 
     # 轉成 query_string
     query_string = to_query_string(params)
@@ -120,20 +108,10 @@ class CreateOrder
     params.join('&')
   end
 
-  def expect(a, b)
-    @params = a
-    rs = check_mac_value
-    puts rs
-    puts rs == b
-  end
+  # def expect(a, b)
+  #   @params = a
+  #   rs = check_mac_value
+  #   puts rs
+  #   puts rs == b
+  # end
 end
-
-
-
-# TradeDesc=促銷方案&PaymentType=aio&MerchantTradeDate=2013/03/1215:30:23&MerchantTradeNo=ecpay20130312153023&MerchantID=2000132&ReturnURL=https://www.ecpay.com.tw/receive.php&ItemName=Apple iphone 7 手機殼&TotalAmount=1000&ChoosePayment=ALL&EncryptType=1
-
-
-
-# arr = HashKey=5294y06JbISpM5x9&    &HashIV=v77hoKGq4kWxNNIS
-
-# HashKey=5294y06JbISpM5x9&ChoosePayment=Credit&ClientBackURL=http://localhost:3000/carts&EncryptType=1&ItemName=Ruby&MerchantID=2000132&MerchantTradeDate=2020/12/24 18:40:00&MerchantTradeNo=ShoppingGo001&PaymentType=aio&ReturnURL=http://localhost:3000/carts&TotalAmount=5000&TradeDesc=123&HashIV=v77hoKGq4kWxNNIS
