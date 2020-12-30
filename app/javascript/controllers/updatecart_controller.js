@@ -108,6 +108,7 @@ export default class extends Controller {
   }
 
   numberValueChanged() {
+    console.log(this.amountTargets)
     if (this.amountTarget.value !== NaN || this.amountTarget.value != '') {
       this.amountTarget.value = this.numberValue
       this.totalpriceTarget.textContent = Number(this.priceTarget.textContent) * Number(this.amountTarget.value)  
@@ -131,4 +132,7 @@ export default class extends Controller {
     })
   }
 
+  usecoupon(e) {
+    console.log('you press this coupon')
+  }
 }

@@ -46,7 +46,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0', '>= 4.0.2'
   gem 'faker', '~> 2.15', '>= 2.15.1'
   gem 'timecop', '~> 0.8.1'
-
 end
 
 group :development do

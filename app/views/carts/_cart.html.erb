@@ -17,36 +17,44 @@
       <td>處理</td>
     </tr>
   </thead>
-  <tbody>
-    <% cart.items.each do |item| %>
 
-    <tr>
-      <td><%= item.product.name %></td>
-      <td><%= item.product.content %></td>
-      <td><%= item.quantity %></td>
-      <td><%= item.product.price %></td>
-      <td><%= item.total_price %></td>
-    </tr>
-
-      <tr class="content" data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value=<%= item.quantity %> data-updatecart-totaprice-value= 0 >
-          <td><%= link_to product_path(item.product) do %><%= image_tag item.product.image_url if item.product.image_url.present? %><% end %></td>
-          <td><%= item.product.name %></td>
-            <td>
-              <div class="amount">
-                <button class="minus" data-action="click->updatecart#minusbtn">-</button>
-                <input type="number" class="input_amount" data-updatecart-target="amount " data-action="input->updatecart#changequantity">
-                <button class="plus" data-action="click->updatecart#plusbtn">+</button>
-              </div>
-            </td>
-            <td data-updatecart-target="price"><%= item.product.price %></td>
-            <td data-updatecart-target="totalprice" class="item_total_price"></td>
-            <td>
-              <a href='#' data-action="click->updatecart#destroy">取消</ㄇ>
-            </td>
+  <% cart.items.each do |item| %>
+    <tbody data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totaprice-value="0">
+      <tr>
+        <td><%= item.product.name %></td>
+        <td><%= item.product.content %></td>
+        <td><%= item.quantity %></td>
+        <td><%= item.product.price %></td>
+        <td><%= item.total_price %></td>
       </tr>
+      <tr>
+        <td><%= link_to product_path(item.product) do %><%= image_tag item.product.image_url if item.product.image_url.present? %><% end %></td>
+        <td><%= item.product.name %></td>
+        <td>
+          <div class="amount">
+            <button class="minus" data-action="click->updatecart#minusbtn">-</button>
+            <input type="number" class="input_amount" data-updatecart-target="amount" data-action="input->updatecart#changequantity">
+            <button class="plus" data-action="click->updatecart#plusbtn">+</button>
+          </div>
+        </td>
+        <td data-updatecart-target="price"><%= item.product.price %></td>
+        <td data-updatecart-target="totalprice" class="item_total_price"></td>
+        <td>
+          <a href='#' data-action="click->updatecart#destroy">取消</ㄇ>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6"> 
+          <% Coupon.where(shop_id: item.product.shop_id).pluck(:title).each do |title| %>
+            <a data-action="click->updatecart#usecoupon">
+              <%= title %>
+            </a>          
+          <% end %>
+        </td>
+      </tr>
+    </div>
+  <% end %>
 
-    <% end %>
-  </tbody>
   <tfoot>
     <tr>
       <td colspan="3">總價</td>
