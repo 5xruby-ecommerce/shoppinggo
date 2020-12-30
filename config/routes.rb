@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   root 'pages#home'
   
    devise_scope :user do
-     get 'payment', to: 'user/registrations#payment'
+     get 'change_password', to: 'user/registrations#change_password'
    end
-
+   
   resources :shops
   resources :products
 
