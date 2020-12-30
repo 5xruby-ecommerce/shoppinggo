@@ -20,12 +20,12 @@
 
 <p>
   <strong>優惠開始</strong>
-  <%= @coupon.discount_start %>
+  <%= Datetime.strptime(@coupon.discount_start, "%Y-%m-%d %H:%M:%S %Z").strftime("%Y/%m/%d") %>
 </p>
 
 <p>
   <strong>優惠結束</strong>
-  <%= @coupon.discount_end %>
+  <%= DateTime.strptime('02-09-2007 12:30:44 EST', date_and_time).to_s %>
 </p>
 
 <p>
@@ -33,4 +33,7 @@
   <%= @coupon.amount %>
 </p>
 
-
+<p>
+  <strong>領取數量</strong>
+  <%= @coupon.counter_catch %>
+</p>

@@ -1,5 +1,4 @@
 ActiveRecord::Schema.define(version: 2021_01_05_072028) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -10,7 +9,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_072028) do
     t.datetime "discount_end"
     t.integer "min_consumption"
     t.integer "amount"
-    t.integer "counter_catch"
+    t.integer "counter_catch", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "shop_id"
