@@ -44,7 +44,12 @@ class User::RegistrationsController < Devise::RegistrationsController
     params.require(:user).permit(:image, :name, :password, :email, :phone, :password_confirmation, :current_password)
     # devise_parameter_sanitizer.sanitize(:account_update)
   end
+  
+  protected
 
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
   # DELETE /resource
   # def destroy
   #   super
