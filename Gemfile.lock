@@ -339,6 +339,7 @@ DEPENDENCIES
   fog-aws (~> 3.7)
   jbuilder (~> 2.7)
   listen (~> 3.2)
+  mini_magick
   omniauth
   omniauth-facebook
   omniauth-github
