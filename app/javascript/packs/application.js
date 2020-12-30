@@ -15,10 +15,13 @@ require("scripts")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-
+import '../components'
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"
 
+//tailwind
+import 'stylesheet'
+// import "tailwindcss/tailwind.css"
 import "tempusdominus-bootstrap-4"
 import "tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css"
 import "font-awesome/css/font-awesome.min.css"

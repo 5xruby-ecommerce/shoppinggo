@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
+
+  def index
+      if params[:search]
+          @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
+      else
+          @product = Product.all
+      end
+  end 
+
   def new
     @product = Product.new
   end
@@ -39,6 +48,9 @@ class ProductsController < ApplicationController
     else
       redirect_to shops_path, notice: '刪除商品失敗'
     end
+  end
+
+  def search
   end
 
   private
