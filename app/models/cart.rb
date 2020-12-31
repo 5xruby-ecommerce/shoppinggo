@@ -1,14 +1,14 @@
-class Cart 
+class Cart
   def initialize(items = [])
     @items = items
-  end 
+  end
 
-  def add_item(item_id, quantity = 1)
-    found_item = @items.find { |item| item.item_id == item_id}
+  def add_item(product_id, quantity = 1, product_name, product_price)
+    found_item = @items.find { |item| item.product_id == product_id}
     if found_item
       found_item.increament(quantity)
     else
-      @items << CartItem.new(item_id, quantity)
+      @items << CartItem.new(product_id, quantity, product_name, product_price)
     end
   end
 
@@ -17,7 +17,7 @@ class Cart
   end
 
   def items
-    @items 
+    @items
   end
 
   def total_price
@@ -31,19 +31,21 @@ class Cart
 
   def serialize
     items = @items.map { |item| {
-      "item_id" => item.item_id,
-      "quantity" => item.quantity
+      "product_id" => item.product_id,
+      "quantity" => item.quantity,
+      "product_name" => item.product_name,
+      "product_price" => item.product_price,
     }}
-
+    
     { "items" => items}
-  end 
+  end
 
   def self.from_hash(hash)
     if hash && hash["items"]
-      items = hash["items"].map { |item| CartItem.new(item["item_id"], item["quantity"])}
+      items = hash["items"].map { |item| CartItem.new(item["product_id"], item["quantity"], item["product_name"], item["product_price"])}
       Cart.new(items)
     else
       Cart.new
-    end 
+    end
   end
 end

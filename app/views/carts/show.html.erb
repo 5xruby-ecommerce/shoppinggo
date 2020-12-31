@@ -2,10 +2,6 @@
 
 <%= render 'cart', cart: current_cart %>
 
-<%# <%= form_for(@order_params) do |f| %>
-  <%# <%= f.hidden_field :, :value => @order. %>
-<%# <% end %>
-
 <%= link_to '繼續購買', root_path %>
 <%= link_to '清空購物車', carts_path, method: 'delete' %>
-<%= link_to '結帳', checkout_carts_path if not current_cart.empty? %>
+<%= link_to '去買單', checkout_carts_path if not current_cart.empty? %>

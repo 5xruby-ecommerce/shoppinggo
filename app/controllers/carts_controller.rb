@@ -3,9 +3,8 @@ class CartsController < ApplicationController
   def add_item
     product = Product.find(params[:id])
     quantity = JSON.parse(params.keys.first)["amount"].to_i
-    current_cart.add_item(product.id, quantity)
+    current_cart.add_item(product.id, product.name, quantity, product.price)
     session[:cartgo] = current_cart.serialize
-
     redirect_to root_path, notice: '已加入購物車'
   end
 
@@ -18,6 +17,7 @@ class CartsController < ApplicationController
   end
 
   def checkout
+    @order = Order.new
     create_order(sample_params)
   end
 
@@ -29,20 +29,15 @@ class CartsController < ApplicationController
     compute_check_mac_value(@params)  # 組合檢查碼
   end
 
-  # def order_params
-  #   session[:value] = params[:value]
-  #   @order_params = 
-  # end
-
   private
 
   def sample_params
     @hash = {
       'MerchantID' => '2000132',
-      'MerchantTradeNo' => 'shoppinggoA000005',
+      'MerchantTradeNo' => 'shoppinggoA000011',
       'MerchantTradeDate' => Time.zone.now.strftime('%Y/%m/%d %T'),
       'PaymentType' => 'aio',
-      'TotalAmount' => '5',
+      'TotalAmount' => current_cart.total_price,
       'TradeDesc' => '123',
       'ItemName' => 'Ruby',
       'ReturnURL' => 'http://localhost:3000/carts/checkout',
