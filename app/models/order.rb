@@ -2,7 +2,7 @@
 
 class Order < ApplicationRecord
   belongs_to :user
-  has_many :sub_order
+  has_many :sub_orders
 
   include AASM
 
