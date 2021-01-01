@@ -1,6 +1,6 @@
 <!-- <div class="wrap">
   <div class="img">
-    <img src="https://picsum.photos/100/100/?random=1">
+    <%= image_tag @product.image_url if @product.image_url.present? %>
   </div>
   <div class="content" data-controller="addtocart" data-addtocart-id="<%= @product.id %>" data-addtocart-number-value=1 >
     <div class="title"><%= @product.name %></div>
