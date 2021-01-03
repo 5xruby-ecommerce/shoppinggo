@@ -48,7 +48,6 @@ class Cart
       items = hash["items"].map do |item|
         CartItem.new(item["product_id"], item["quantity"])
       end
-      Cart.new(items)
     else
       Cart.new
     end

@@ -33,7 +33,7 @@ export default class extends Controller {
 
   add_item(e) {
     const id = this.data.get('id');
-    const additemController = document.querySelector('.content')
+    const additemController = document.querySelector('.content')    
     const amount = { amount: this.amountTarget.value }
     magicRails.ajax({
       url:  `/carts/add_item/${id}`,
@@ -50,8 +50,8 @@ export default class extends Controller {
     })
   }
 
-  receivecoupon(e) {
-    const key = { coupon_key: e.target.getAttribute('key') }
+  getcoupon(e) {
+    const key = { coupon_key: e.target.getAttribute('data-key') }
 
     magicRails.ajax({
       url: `/users/add_coupon`,
@@ -61,8 +61,7 @@ export default class extends Controller {
       success: (resp) => {
         console.log(resp)
 
-        let coupon = document.querySelector(`div[data-key="${key['coupon_key']}"]`)
-        coupon.classList.add('taken')
+        document.querySelector(`a[data-key="${key['coupon_key']}"]`).classList.add('opacity')
       },
       error: (err) => {
         console.log(err)

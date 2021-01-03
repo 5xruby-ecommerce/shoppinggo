@@ -5,7 +5,7 @@ class CartsController < ApplicationController
     if current_user
       product = Product.find(params[:id])
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
-      current_cart.add_item(product.id, quantity)
+      current_cart.add_item(product.id, quantity, product.shop_id)
       session[:cartgo] = current_cart.serialize
       redirect_to root_path, notice: '已加入購物車'
     else
@@ -16,12 +16,17 @@ class CartsController < ApplicationController
   def update_item
     if current_user
       product = Product.find(params[:id])
-      quantity = JSON.parse(params.keys.first)["amount"].to_i
-      current_cart.add_item(product.id, quantity)
+      quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
+      p '---------------'
+      p quantity
+      p quantity.class
+      current_cart.add_item(product.id, quantity, product.shop.id)
       session[:cartgo] = current_cart.serialize
-      render json: {status: 'ok',
-                    count: current_cart.items.count, total_price: current_cart.total_price
-      }
+      render json: {status: 'ok', 
+                    count: current_cart.items.count, 
+                    total_price: current_cart.total_price,
+                    change: quantity
+                    }
     else
       redirect_to user_session_path
     end
@@ -135,5 +140,21 @@ class CartsController < ApplicationController
       "#{key}=#{val}"
     end
     params.join('&')
+  end
+  
+  def get_coupon
+    p params[:id]
+    p Coupon.find(params[:id])
+    coupon = Coupon.find(params[:id])
+    usercoupon = UserCoupon.where(user_id: current_user, coupon_id: params[:id]) ? "true" : "false"
+    render json: { discount_rule: coupon[:discount_rule], 
+                  discount_start: coupon_TimeWithZone_convert(coupon[:discount_start]),
+                  discount_end: coupon_TimeWithZone_convert(coupon[:discount_end]),
+                  min_consumption: coupon[:min_consumption],
+                  discount_amount: coupon[:discount_amount],
+                  amount: coupon[:amount],
+                  counter_catch: coupon[:counter_catch],
+                  occupy: usercoupon
+                  }
   end
 end

@@ -1,8 +1,15 @@
-
 <nav class='flex w-full items-center bg-gray-800 px-2 lg:px-10 text-white flex-wrap'>
   <div>
     <%= link_to root_path do %>
       <%= image_tag "logo.png" , class:'w-20 lg:w-32' %>
+    <%= link_to carts_path do %>
+        <% if current_user %>    
+          <li data-controller="navcart" data-action="plusbtn@window->navcart#update changequantity@window->navcart#update minusbtn@window->navcart#update usecoupon@window->navcart#update">
+            <i class="fas fa-cart-plus"></i> <span class="cartCount" data-navcart-target="cartcount"><%= current_cart.items.count %></span> / <span class="cartTotalPrice" data-navcart-target="carttotalprice"><%= current_cart.total_price.to_i %> </span>
+          </li>
+        <% else %>
+          <li><i class="fas fa-cart-plus"></i>0 / 0</li>
+        <% end %>
     <% end %>
   </div>
 
