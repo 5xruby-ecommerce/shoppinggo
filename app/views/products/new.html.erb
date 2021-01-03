@@ -1,5 +1,6 @@
 <h1>新增商品</h1>
 
+
 <%= form_for @product, url: {action: "create"} do |f| %>
   <%= f.label :image, "商品首圖" %>
   <%= f.file_field :image, id: :product_image, class: "form-control" %><br/>
@@ -17,3 +18,5 @@
 <% end %>
 
 <%= link_to '回上頁', shops_path %>
+
+
