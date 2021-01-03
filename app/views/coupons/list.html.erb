@@ -9,6 +9,7 @@
       <th>優惠開始</th>
       <th>優惠結束</th>
       <th>發行數量</th>
+      <th>領取數量</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -23,6 +24,7 @@
         <td><%= coupon_TimeWithZone_convert(coupon.discount_start) %></td>
         <td><%= coupon_TimeWithZone_convert(coupon.discount_end) %></td>
         <td><%= coupon.amount %></td>
+        <td><%= coupon.counter_catch %></td>
         <td><%= link_to '編輯', edit_coupon_path(coupon) %></td>
         <td><%= link_to '真刪除', coupon_path(coupon), method: :delete%></td>
       </tr>

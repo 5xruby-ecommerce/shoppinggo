@@ -1,8 +1,9 @@
 class CartItem 
-  attr_reader :item_id, :quantity
-  def initialize(item_id, quantity = 1)
+  attr_reader :item_id, :quantity, :shop_id
+  def initialize(item_id, quantity = 1, shop_id)
     @item_id = item_id 
     @quantity = quantity
+    @shop_id = shop_id
   end
 
   def increament(n = 1) 

@@ -2,7 +2,7 @@
   <div class="img">
     <img src="https://picsum.photos/100/100/?random=1">
   </div>
-  <div class="content" data-controller="addtocart" data-addtocart-id="<%= @product.id %>" data-addtocart-number-value=1 data-addtocart-coupon-value=99>
+  <div class="content" data-controller="addtocart" data-addtocart-id="<%= @product.id %>" data-addtocart-number-value=1 data-addtocart-coupon-value=99 data-shopid="<%= @product.shop_id %>">
     <div class="title"><%= @product.name %></div>
     <div class="price">$<%= @product.price %></div>
     <div class="amount" >
@@ -11,7 +11,16 @@
       <input type="text" class="inputamount" data-addtocart-target="amount">
       <button class="plus" data-action="click->addtocart#plusbtn">+</button>
       <% @product.shop.coupons.each do |coupon| %>
-        <div class="coupon" data-action="click->addtocart#receivecoupon" key=<%= coupon.id %> data-key=<%= coupon.id %> > <%= coupon.title %><%= coupon.id %></div>
+        <div>
+          <% userOwnCoupon = user_own_coupon?(coupon) %>
+          <%= userOwnCoupon %>
+          <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key=<%= coupon.id %> > <%= coupon.title %> </a>
+          <% if userOwnCoupon %>
+            <span href="#">已領取</span>
+          <% else %>
+            <span>領取</span>
+          <% end %>
+        </div>
       <% end %>
     </div>
     <button data-action="click->addtocart#add_item">加到購物車</button>
@@ -21,6 +30,15 @@
 
 <style>
   .taken {
-    background-color: antiquewhite;
+    background-color: grey;
+  }
+  .coupon {
+    display: inline-block;
+    width: 25vh;
+    text-align: center;
+  }
+
+  .occupy {
+    background-color: grey;
   }
 </style>

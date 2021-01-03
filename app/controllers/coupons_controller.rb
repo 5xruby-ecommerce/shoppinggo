@@ -27,8 +27,9 @@ class CouponsController < ApplicationController
   end
 
   def update
+    @coupon = Coupon.find(params[:id])
     respond_to do |format|
-      if @coupon.save
+      if @coupon.update(coupon_params)
         format.html {
           redirect_to shops_path, notice: 'Coupon was successfully created'
         }
