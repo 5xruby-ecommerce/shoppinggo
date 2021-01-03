@@ -19,7 +19,7 @@
   <tbody>
     <% cart.items.each do |item| %>
       <tr class="content" data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value=<%= item.quantity %> data-updatecart-totaprice-value= 0 >
-          <td><%= image_tag item.product.image_url if item.product.image_url.present? %></td>
+          <td><%= link_to product_path(item.product) do %><%= image_tag item.product.image_url if item.product.image_url.present? %><% end %></td>
           <td><%= item.product.name %></td>
             <td>
               <div class="amount">
