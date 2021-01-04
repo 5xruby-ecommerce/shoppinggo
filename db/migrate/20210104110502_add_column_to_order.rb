@@ -1,5 +1,5 @@
 class AddColumnToOrder < ActiveRecord::Migration[6.0]
   def change
-    add_column :order, :number, :integer
+    add_column :orders, :number, :integer
   end
 end
