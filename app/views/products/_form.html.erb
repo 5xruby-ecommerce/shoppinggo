@@ -2,6 +2,9 @@
     <%= f.label :image, "商品圖片" %>
     <%= f.file_field :image, id: :product_image, class: "form-control" %>
     <br/>
+    <%= f.label :images, "商品多圖" %>
+    <%= f.file_field :images, multiple:true, :class => "form-control" %>
+    <br/>
     <%= f.label :name, "商品名稱" %>
     <%= f.text_field :name %><br/>
     <%= f.label :content, "商品描述" %>
