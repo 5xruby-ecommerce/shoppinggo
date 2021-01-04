@@ -7,7 +7,7 @@ Rails.application.routes.draw do
    devise_scope :user do
      get 'change_password', to: 'user/registrations#change_password'
    end
-   
+  
   resources :shops
   resources :products
   resources :coupons do
