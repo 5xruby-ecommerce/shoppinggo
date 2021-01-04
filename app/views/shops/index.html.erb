@@ -6,6 +6,7 @@
 <table>
   <thead>
     <tr>
+        <td><%= "商品圖片" %></td>
         <td><%= "商品名稱" %></td>
         <td><%= "商品描述" %></td>
         <td><%= "商品數量" %></td>
@@ -17,6 +18,7 @@
   <tbody>
     <% @products.each do |product|%>
       <tr>
+          <td><%= image_tag product.image_url if product.image_url.present? %></td>
           <td><%= product.name %></td>
           <td><%= product.content %></td>
           <td><%= product.quantity %></td>
