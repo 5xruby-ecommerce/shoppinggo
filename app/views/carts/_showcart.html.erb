@@ -1,0 +1,80 @@
+<style>
+  .input_amount[type="number"]::-webkit-inner-spin-button,
+  .input_amount[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.coupon {
+    border: 1px solid ;
+    padding: 5px;
+    display: flex;
+  }
+
+.occupy {
+  background-color: grey;
+  pointer-events: none
+}
+
+</style>
+<table>
+  <thead>
+    <tr>
+      <td>商品名稱</td>
+      <td>商店名稱</td>
+      <td></td>
+      <td>數量</td>
+      <td>單價</td>
+      <td>小計</td>
+      <td>處理</td>
+      <td>總計</td>
+    </tr>
+  </thead>
+  <% items = (cart.items.sort_by {|item| item.shop_id})%>
+  <% temp = items.group_by { |item| item.shop_id.itself} %>
+  <% temp.values.each do |items|%>
+    <% items.each do |item| %>
+      <tbody data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0" >
+        <tr>
+          <td><img src="https://picsum.photos/100/100/?random=1"></td>
+          <td><%= item.product.name %></td>
+          <td><%= item.product.shop.name %></td>
+          <td>
+            <div class="amount">
+              <button class="minus" data-action="click->updatecart#minusbtn">-</button>
+              <input type="number" class="input_amount" data-updatecart-target="amount" data-action="input->updatecart#changequantity">
+              <button class="plus" data-action="click->updatecart#plusbtn">+</button>
+            </div>
+          </td>
+          <td data-updatecart-target="price"><%= item.product.price %></td>
+          <td data-updatecart-target="totalprice" class="item_total_price" data-shopid="<%= item.product.shop_id %>"></td>
+          <td>
+            <a href='#' data-action="click->updatecart#destroy">取消</ㄇ>
+          </td>
+        </tr>
+    <% end %>
+    <tr>
+      <td>
+        <span>總金額 : </span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="8"> 
+        <% Coupon.where(shop_id: items[0].product.shop_id).pluck(:title, :id).each do |title, coupon_id| %>
+            <a data-action="click->updatecart#getcoupon" data-couponid="<%= coupon_id %>" class=" <%= UserCoupon.where(coupon_id: coupon_id, user_id: current_user) ? 'occupy' : '' %>">
+              <%= title %>
+            </a>     
+            <span data-couponid="<%= coupon_id %>" data-action="click->updatecart#usecoupon">使用</span>       
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+  <% end %>
+  <tfoot>
+    <tr>
+      <td colspan="3">總價</td>
+      <td class="cart_total"><%= cart.total_price %></td>
+    </tr>
+  </tfoot>
+</table>

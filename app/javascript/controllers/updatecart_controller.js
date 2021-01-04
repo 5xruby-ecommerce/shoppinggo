@@ -15,7 +15,7 @@ function updateCartTotal() {
 
 
 export default class extends Controller {
-  static targets = [ "amount", "totalprice" , "price"]
+  static targets = [ "amount", "totalprice" , "price", "shoptotalprice"]
   static values = { number: Number, totalprice: Number }
  
   // const shopID = document.querySelector();
@@ -186,10 +186,12 @@ export default class extends Controller {
   }
 
   usecoupon(e) {
-    const itemTotalPrice= e.currentTarget.parentNode.parentNode.previousSibling.previousElementSibling.querySelector('.item_total_price');
-    const shopID = itemTotalPrice.getAttribute('data-shopid');
-    const couponID = e.currentTarget.getAttribute('data-couponid');
-    const itemID = e.currentTarget.getAttribute('data-itemid');
+    const itemTotalPrice= e.currentTarget.parentNode.parentNode.previousSibling.previousElementSibling.previousElementSibling.querySelector('.item_total_price');
+    const shopID = itemTotalPrice.getAttribute('data-shopid'); // the shop ID of the select coupon 
+    const couponID = e.currentTarget.getAttribute('data-couponid'); // the coupon ID of the select coupon
+    const itemsTotalPrice = document.querySelectorAll(`td[data-shopid="${shopID}"]`); // select all product's total price of the shop
+    const coupons = (e.currentTarget.parentNode.querySelectorAll('span')); // select all coupons of the shop
+    const clickedbtn = e.currentTarget; // select the clicked coupon
 
     magicRails.ajax({
       url: `/carts/get_coupon/${couponID}`,
@@ -204,37 +206,38 @@ export default class extends Controller {
         const discountAmount = resp['discount_amount'];
         const occupy = resp['occupy'];
 
-        const cartShopProducts = document.querySelectorAll(`td[data-shopid="${shopID}"]`);
+        // query all products of the shop
+        const cartShopProductsNumber = document.querySelectorAll(`td[data-updatecart-target="totalprice"]`); 
+        // calculate the total price of the shop
         let cartShopTotalprice = 0;
-        cartShopProducts.forEach((e) =>{
+        itemsTotalPrice.forEach((e) =>{
           cartShopTotalprice += Number(e.innerHTML)
         })
   
+        // First check whether it satisfy the rule of the coupon
         if (counterCatch < amount && cartShopTotalprice > minConsumption) {
-          console.log('The shop total price before using coupon: ',itemTotalPrice.textContent);
-          console.log('coupon occupy: ', occupy);  
-          console.log('discount', discountAmount)
+          // check which rule it is
           if (rule == "dollor") {
-            this.totalpriceTarget.textContent = (Number(itemTotalPrice.textContent) - discountAmount)
+            // direct minus the discountAmount of the coupon to the cart total price 
             document.querySelector('.cart_total').textContent -= discountAmount
-            console.log('The shop total price after using coupon: ', Number(this.totalpriceTarget.textContent));
           } else if (rule == 'percent') {
-            let discountDollor = Math.floor(Number(itemTotalPrice.textContent) * discountAmount * 0.01)
-            this.totalpriceTarget.textContent = Number(itemTotalPrice.textContent) - discountDollor
+            // if its rule is percent, first calculate the discount dollar based on the total price of the shop(note: not the cart total price, is the shop total price)
+            // then minus the discount dollar to the cart total price
+            let discountDollor = Math.floor(cartShopTotalprice * discountAmount * 0.01)
             document.querySelector('.cart_total').textContent -= discountDollor
-            console.log('The shop total price after using coupon: ', Number(this.totalpriceTarget.textContent));
           }
-          
-          // change background color and make it unclickable after clicked 
-          console.log(document.querySelector(`[data-couponid="${couponID}"][data-itemid="${itemID}"]`))
-          document.querySelector(`[data-couponid="${couponID}"][data-itemid="${itemID}"]` ).classList.add('occupy')
+          // if the coupon is used, then add class tag to it to ensure it is not clickable
+          document.querySelector(`[data-couponid="${couponID}"]`).classList.add('occupy')
+          coupons.forEach(el => {el.classList.add('occupy')})
+          clickedbtn.textContent = '已使用'
         } else {
           console.log('未達使用Coupon條件')
         }
-
+        
+        // it is for broadcasting to thoses who listen to the usecoupon action
         const event = new CustomEvent('usecoupon', {
           detail: {
-            count: cartShopProducts.length,
+            count: cartShopProductsNumber.length,
             total_price: document.querySelector('.cart_total').textContent
           }
         })
