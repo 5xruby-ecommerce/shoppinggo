@@ -15,7 +15,10 @@
   <%= hidden_field_tag :EncryptType, @hash['EncryptType'] %>
   <%= hidden_field_tag :CheckMacValue, @shavalue %>
 </form>
+
 <button id="btn">付款</button>
+
+<%= link_to '回上頁', carts_path %>
 
 <script>
 (function() {
