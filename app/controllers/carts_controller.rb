@@ -17,16 +17,13 @@ class CartsController < ApplicationController
     if current_user
       product = Product.find(params[:id])
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
-      p '---------------'
-      p quantity
-      p quantity.class
       current_cart.add_item(product.id, quantity, product.shop.id)
       session[:cartgo] = current_cart.serialize
-      render json: {status: 'ok', 
+      render json:{status: 'ok', 
                     count: current_cart.items.count, 
                     total_price: current_cart.total_price,
                     change: quantity
-                    }
+                  }
     else
       redirect_to user_session_path
     end
@@ -143,10 +140,10 @@ class CartsController < ApplicationController
   end
   
   def get_coupon
-    p params[:id]
-    p Coupon.find(params[:id])
     coupon = Coupon.find(params[:id])
-    usercoupon = UserCoupon.where(user_id: current_user, coupon_id: params[:id]) ? "true" : "false"
+
+    own = user_own_coupon?(params[:id])
+    # usercoupon = UserCoupon.where(user_id: current_user, coupon_id: params[:id]) ? "true" : "false"
     render json: { discount_rule: coupon[:discount_rule], 
                   discount_start: coupon_TimeWithZone_convert(coupon[:discount_start]),
                   discount_end: coupon_TimeWithZone_convert(coupon[:discount_end]),
@@ -154,7 +151,7 @@ class CartsController < ApplicationController
                   discount_amount: coupon[:discount_amount],
                   amount: coupon[:amount],
                   counter_catch: coupon[:counter_catch],
-                  occupy: usercoupon
+                  occupy: own
                   }
   end
 end

@@ -140,10 +140,9 @@ export default class extends Controller {
       e.preventDefault()
     } else {
       const couponID = e.currentTarget.getAttribute('data-couponid');
-      const totalPrice= e.currentTarget.parentNode.parentNode.previousSibling.previousElementSibling.querySelector('.item_total_price');
+      const totalPrice= e.currentTarget.parentNode.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.querySelector('.item_total_price');
       const shopID = totalPrice.getAttribute('data-shopid');
       console.log('shop ID: ', shopID)
-      console.log(e.currentTarget)
   
       magicRails.ajax({
         url: `/carts/get_coupon/${couponID}`,
@@ -172,10 +171,23 @@ export default class extends Controller {
           console.log('coupon opacity', opacity);
   
           // change backgroun color after clicked
-          document.querySelector(`a[data-couponid="${couponID}"]`).classList.add('opacity')
+          document.querySelector(`a[data-couponid="${couponID}"]`).classList.add('occupy')
   
-          this.totalpriceTarget
-          this.amountTarget
+          const key = { coupon_key: couponID }
+
+          magicRails.ajax({
+            url: `/users/add_coupon`,
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(key),
+            success: (resp) => {
+              console.log(resp)
+            },
+            error: (err) => {
+              console.log(err)
+            }
+          })
+      
         },
         error: (err) => {
           console.log(err);
@@ -206,44 +218,49 @@ export default class extends Controller {
         const discountAmount = resp['discount_amount'];
         const occupy = resp['occupy'];
 
-        // query all products of the shop
-        const cartShopProductsNumber = document.querySelectorAll(`td[data-updatecart-target="totalprice"]`); 
-        // calculate the total price of the shop
-        let cartShopTotalprice = 0;
-        itemsTotalPrice.forEach((e) =>{
-          cartShopTotalprice += Number(e.innerHTML)
-        })
-  
-        // First check whether it satisfy the rule of the coupon
-        if (counterCatch < amount && cartShopTotalprice > minConsumption) {
-          // check which rule it is
-          if (rule == "dollor") {
-            // direct minus the discountAmount of the coupon to the cart total price 
-            document.querySelector('.cart_total').textContent -= discountAmount
-          } else if (rule == 'percent') {
-            // if its rule is percent, first calculate the discount dollar based on the total price of the shop(note: not the cart total price, is the shop total price)
-            // then minus the discount dollar to the cart total price
-            let discountDollor = Math.floor(cartShopTotalprice * discountAmount * 0.01)
-            document.querySelector('.cart_total').textContent -= discountDollor
-          }
-          // if the coupon is used, then add class tag to it to ensure it is not clickable
-          document.querySelector(`[data-couponid="${couponID}"]`).classList.add('occupy')
-          coupons.forEach(el => {
-              el.classList.add('occupy')
+        if (occupy == true) {
+          // query all products of the shop
+          const cartShopProductsNumber = document.querySelectorAll(`td[data-updatecart-target="totalprice"]`); 
+          // calculate the total price of the shop
+          let cartShopTotalprice = 0;
+          itemsTotalPrice.forEach((e) =>{
+            cartShopTotalprice += Number(e.innerHTML)
           })
-          clickedbtn.textContent = '使用中'
-        } else {
-          console.log('未達使用Coupon條件')
-        }
-        
-        // it is for broadcasting to thoses who listen to the usecoupon action
-        const event = new CustomEvent('usecoupon', {
-          detail: {
-            count: cartShopProductsNumber.length,
-            total_price: document.querySelector('.cart_total').textContent
+          
+  
+          // First check whether it satisfy the rule of the coupon
+          if (counterCatch < amount && cartShopTotalprice > minConsumption) {
+            // check which rule it is
+            if (rule == "dollor") {
+              // direct minus the discountAmount of the coupon to the cart total price 
+              document.querySelector('.cart_total').textContent -= discountAmount
+            } else if (rule == 'percent') {
+              // if its rule is percent, first calculate the discount dollar based on the total price of the shop(note: not the cart total price, is the shop total price)
+              // then minus the discount dollar to the cart total price
+              let discountDollor = Math.floor(cartShopTotalprice * discountAmount * 0.01)
+              document.querySelector('.cart_total').textContent -= discountDollor
+            }
+            // if the coupon is used, then add class tag to it to ensure it is not clickable
+            document.querySelector(`[data-couponid="${couponID}"]`).classList.add('occupy')
+            coupons.forEach(el => {
+                el.classList.add('occupy')
+            })
+            clickedbtn.textContent = '使用中'
+          } else {
+            console.log('未達使用Coupon條件')
           }
-        })
-        window.dispatchEvent(event)
+          
+          // it is for broadcasting to thoses who listen to the usecoupon action
+          const event = new CustomEvent('usecoupon', {
+            detail: {
+              count: cartShopProductsNumber.length,
+              total_price: document.querySelector('.cart_total').textContent
+            }
+          })
+          window.dispatchEvent(event)
+        } else {
+          console.log('你還未領取該優惠卷')
+        }
       },
       error: (err) => {
         console.log(err);

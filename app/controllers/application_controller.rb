@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   # before the location can be stored.
   include CartsHelper
   include ShopsHelper
+  include ProductsHelper
 
   private
     # Its important that the location is NOT stored if:
