@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_041011) do
+ActiveRecord::Schema.define(version: 2021_01_05_072028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 2020_12_29_041011) do
     t.bigint "shop_id"
     t.integer "discount_amount"
     t.index ["shop_id"], name: "index_coupons_on_shop_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.bigint "room_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -58,7 +68,19 @@ ActiveRecord::Schema.define(version: 2020_12_29_041011) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "shop_id"
+    t.string "image"
+    t.string "images"
     t.index ["shop_id"], name: "index_products_on_shop_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["receiver_id"], name: "index_rooms_on_receiver_id"
+    t.index ["sender_id", "receiver_id"], name: "index_rooms_on_sender_id_and_receiver_id", unique: true
+    t.index ["sender_id"], name: "index_rooms_on_sender_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -105,6 +127,8 @@ ActiveRecord::Schema.define(version: 2020_12_29_041011) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "order_items", "sub_orders"
   add_foreign_key "orders", "users"
   add_foreign_key "shops", "users"
