@@ -1,6 +1,6 @@
 <h1>編輯商品</h1>
 
-<%= form_for @product do |f| %>
+<%= form_for @product, url: {action: "update"} do |f| %>
   <%= f.label :name, "商品名稱" %>
   <%= f.text_field :name %><br/>
   <%= f.label :content, "商品描述" %>

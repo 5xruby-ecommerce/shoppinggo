@@ -2,18 +2,18 @@
 
 class ProductsController < ApplicationController
 
+  before_action :find_shop, only: [:show, :create, :edit, :update, :destroy]
   before_action :find_product, only: [:show, :edit, :update, :destroy]
+
+  def show
+  end
 
   def new
     @product = Product.new
   end
 
-  def show
-  end
-
   def create
-    @product = Product.new(product_params)
-
+    @product = @shop.products.new(product_params)
     if @product.save
       redirect_to shops_path, notice: '新增商品成功'
     else
@@ -42,8 +42,12 @@ class ProductsController < ApplicationController
 
   private
 
+  def find_shop
+    @shop = Shop.find(current_user.shop.id)
+  end
+
   def find_product
-    @product = Product.find(params[:id])
+    @product = @shop.products.find(params['id'])
   end
 
   def product_params
