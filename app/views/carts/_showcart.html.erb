@@ -65,8 +65,9 @@
             <a data-action="click->updatecart#getcoupon" data-couponid="<%= coupon_id %>" class=" <%= UserCoupon.where(coupon_id: coupon_id, user_id: current_user) ? 'occupy' : '' %>">
               <%= title %>
             </a>     
-            <span data-couponid="<%= coupon_id %>" data-action="click->updatecart#usecoupon">使用</span>       
+            <span data-couponid="<%= coupon_id %>" data-action="click->updatecart#usecoupon">未使用</span>       
         <% end %>
+        <a data-action="click->updatecart#unusecoupon">取消使用優惠卷</a>
       </td>
     </tr>
   </tbody>
