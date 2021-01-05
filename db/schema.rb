@@ -10,13 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2020_12_22_103243) do
+ActiveRecord::Schema.define(version: 2021_01_05_085904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-
 
   create_table "order_items", force: :cascade do |t|
     t.string "category"
@@ -25,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_12_22_103243) do
     t.bigint "sub_order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "products_id"
+    t.bigint "product_id"
     t.index ["sub_order_id"], name: "index_order_items_on_sub_order_id"
   end
 
@@ -35,12 +32,7 @@ ActiveRecord::Schema.define(version: 2020_12_22_103243) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-
-
-
-    t.string "state", default: "pending"
-    t.index ["state"], name: "index_orders_on_state"
-
+    t.integer "number"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -49,7 +41,7 @@ ActiveRecord::Schema.define(version: 2020_12_22_103243) do
     t.string "content"
     t.integer "price"
     t.integer "quantity"
-    t.string "shop"
+    t.string "shop_id"
     t.string "references"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -87,14 +79,12 @@ ActiveRecord::Schema.define(version: 2020_12_22_103243) do
     t.string "role", default: "user"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-
     t.string "fb_uid"
     t.string "fb_token"
     t.string "google_uid"
     t.string "google_token"
     t.string "github_uid"
     t.string "github_token"
-
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
