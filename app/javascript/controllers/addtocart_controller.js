@@ -50,7 +50,8 @@ export default class extends Controller {
   }
 
   getcoupon(e) {
-    const key = { coupon_key: e.target.getAttribute('data-key') }
+    const coupon = e.target
+    const key = { coupon_key: coupon.getAttribute('data-couponid') }
 
     magicRails.ajax({
       url: `/users/add_coupon`,
@@ -59,8 +60,13 @@ export default class extends Controller {
       data: JSON.stringify(key),
       success: (resp) => {
         console.log(resp)
-
-        document.querySelector(`a[data-key="${key['coupon_key']}"]`).classList.add('opacity')
+        console.log(coupon)
+        if (!coupon.classList.contains('occupy')) {
+          console.log('get it')
+          coupon.classList.add('occupy')
+        } else {
+          console.log('already get it')
+        }
       },
       error: (err) => {
         console.log(err)

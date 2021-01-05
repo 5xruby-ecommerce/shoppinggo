@@ -12,14 +12,8 @@
       <button class="plus" data-action="click->addtocart#plusbtn">+</button>
       <% @product.shop.coupons.each do |coupon| %>
         <div>
-          <% userOwnCoupon = user_own_coupon?(coupon) %>
-          <%= userOwnCoupon %>
-          <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key=<%= coupon.id %> > <%= coupon.title %> </a>
-          <% if userOwnCoupon %>
-            <span href="#">已領取</span>
-          <% else %>
-            <span>領取</span>
-          <% end %>
+          <% userOwnCoupon = user_own_coupon?(coupon.id) %>
+          <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-couponid=<%= coupon.id %> > <%= coupon.title %> </a>
         </div>
       <% end %>
     </div>

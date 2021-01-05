@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :store_location
   include CartsHelper
   include ShopsHelper
+  include ProductsHelper
 
 
   def store_location
