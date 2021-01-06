@@ -15,6 +15,10 @@ class CartItem
     @product = Product.find_by(id: @product_id)
   end
 
+  def sub_order_sum
+    # @product = Product
+  end
+
   def total_price
     @product = Product.find_by(id: @product_id)
     @quantity.to_i * @product.price

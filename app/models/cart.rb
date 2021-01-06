@@ -20,6 +20,15 @@ class Cart
     @items
   end
 
+  def product_names
+    @items.map(&:product_name).join(', ')
+    # @items.map { |cart_item| cart_item.product_name }.join(', ')
+  end
+
+  def product_ids
+    @items.map(&:product_id)
+  end
+
   def total_price
     total = @items.reduce(0) { |total, item| total + item.total_price}
 
@@ -36,7 +45,6 @@ class Cart
       "product_name" => item.product_name,
       "product_price" => item.product_price,
     }}
-    
     { "items" => items}
   end
 

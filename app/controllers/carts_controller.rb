@@ -2,8 +2,8 @@ class CartsController < ApplicationController
 
   def add_item
     product = Product.find(params[:id])
-    quantity = JSON.parse(params.keys.first)["amount"].to_i
-    current_cart.add_item(product.id, product.name, quantity, product.price)
+    quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
+    current_cart.add_item(product.id, quantity, product.name, product.price)
     session[:cartgo] = current_cart.serialize
     redirect_to root_path, notice: '已加入購物車'
   end
@@ -17,8 +17,8 @@ class CartsController < ApplicationController
   end
 
   def checkout
-    @order = Order.new
-    create_order(sample_params)
+    @order = create_order
+    add_mac_value(sample_params(@order))
   end
 
   def initialize(params={}) # 建立空陣列，產生訂單時接資料
@@ -31,15 +31,34 @@ class CartsController < ApplicationController
 
   private
 
-  def sample_params
+  def create_order
+    if current_user
+      order = Order.new(user: current_user, sum: current_cart.total_price)
+      sub_order = order.sub_orders.new()
+
+      current_cart.items.each do |cart_item|
+        sub_order.order_items.new(
+          product_id: cart_item.product_id,
+          quantity: cart_item.quantity,
+          price: cart_item.product_price
+        )
+      end
+    order.save!
+    order
+    else
+      redirect_to new_user_session_path
+    end
+  end
+
+  def sample_params(order)
     @hash = {
       'MerchantID' => '2000132',
-      'MerchantTradeNo' => 'shoppinggoA000011',
+      'MerchantTradeNo' => 'shoppinggoA0000012',
       'MerchantTradeDate' => Time.zone.now.strftime('%Y/%m/%d %T'),
       'PaymentType' => 'aio',
       'TotalAmount' => current_cart.total_price,
       'TradeDesc' => '123',
-      'ItemName' => 'Ruby',
+      'ItemName' => current_cart.product_names,
       'ReturnURL' => 'http://localhost:3000/carts/checkout',
       'ClientBackURL' => 'http://localhost:3000/carts/checkout',
       'ChoosePayment' => 'Credit',
@@ -47,7 +66,7 @@ class CartsController < ApplicationController
     }
   end
 
-  def create_order(params)
+  def add_mac_value(params)
     params['CheckMacValue'] = compute_check_mac_value(params) # 計算檢查碼
   end
 
