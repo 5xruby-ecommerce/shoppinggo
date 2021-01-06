@@ -2,7 +2,8 @@
 
 class ShopsController < ApplicationController
   def index
-    @products = Product.all
+    # @products = Product.where(shops: current_user.shop)
+    @products = current_user.shop.products
   end
 
   def new

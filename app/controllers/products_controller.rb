@@ -9,13 +9,23 @@ class ProductsController < ApplicationController
     @shop = Shop.find(params[:shop_id])
     @product = Product.find(params[:id])
   end
+  
+  def index
+    if params[:search]
+        @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
+    else
+        @product = Product.all
+    end
+  end 
 
   def new
     @product = Product.new
   end
 
   def create
-    @product = @shop.products.new(product_params)
+    @product = Product.new(product_params)
+    @product.shop = current_user.shop
+
     if @product.save
       redirect_to shops_path, notice: '新增商品成功'
     else
@@ -42,18 +52,21 @@ class ProductsController < ApplicationController
     end
   end
 
+  def search
+  end
+
   private
 
   def find_shop
     @shop = Shop.find(current_user.shop.id)
   end
-
+  
   def find_product
     @product = @shop.products.find(params['id'])
   end
 
   def product_params
-    params.require(:product).permit(:name, :content, :quantity, :price)
+    params.require(:product).permit(:image, :name, :content, :quantity, :price, {images:[]})
   end
 
 end

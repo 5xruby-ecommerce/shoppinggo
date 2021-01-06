@@ -1,0 +1,16 @@
+ 
+<div class="wrap">
+  <div class="rows">
+    <% @product.each do |product|%>
+      <%= link_to product_path(product) do %>
+        <div class="item">
+          <div class="img"><%= image_tag product.image_url if product.image_url.present? %></div>
+          <div class="content">
+            <div class="title"><%= product.name %></div>
+            <div class="price">$<%= product.price %></div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

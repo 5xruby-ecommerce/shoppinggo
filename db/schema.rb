@@ -15,6 +15,21 @@ ActiveRecord::Schema.define(version: 2021_01_06_080239) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "coupons", force: :cascade do |t|
+    t.string "title"
+    t.integer "discount_rule"
+    t.datetime "discount_start"
+    t.datetime "discount_end"
+    t.integer "min_consumption"
+    t.integer "amount"
+    t.integer "counter_catch"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "shop_id"
+    t.integer "discount_amount"
+    t.index ["shop_id"], name: "index_coupons_on_shop_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.string "category"
     t.integer "quantity"
@@ -44,6 +59,10 @@ ActiveRecord::Schema.define(version: 2021_01_06_080239) do
     t.string "references"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "shop_id"
+    t.string "image"
+    t.string "images"
+    t.index ["shop_id"], name: "index_products_on_shop_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -84,6 +103,8 @@ ActiveRecord::Schema.define(version: 2021_01_06_080239) do
     t.string "google_token"
     t.string "github_uid"
     t.string "github_token"
+    t.string "name"
+    t.string "image"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

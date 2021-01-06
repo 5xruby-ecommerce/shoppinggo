@@ -1,7 +1,4 @@
-<div class="wrap">
-  <div class="img">
-    <img src="https://picsum.photos/100/100/?random=1">
-  </div>
+<!-- <div class="wrap">
   <div class="content" data-controller="addtocart" data-addtocart-id="<%= @product.id %>" data-addtocart-number-value=1 >
     <div class="title"><%= @product.name %></div>
     <div class="price">$<%= @product.price %></div>
@@ -13,4 +10,58 @@
     </div>
       <button data-action="click->addtocart#add_item">加到購物車</button>
   </div>
-</div>
+</div>  -->
+
+
+<section class="py-12 px- flex justify-center">
+<div class="content" data-controller="addtocart" data-addtocart-id="<%= @product.id %>" data-addtocart-number-value=1 >
+  <div class="flex flex-wrap -mx-8 max-w-screen-lg">
+    <div class="lg:w-1/2 px-8 mt-6 lg:mt-0 order-2 lg:order-none">
+      <h2 class="text-4xl mb-2 font-semibold font-heading"><%= @product.name %></h2>
+      <p class="mb-6">$<%= @product.price %></p>
+      <div class="flex mb-6">
+        <ul class="flex list-reset">
+          <li><a class="block py-2 px-3 mr-2 bg-gray-100 rounded" href="#">Product Details</a></li>
+          <li><a class="block py-2 px-3 mr-2 hover:bg-gray-100 rounded" href="#">Reviews</a></li>
+          <li><a class="block py-2 px-3 mr-2 hover:bg-gray-100 rounded" href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <p class="mb-8 text-gray-400 leading-relaxed">Premium quality home and office paper for all printing and copying machines. It is a flexible paper capable of switching from one machine to another with great print results.</p>
+      <table class="w-full mb-6">
+        <tbody>
+          <tr class="border-t">
+            <td class="py-3"><%= @product.name %></td>
+            <td class="text-right">500</td>
+          </tr>
+          <tr class="border-t">
+            <td class="py-3">Reams per box</td>
+            <td class="text-right"></td>
+          </tr>
+          <tr class="border-t">
+            <td class="py-3">Basis weight</td>
+            <td class="text-right">80mg</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="amount">
+      <div>數量</div>
+      <button class="minus" data-action="click->addtocart#minusbtn">-</button>
+      <input type="text" class="inputamount" data-addtocart-target="amount">
+      <button class="plus" data-action="click->addtocart#plusbtn">+</button>
+    </div>
+      <button data-action="click->addtocart#add_item" class="inline-block py-4 px-8 leading-none text-white bg-indigo-600 hover:bg-indigo-700 font-semibold rounded">Buy Now!</button>
+    </div>
+    <div class="lg:w-1/2 px-8">
+      <div class="mb-4 rounded shadow"><%= image_tag @product.image_url(:thumb) if @product.image_url.present? %></div>
+      <div class="flex flex-wrap -mx-2">
+        <div class="flex w-1/3">
+        <% @product.images.each do |image| %>
+          <%= image_tag(image.thumb.url, class:"px-2") %>
+        <% end %>
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>

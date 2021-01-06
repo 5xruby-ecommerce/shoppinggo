@@ -3,9 +3,9 @@ import magicRails from '@rails/ujs'
 
 
 export default class extends Controller {
-  static targets = [ "amount", "additem" ]
+  static targets = [ "amount"]
   static values = { number: Number }
-
+ 
   connect() {
     this.numberValueChanged()
   }
@@ -20,11 +20,15 @@ export default class extends Controller {
     }
   }
 
-  numberValueChanged() {
-    this.amountTarget.value = this.numberValue
-    console.log(this.amountTarget.value)
+  changequantity(e) {
+    this.numberValue = Number(this.amountTarget.value)
   }
 
+  numberValueChanged() {
+    if (this.numberValue !== NaN || this.numberValue != '') {
+      this.amountTarget.value = this.numberValue
+    }
+  }
 
   add_item(e) {
     const id = this.data.get('id');
@@ -42,6 +46,5 @@ export default class extends Controller {
         console.log(err);
       }
     })
-
   }
 }

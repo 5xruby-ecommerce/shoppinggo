@@ -21,22 +21,23 @@ gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# gem 'bcrypt', '~> 3.1.7'a
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
 gem 'aasm', '~> 4.11'
 gem 'omniauth', '~> 1.9', '>= 1.9.1'
 gem 'omniauth-facebook', '~> 8.0'
 gem 'omniauth-google-oauth2', '~> 0.8.1'
 gem 'omniauth-github', '~> 1.4'
 gem 'figaro', '~> 1.2'
-
 gem 'pg', '~> 1.2', '>= 1.2.3'
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'fog-aws', '~> 3.7'
+gem "mini_magick"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -56,6 +57,7 @@ group :development do
   gem 'rubocop', '~> 1.7', require: false
   gem 'spring', '~> 2.1', '>= 2.1.1'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'foreman', '~> 0.87.2'
 end
 
 group :test do
