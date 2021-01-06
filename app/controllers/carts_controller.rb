@@ -1,11 +1,12 @@
 class CartsController < ApplicationController
-  
+
   # before_action :authenticate_user! ,only:[:add_item]
   def add_item
+    byebug
     if current_user
       product = Product.find(params[:id])
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
-     current_cart.add_item(product.id, quantity, product.name, product.price)
+      current_cart.add_item(product.id, quantity, product.name, product.price)
       session[:cartgo] = current_cart.serialize
       redirect_to root_path, notice: '已加入購物車'
     else
@@ -19,7 +20,7 @@ class CartsController < ApplicationController
       quantity = JSON.parse(params.keys.first)["amount"].to_i
       current_cart.add_item(product.id, quantity)
       session[:cartgo] = current_cart.serialize
-      render json: {status: 'ok', 
+      render json: {status: 'ok',
                     count: current_cart.items.count, total_price: current_cart.total_price
       }
     else
@@ -45,7 +46,7 @@ class CartsController < ApplicationController
   def destroy
     result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:id].to_i }
     session[:cartgo] = { 'items' => result_ary }
-    redirect_to carts_path, notice: "已刪除訂單" 
+    redirect_to carts_path, notice: "已刪除訂單"
   end
 
   def checkout

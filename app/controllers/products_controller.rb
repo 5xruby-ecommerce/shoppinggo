@@ -9,14 +9,14 @@ class ProductsController < ApplicationController
     @shop = Shop.find(params[:shop_id])
     @product = Product.find(params[:id])
   end
-  
+
   def index
     if params[:search]
         @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
     else
         @product = Product.all
     end
-  end 
+  end
 
   def new
     @product = Product.new
@@ -60,7 +60,7 @@ class ProductsController < ApplicationController
   def find_shop
     @shop = Shop.find(current_user.shop.id)
   end
-  
+
   def find_product
     @product = @shop.products.find(params['id'])
   end

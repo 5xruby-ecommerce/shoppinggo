@@ -7,11 +7,13 @@ Rails.application.routes.draw do
   resources :shops do
     resources :products
   end
-  
-   devise_scope :user do
-     get 'change_password', to: 'user/registrations#change_password'
-   end
- 
+
+  get :search, to: 'products#search'
+
+  devise_scope :user do
+    get 'change_password', to: 'user/registrations#change_password'
+  end
+
   resources :coupons do
     collection do
       get :list

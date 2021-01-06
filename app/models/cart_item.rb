@@ -20,7 +20,7 @@ class CartItem
   end
 
   def total_price
-    @product = Product.find_by(id: @product_id)
+    @product = Product.find_by(id: product_id)
     @quantity.to_i * @product.price
   end
 end
