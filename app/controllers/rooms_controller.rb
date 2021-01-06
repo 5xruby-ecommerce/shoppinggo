@@ -7,13 +7,13 @@ class RoomsController < ApplicationController
 
   def create
     @user = Product.find(params[:format]).shop.user
-    @room = Room.get(current_user.id, user.id)
+    @room = Room.get(current_user.id, @user.id)
     redirect_to room_path(@room)
   end
 
   def show
     @room = Room.find(params[:id])
-    # @message = Message.new
-    # @messages = @room.messages.includes(:user)
+    @message = Message.new
+    @messages = @room.messages
   end
 end

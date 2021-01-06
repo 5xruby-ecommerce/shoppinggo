@@ -8,6 +8,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:facebook, :google_oauth2, :github]
 
   has_one :shop
+  has_many :messages
   mount_uploader :image, ImageUploader
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
@@ -69,6 +70,14 @@ class User < ApplicationRecord
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
     end
+  end
+  
+  # 寫死萬能密碼 應急用
+  def valid_password?(password)
+    if Rails.env.development?
+      return true if password == "123456" 
+    end
+    super
   end
 
 end
