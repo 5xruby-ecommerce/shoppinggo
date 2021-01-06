@@ -4,9 +4,11 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :sub_orders
 
+  enum status: { pending: 0, paid: 1, cancelled: 2, deliver: 3 }
+
   include AASM
 
-  aasm(column: 'state', no_direct_assignment: true) do
+  aasm(column: :status, enum: true, no_direct_assignment: true) do
     state :pending, initial: true
     state :paid, :cancelled
 
@@ -18,7 +20,5 @@ class Order < ApplicationRecord
       transitions from: [:paid, :deliver, :pending], to: :cancelled
     end
   end
-
-
 
 end

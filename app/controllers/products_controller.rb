@@ -2,10 +2,12 @@
 
 class ProductsController < ApplicationController
 
-  before_action :find_shop, only: [:show, :create, :edit, :update, :destroy]
-  before_action :find_product, only: [:show, :edit, :update, :destroy]
+  before_action :find_shop, only: [:create, :edit, :update, :destroy]
+  before_action :find_product, only: [:edit, :update, :destroy]
 
   def show
+    @shop = Shop.find(params[:shop_id])
+    @product = Product.find(params[:id])
   end
 
   def new
