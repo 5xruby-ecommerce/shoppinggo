@@ -50,28 +50,49 @@ export default class extends Controller {
   }
 
   getcoupon(e) {
-    const coupon = e.target
-    const key = { coupon_key: coupon.getAttribute('data-couponid') }
 
-    magicRails.ajax({
-      url: `/users/add_coupon`,
-      type: 'post',
-      contentType: 'application/json',
-      data: JSON.stringify(key),
-      success: (resp) => {
-        console.log(resp)
-        console.log(coupon)
-        if (!coupon.classList.contains('occupy')) {
-          console.log('get it')
-          coupon.classList.add('occupy')
-        } else {
-          console.log('already get it')
+    if (e.currentTarget.getAttribute('class').split(' ').includes('occupy')) {
+      e.preventDefault()
+    } else {
+      const coupon = e.target
+      const couponID = coupon.getAttribute('data-couponid')
+      const key = { coupon_key: couponID }
+  
+      // first check whether the user own the coupon by check database
+      magicRails.ajax({
+        url: `carts/get_coupon_info/${couponID}`,
+        type: 'get',
+        success: (resp) => {
+  
+          const occupy = resp['occupy']
+          const amount = resp['amount']
+          const counterCatch = resp['counter_catch']
+  
+          if (occupy === false && amount > counterCatch) {
+            // if the user doese not own the coupon and the coupons haven't been run out, then user can occupy the coupon
+            magicRails.ajax({
+              url: `/users/add_coupon`,
+              type: 'post',
+              contentType: 'application/json',
+              data: JSON.stringify(key),
+              success: (resp) => {
+                if (!coupon.classList.contains('occupy')) {
+                  console.log('get it')
+                  coupon.classList.add('occupy')
+                } else {
+                  console.log('already get it')
+                }
+              },
+              error: (err) => {
+                console.log(err)
+              }
+            })
+          }
+        },
+        error: (err) => {
+          console.log(err)
         }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-
+      })  
+    }
   }
 }

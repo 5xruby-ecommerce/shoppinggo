@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
     get :checkout
     get :cancel
-    get 'get_coupon/:id', action: 'get_coupon', as: 'get_coupon'
+    get 'get_coupon_info/:id', action: 'get_coupon_info', as: 'get_coupon'
     delete 'destroy/:id', action: 'destroy', as: 'destroy'
     post 'update_item/:id', action: 'update_item', as: 'update_item'
   end

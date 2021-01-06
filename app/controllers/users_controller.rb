@@ -2,9 +2,9 @@ class UsersController < ApplicationController
   def index 
     redirect_to root_path
   end
+  
   def add_coupon
 
-    # coupon_key = JSON.parse(params.keys.first)["coupon_key"].to_i
     coupon_key = JSON.parse(params.keys.filter{|i| i[/.coupon_key/]}.first)["coupon_key"].to_i
     user_own_coupon_key = current_user.user_coupon.pluck(:coupon_id).uniq
     @coupon = Coupon.find_by!(id: coupon_key)

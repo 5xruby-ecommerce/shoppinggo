@@ -145,7 +145,7 @@ export default class extends Controller {
       console.log('shop ID: ', shopID)
   
       magicRails.ajax({
-        url: `/carts/get_coupon/${couponID}`,
+        url: `/carts/get_coupon_info/${couponID}`,
         type: 'get',
         success: (resp) => {
           const rule = resp['discount_rule'];
@@ -155,37 +155,37 @@ export default class extends Controller {
           const amount = resp['amount'];
           const counterCatch = resp['counter_catch'];
           const discountAmount = resp['discount_amount'];
-          const opacity = resp['opacity'];
-          console.log('rule: ', rule);
-          console.log('minimum consumption: ', minConsumption);
-          console.log('discount amount: ', discountAmount);
-          console.log('counter catch: ', counterCatch);
-  
-          const cartShopProducts = document.querySelectorAll(`td[data-shopid="${shopID}"]`);
-          let cartShopTotalprice = 0;
-          cartShopProducts.forEach((e) =>{
-            cartShopTotalprice += Number(e.innerHTML)
-            console.log(e.innerHTML)
-          })
-          console.log('coupon opacity', opacity);
-  
-          // change backgroun color after clicked
-          document.querySelector(`a[data-couponid="${couponID}"]`).classList.add('occupy')
-  
-          const key = { coupon_key: couponID }
-          magicRails.ajax({
-            url: `/users/add_coupon`,
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify(key),
-            success: (resp) => {
-              console.log(resp)
-            },
-            error: (err) => {
-              console.log(err)
-            }
-          })
+          const occupy = resp['occupy'];
+
+          console.log("coupon id : ", couponID)
+          console.log("amount : ", amount)
+          console.log("counter catch : ", counterCatch)
+          console.log('own : ', occupy)
+
+          if (occupy === false ) {
+            if (amount > counterCatch) {
+              // change backgroun color after clicked
+              document.querySelector(`a[data-couponid="${couponID}"]`).classList.add('occupy')
       
+              const key = { coupon_key: couponID }
+              magicRails.ajax({
+                url: `/users/add_coupon`,
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(key),
+                success: (resp) => {
+                  console.log(resp)
+                },
+                error: (err) => {
+                  console.log(err)
+                }
+              })            
+            } else {
+              console.log('the coupon has already been run out')
+            }
+          } else {
+            console.log('you have already owned the coupon')
+          }
         },
         error: (err) => {
           console.log(err);
@@ -204,7 +204,7 @@ export default class extends Controller {
     const clickedbtn = e.currentTarget; // select the clicked coupon
 
     magicRails.ajax({
-      url: `/carts/get_coupon/${couponID}`,
+      url: `/carts/get_coupon_info/${couponID}`,
       type: 'get',
       success: (resp) => {
         const rule = resp['discount_rule'];
@@ -348,7 +348,7 @@ export default class extends Controller {
         const couponID = el.getAttribute('data-couponid')
         
         magicRails.ajax({
-          url: `/carts/get_coupon/${couponID}`,
+          url: `/carts/get_coupon_info/${couponID}`,
           type: 'get',
           success: (resp) => {
             const rule = resp['discount_rule'];
