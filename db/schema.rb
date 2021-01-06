@@ -1,4 +1,4 @@
-ActiveRecord::Schema.define(version: 2021_01_05_072028) do
+ActiveRecord::Schema.define(version: 2021_01_06_033740) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_072028) do
   end
 
   create_table "user_coupons", force: :cascade do |t|
-    t.integer "coupon_status"
+    t.integer "coupon_status", default: 0
     t.bigint "user_id", null: false
     t.bigint "coupon_id", null: false
     t.datetime "created_at", precision: 6, null: false

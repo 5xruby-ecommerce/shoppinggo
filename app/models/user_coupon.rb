@@ -3,4 +3,19 @@ class UserCoupon < ApplicationRecord
   belongs_to :coupon
 
   enum coupon_status: { used: 1, unused: 0 }
+
+  include AASM
+
+  aasm(column: 'coupon_status', no_direct_assignment: true) do
+    state :unused, initial: true
+    state :used
+
+    event :use do
+      transitions from: :unused, to: :use
+    end
+
+    event :cancel do
+      transitions from: :used, to: :unused
+    end
+  end
 end

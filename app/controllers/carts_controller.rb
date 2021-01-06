@@ -139,20 +139,37 @@ class CartsController < ApplicationController
     params.join('&')
   end
   
-  def get_coupon
+  def get_coupon_info
     coupon = Coupon.find(params[:id])
-    status = current_user.user_coupon.status
-    own = user_own_coupon?(params[:id])
-    # usercoupon = UserCoupon.where(user_id: current_user, coupon_id: params[:id]) ? "true" : "false"
-    render json: { discount_rule: coupon[:discount_rule], 
-                  discount_start: coupon_TimeWithZone_convert(coupon[:discount_start]),
-                  discount_end: coupon_TimeWithZone_convert(coupon[:discount_end]),
-                  min_consumption: coupon[:min_consumption],
-                  discount_amount: coupon[:discount_amount],
-                  amount: coupon[:amount],
-                  counter_catch: coupon[:counter_catch],
-                  occupy: own,
-                  status: status
-                  }
+
+    user_coupons = current_user.user_coupon.where(coupon_id: params[:id])
+    own = !(user_coupons.empty?)
+
+    if own
+      status = user_coupons.pluck(:coupon_status)      
+
+      render json: { 
+        discount_rule: coupon[:discount_rule], 
+        discount_start: coupon_TimeWithZone_convert(coupon[:discount_start]),
+        discount_end: coupon_TimeWithZone_convert(coupon[:discount_end]),
+        min_consumption: coupon[:min_consumption],
+        discount_amount: coupon[:discount_amount],
+        amount: coupon[:amount],
+        counter_catch: coupon[:counter_catch],
+        occupy: own,
+        status: status
+      }
+    else
+      render json: {
+        discount_rule: coupon[:discount_rule], 
+        discount_start: coupon_TimeWithZone_convert(coupon[:discount_start]),
+        discount_end: coupon_TimeWithZone_convert(coupon[:discount_end]),
+        min_consumption: coupon[:min_consumption],
+        discount_amount: coupon[:discount_amount],
+        amount: coupon[:amount],
+        counter_catch: coupon[:counter_catch],
+        occupy: own
+      } 
+    end
   end
 end
