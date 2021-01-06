@@ -141,7 +141,7 @@ class CartsController < ApplicationController
   
   def get_coupon
     coupon = Coupon.find(params[:id])
-
+    status = current_user.user_coupon.status
     own = user_own_coupon?(params[:id])
     # usercoupon = UserCoupon.where(user_id: current_user, coupon_id: params[:id]) ? "true" : "false"
     render json: { discount_rule: coupon[:discount_rule], 
@@ -151,7 +151,8 @@ class CartsController < ApplicationController
                   discount_amount: coupon[:discount_amount],
                   amount: coupon[:amount],
                   counter_catch: coupon[:counter_catch],
-                  occupy: own
+                  occupy: own,
+                  status: status
                   }
   end
 end

@@ -10,13 +10,9 @@ class UsersController < ApplicationController
     @coupon = Coupon.find_by!(id: coupon_key)
 
     if (not user_own_coupon_key.include?(coupon_key)) && @coupon.counter_catch < @coupon.amount
-      # @usercoupon = UserCoupon.new()
-      # @usercoupon.user_id = current_user.id
-      # @usercoupon.coupon_id = coupon_key
-      # @usercoupon.save
       @usercoupon = current_user.user_coupon.create(coupon_id: coupon_key)
       @usercoupon.save 
-      
+
       @coupon.increment(:counter_catch) 
       @coupon.save
       render json: { coupon_taken: 'taken' , rest: @coupon.amount-@coupon.counter_catch}  
