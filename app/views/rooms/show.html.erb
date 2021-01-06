@@ -1,13 +1,13 @@
 <div class = "message_box" data-room= "<%= @room.id %>" data-user="<%= current_user.id%>">
-  <div class="">
-        <div class="overflow-y-scroll h-75 ">
+  <div class="container">
+        <div class="message_area">
           <%= render @messages %>
         </div>
-        <div class="">
-          <%= form_for @message ,url: room_messages_path(@room),remote: true do |form| %>
-            <%= form.text_area :content %>
+        <div class="input">
+          <%= form_for @message ,remote: true ,url: room_messages_path(@room) do |form| %>
+            <%= form.text_field :content %>
             <%= form.submit %>
           <% end %>
-        </div>     
+        </div>
   </div>
 </div>

@@ -3,10 +3,12 @@ class MessagesController < ApplicationController
 
   def create
     room = Room.find(params[:room_id])
-    message = current_user.messages.new(message_params)
-    message[:room_id] = room.id
-    message.save
-    redirect_to room_path(room)
+    @message = current_user.messages.new(message_params)
+    @message[:room_id] = room.id
+
+    if @message.save
+      MessageBroadcastJob.perform_later(@message)
+    end
   end
 
   private
