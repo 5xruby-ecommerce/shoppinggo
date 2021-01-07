@@ -18,7 +18,8 @@
   <tbody>
       <% @products.each do |product|%>
     <tr>
-        <td><%= product.name %><%= image_tag product.image.url.to_s %></td>
+        <td><%= image_tag product.image.url.to_s %></td>
+        <td><%= product.name %></td>
         <td><%= product.content %></td>
         <td><%= product.quantity %></td>
         <td><%= product.price %></td>
