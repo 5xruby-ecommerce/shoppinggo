@@ -6,12 +6,12 @@ class UserCoupon < ApplicationRecord
 
   include AASM
 
-  aasm(column: 'coupon_status', no_direct_assignment: true) do
+  aasm(:coupon_status) do
     state :unused, initial: true
     state :used
 
     event :use do
-      transitions from: :unused, to: :use
+      transitions from: :unused, to: :used
     end
 
     event :cancel do

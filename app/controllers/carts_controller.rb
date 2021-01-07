@@ -19,7 +19,7 @@ class CartsController < ApplicationController
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
       current_cart.add_item(product.id, quantity, product.shop.id)
       session[:cartgo] = current_cart.serialize
-      render json:{status: 'ok', 
+      render json:{ status: 'ok', 
                     count: current_cart.items.count, 
                     total_price: current_cart.total_price,
                     change: quantity
@@ -147,6 +147,7 @@ class CartsController < ApplicationController
 
     if own
       status = user_coupons.pluck(:coupon_status)      
+      id = user_coupons.pluck(:id)
 
       render json: { 
         discount_rule: coupon[:discount_rule], 
@@ -156,6 +157,7 @@ class CartsController < ApplicationController
         discount_amount: coupon[:discount_amount],
         amount: coupon[:amount],
         counter_catch: coupon[:counter_catch],
+        usercoupon_id: id,
         occupy: own,
         status: status
       }

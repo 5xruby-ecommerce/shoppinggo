@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do 
       post :add_coupon
+      get :change_coupon_status
     end
   end
   resources :coupons do
