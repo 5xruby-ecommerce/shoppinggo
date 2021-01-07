@@ -1,11 +1,12 @@
 <h1>賣家中心</h1>
 
 <h3>商品列表</h3>
-<%= link_to '新增商品', new_product_path %>
+<%= link_to '新增商品', new_shop_product_path(current_user.shop) %>
 
 <table>
   <thead>
     <tr>
+        <td><%= "商品圖片" %></td>
         <td><%= "商品名稱" %></td>
         <td><%= "商品描述" %></td>
         <td><%= "商品數量" %></td>
@@ -16,18 +17,18 @@
 
   <tbody>
     <% @products.each do |product|%>
-      <tr>
-          <td><%= product.name %></td>
-          <td><%= product.content %></td>
-          <td><%= product.quantity %></td>
-          <td><%= product.price %></td>
-          <td><%= link_to "編輯商品", edit_product_path(product) %></td>
-          <td><%= link_to "刪除商品", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"}  %></td>
-      <tr>
+    <tr>
+      <td><%= image_tag product.image.url.to_s %></td>
+      <td><%= product.name %></td>
+      <td><%= product.content %></td>
+      <td><%= product.quantity %></td>
+      <td><%= product.price %></td>
+      <td><%= link_to "編輯商品", edit_product_path(product) %></td>
+      <td><%= link_to "刪除商品", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"}  %></td>
+    <tr>
     <% end %>
   </tbody>
 </table>
-
 
 <h3>Coupon列表</h3>
 <%= link_to '新增Coupon', new_coupon_path %>

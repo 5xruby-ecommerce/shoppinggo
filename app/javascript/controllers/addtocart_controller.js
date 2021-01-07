@@ -39,6 +39,7 @@ export default class extends Controller {
       type: 'post',
       contentType: 'application/json', // 指定傳送到 server 的資料類型
       data: JSON.stringify(amount),
+      // data: new URLSearchParams(amount).toString(),
       success: (resp) => {
         console.log(resp, this.amountTarget.value);
       },

@@ -6,6 +6,12 @@ class ApplicationController < ActionController::Base
 
   include CartsHelper
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+
+  private
+  def render_not_found
+    render :file => '/public/404.html', layout: false, :status => 404
+  end
 
   def store_location
     if(request.path != "/users/sign_in" &&
@@ -24,4 +30,5 @@ class ApplicationController < ActionController::Base
     session[:previous_url] = nil
     previous_path || root_path
   end
+
 end

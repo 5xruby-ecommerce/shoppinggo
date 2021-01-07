@@ -1,6 +1,10 @@
 <h1>編輯商品</h1>
 
-<%= form_for @product do |f| %>
+<%= form_for @product, url: {action: "update"} do |f| %>
+  <%= f.label :image, "商品首圖" %>
+  <%= f.file_field :image, id: :product_image, class: "form-control" %><br/>
+  <%= f.label :images, "更多商品圖片" %>
+  <%= f.file_field :images, multiple:true, :class => "form-control" %><br/>
   <%= f.label :name, "商品名稱" %>
   <%= f.text_field :name %><br/>
   <%= f.label :content, "商品描述" %>
@@ -11,3 +15,5 @@
   <%= f.text_field :price %><br/>
   <%= f.submit "更新商品" %>
 <% end %>
+
+<%= link_to '回上頁', shops_path %>

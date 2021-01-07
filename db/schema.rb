@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_05_072028) do
+ActiveRecord::Schema.define(version: 2021_01_06_080239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_072028) do
     t.index ["shop_id"], name: "index_coupons_on_shop_id"
   end
 
+
   create_table "messages", force: :cascade do |t|
     t.text "content"
     t.bigint "room_id", null: false
@@ -47,7 +48,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_072028) do
     t.bigint "sub_order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "products_id"
+    t.bigint "product_id"
     t.index ["sub_order_id"], name: "index_order_items_on_sub_order_id"
   end
 
@@ -57,6 +58,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_072028) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "number"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -65,6 +67,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_072028) do
     t.string "content"
     t.integer "price"
     t.integer "quantity"
+    t.string "references"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "shop_id"

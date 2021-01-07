@@ -1,4 +1,4 @@
-<%# <h1>首頁</h1> %>
+<h1>首頁</h1>
 <header class="bg-pink-300 flex justify-center items-center" style="height:300px">
   <span class="text-6xl	bg-clip-text text-transparent bg-gradient-to-r from-green-200 to-purple-300 font-extrabold">
     jumbotron
@@ -54,7 +54,7 @@
     <% @products.each do |product|%>
       <%= link_to product_path(product) do %>
         <div class="item">
-          <div class="img"><img src="https://picsum.photos/100/100/?random=1"></div>
+          <div class="img"><%= image_tag product.image_url if product.image_url.present? %></div>
           <div class="content">
             <div class="title"><%= product.name %></div>
             <div class="price">$<%= product.price %></div>
