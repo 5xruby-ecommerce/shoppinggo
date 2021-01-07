@@ -1,6 +1,13 @@
-<div class="wrap h-screen	flex">
-  <div class="sidebar w-48 bg-gray-200 flex items-center flex-col pt-4">
+
+
+
+
+
+<div class="wrap h-screen	flex pt-20 ">
+  <div class="w-1/5 bg-gray-50 flex items-center flex-col shadow pt-10">
     <div class="border-b-2 border-pink-400 "><%= link_to '賣家中心', shops_path %></div>
     <div class="pt-4"><%= link_to '商品列表', shops_path %></div>
     <%= link_to '新增商品', new_product_path %>
+    <%= link_to '新增Coupon', new_coupon_path %>
+    <%= link_to '檢視Coupon', list_coupons_path %>
 </div>

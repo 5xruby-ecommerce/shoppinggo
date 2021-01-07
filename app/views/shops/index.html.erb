@@ -1,35 +1,58 @@
-<h1>賣家中心</h1>
+<div class='flex w-full items-center flex-col pt-10 space-y-1'>
+<%# 選項列 %>
+  <div class='w-4/5 flex justify-between text-gray-500'>
+    <div class=' w-3/5 input-store'>
+      <select class='w-2/5 bg-transparent outline-none'>
+          <option>商品名稱</option>
+          <option>商品貨號</option>
+          <option>主商品貨號</option>
+          <option>商品選項貨號</option>
+          <option>規格</option>
+          <option>商品ID</option>
+      </select>
+      <input type="text" class='bg-transparent outline-none'>
+    </div>
+    <div>
+      <span>類別</span>
+      <input type="text" class='input-store'>
+    </div>
+  </div>
+  <div class='w-4/5 flex text-gray-500'>
+    <div class='w-3/5 flex items-center text-gray-500'>
+      <span>商品數量</span><input type="number" class='flex-grow input-store'>
+    </div>
+    <div class='w-2/5 flex justify-end items-center text-gray-500'>
+      <span>已售出</span><input type="number" class='w-2/6 input-store'>&#8722;<input type="number"  class='w-2/6 input-store'>
+    </div>
+  </div>
+  <%# 商品顯示 %>
+  <div class='h-5/6 bg-gray-50 w-4/5 rounded-lg overflow-hidden border-1 shadow'>
+    <table class='w-full text-center border-collapse' >
+      <thead class='bg-gray-100 text-gray-500'>
+        <tr>
+            <td class='p-3'>商品圖片</td>
+            <td>商品名稱</td>
+            <td>商品描述</td>
+            <td>商品數量</td>
+            <td>商品價格</td>
+            <td colspan='2'>商品設定</td>
+        <tr>
+      </thead>
 
-<h3>商品列表</h3>
-<%= link_to '新增商品', new_shop_product_path(current_user.shop) %>
+      <tbody>
+        <% @products.each do |product|%>
+          <tr class='border-b-2 border-fuchsia-600 h-20'>
+              <td><%= image_tag product.image_url if product.image_url.present? %></td>
+              <td><%= product.name %></td>
+              <td><%= product.content %></td>
+              <td><%= product.quantity %></td>
+              <td><%= product.price %></td>
+              <td><%= link_to "編輯商品", edit_product_path(product) ,class:'primary-button text-xs' %></td>
+              <td><%= link_to "刪除商品", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"} ,class:'primary-button text-xs' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<table>
-  <thead>
-    <tr>
-        <td><%= "商品圖片" %></td>
-        <td><%= "商品名稱" %></td>
-        <td><%= "商品描述" %></td>
-        <td><%= "商品數量" %></td>
-        <td><%= "商品價格" %></td>
-        <td><%= "商品設定" %></td>
-    <tr>
-  </thead>
-
-  <tbody>
-    <% @products.each do |product|%>
-    <tr>
-      <td><%= image_tag product.image.url.to_s %></td>
-      <td><%= product.name %></td>
-      <td><%= product.content %></td>
-      <td><%= product.quantity %></td>
-      <td><%= product.price %></td>
-      <td><%= link_to "編輯商品", edit_product_path(product) %></td>
-      <td><%= link_to "刪除商品", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"}  %></td>
-    <tr>
-    <% end %>
-  </tbody>
-</table>
-
-<h3>Coupon列表</h3>
-<%= link_to '新增Coupon', new_coupon_path %>
-<%= link_to '檢視Coupon', list_coupons_path %>

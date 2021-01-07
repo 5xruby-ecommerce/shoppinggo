@@ -7,6 +7,7 @@ class CouponsController < ApplicationController
   def new
     @shop = Shop.find(current_user.shop.id)
     @coupon = Coupon.new
+    render layout: "store"
   end
 
   def create
@@ -42,6 +43,7 @@ class CouponsController < ApplicationController
 
   def list
     @coupons = Coupon.where(shop_id: current_user.shop.id)
+    render layout: "store"
   end
 
   def edit

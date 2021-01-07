@@ -1,3 +1,4 @@
+
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
@@ -54,16 +55,3 @@ class ProductsController < ApplicationController
   private
 
   def find_shop
-    @shop = Shop.find(current_user.shop.id)
-  end
-
-  def find_product
-    @product = @shop.products.find(params['id'])
-  end
-
-  def product_params
-    params.require(:product).permit(:image, :name, :content, :quantity, :price, {images:[]})
-  end
-
-end
-
