@@ -1,0 +1,4 @@
+<% @rooms.each do |room| %>
+  <%= link_to room.with(current_user) , room_path(room) %>
+
+<% end %>

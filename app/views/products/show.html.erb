@@ -24,6 +24,10 @@
           <li><a class="block py-2 px-3 mr-2 bg-gray-100 rounded" href="#">Product Details</a></li>
           <li><a class="block py-2 px-3 mr-2 hover:bg-gray-100 rounded" href="#">Reviews</a></li>
           <li><a class="block py-2 px-3 mr-2 hover:bg-gray-100 rounded" href="#">FAQ</a></li>
+          <% if @product.shop.user != current_user %>
+            <li><%= link_to '聊聊', rooms_path(@product.shop.user) , method: 'post' ,class:'block py-2 px-3 mr-2 hover:bg-gray-100 rounded' %></li>
+          <% end %>
+
         </ul>
       </div>
       <p class="mb-8 text-gray-400 leading-relaxed">Premium quality home and office paper for all printing and copying machines. It is a flexible paper capable of switching from one machine to another with great print results.</p>
@@ -65,3 +69,4 @@
     </div>
   </div>
 </section>
+

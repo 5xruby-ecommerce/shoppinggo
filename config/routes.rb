@@ -20,6 +20,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :rooms do 
+    resources :messages , shallow: true
+  end
+
   resource :carts, only:[:show, :destroy] do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
     get :checkout
