@@ -5,13 +5,15 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   resources :shops do
-    resources :products
+    resources :products, shallow: true
   end
-  
-   devise_scope :user do
-     get 'change_password', to: 'user/registrations#change_password'
-   end
- 
+
+  get :search, to: 'products#search'
+
+  devise_scope :user do
+    get 'change_password', to: 'user/registrations#change_password'
+  end
+
   resources :coupons do
     collection do
       get :list
@@ -25,6 +27,4 @@ Rails.application.routes.draw do
     delete 'destroy/:id', action: 'destroy', as: 'destroy'
     post 'update_item/:id', action: 'update_item', as: 'update_item'
   end
-
-
 end

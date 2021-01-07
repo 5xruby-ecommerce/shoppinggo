@@ -16,20 +16,19 @@
   </thead>
 
   <tbody>
-      <% @products.each do |product|%>
+    <% @products.each do |product|%>
     <tr>
-        <td><%= product.name %></td>
-        <td><%= product.content %></td>
-        <td><%= product.quantity %></td>
-        <td><%= product.price %></td>
-        <td><%= link_to "編輯商品", edit_shop_product_path(product.shop, product) %></td>
-        <td><%= link_to "刪除商品", shop_product_path(product.shop, product), method: "delete", data: {confirm: "確定刪除嗎？"}  %></td>
+      <td><%= image_tag product.image.url.to_s %></td>
+      <td><%= product.name %></td>
+      <td><%= product.content %></td>
+      <td><%= product.quantity %></td>
+      <td><%= product.price %></td>
+      <td><%= link_to "編輯商品", edit_product_path(product) %></td>
+      <td><%= link_to "刪除商品", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"}  %></td>
     <tr>
-      <% end %>
-
+    <% end %>
   </tbody>
 </table>
-
 
 <h3>Coupon列表</h3>
 <%= link_to '新增Coupon', new_coupon_path %>
