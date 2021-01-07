@@ -1,27 +1,26 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :store_user_location!, if: :storable_location?
 
-  before_action :store_location
 
   include CartsHelper
 
 
-  def store_location
-    if(request.path != "/users/sign_in" &&
-      request.path != "/users/sign_up" &&
-      request.path != "/users/password/new" &&
-      request.path != "/users/password/edit" &&
-      request.path != "/users/confirmation" &&
-      request.path != "/users/sign_out" &&
-      !request.xhr? && !current_user) # don't store ajax calls
-      session[:previous_url] = request.fullpath
+  private
+    def storable_location?
+      request.get? && is_navigational_format? && !devise_controller? && !request.xhr? 
     end
-  end
 
-  def after_sign_in_path_for(resource)
-    previous_path = session[:previous_url]
-    session[:previous_url] = nil
-    previous_path || root_path
-  end
+    def store_user_location!
+      store_location_for(:user, request.fullpath)
+    end
+
+    def after_sign_in_path_for(resource_or_scope)
+      stored_location_for(resource_or_scope) || super
+    end
+    
+    def after_sign_out_path_for(resource_or_scope)
+      stored_location_for(resource_or_scope) || super
+    end
 end
