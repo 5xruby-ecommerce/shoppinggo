@@ -15,7 +15,6 @@ class ProductsController < ApplicationController
   end
   
   def show
-    @message = Message.new
     @product = Product.find(params[:id])
   end 
   
