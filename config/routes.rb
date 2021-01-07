@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   resources :shops do
-    resources :products
+    resources :products, shallow: true
   end
 
   get :search, to: 'products#search'
@@ -27,6 +27,4 @@ Rails.application.routes.draw do
     delete 'destroy/:id', action: 'destroy', as: 'destroy'
     post 'update_item/:id', action: 'update_item', as: 'update_item'
   end
-
-
 end

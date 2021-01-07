@@ -6,11 +6,10 @@ class ProductsController < ApplicationController
   before_action :find_product, only: [:edit, :update, :destroy]
 
   def show
-    @shop = Shop.find(params[:shop_id])
     @product = Product.find(params[:id])
   end
 
-  def index
+  def search
     if params[:search]
         @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
     else
@@ -50,9 +49,6 @@ class ProductsController < ApplicationController
     else
       redirect_to shops_path, notice: '刪除商品失敗'
     end
-  end
-
-  def search
   end
 
   private
