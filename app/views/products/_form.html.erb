@@ -1,4 +1,5 @@
-<%= form_for(product) do |f| %>
+  <div class='w-2/5 bg-red-200'>
+  <%= form_for(product) do |f| %>
     <%= f.label :image, "商品圖片" %>
     <%= f.file_field :image, id: :product_image, class: "form-control" %>
     <br/>
@@ -12,3 +13,4 @@
     <%= f.text_field :price %><br/>
     <%= f.submit "更新商品" %>
   <% end %>
+  </div>

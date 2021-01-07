@@ -8,3 +8,9 @@
 .input-devise {
    @apply p-2 bg-white border;
 }
+.primary-button {
+   @apply bg-gray-800 p-2 text-white rounded-sm;
+}
+.input-store {
+   @apply bg-transparent outline-none border rounded-lg p-1;
+}
