@@ -28,7 +28,7 @@
           <li><a class="block py-2 px-3 mr-2 hover:bg-gray-100 rounded" href="#">Reviews</a></li>
           <li><a class="block py-2 px-3 mr-2 hover:bg-gray-100 rounded" href="#">FAQ</a></li>
           <% if @product.shop.user != current_user %>
-            <li><%= link_to '聊聊', rooms_path(@product.shop.user) , method: 'post' ,class:'block py-2 px-3 mr-2 hover:bg-gray-100 rounded' %></li>
+            <li><%= link_to '聊聊', rooms_path(user: @product.shop.user) , method: 'post' ,class:'block py-2 px-3 mr-2 hover:bg-gray-100 rounded' %></li>
           <% end %>
 
         </ul>

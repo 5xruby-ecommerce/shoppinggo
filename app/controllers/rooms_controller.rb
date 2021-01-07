@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
   end 
 
   def create
-    @user = Product.find(params[:format]).shop.user
+    @user = Product.find(params[:user]).shop.user
     @room = Room.get(current_user.id, @user.id)
     redirect_to room_path(@room)
   end
@@ -16,4 +16,5 @@ class RoomsController < ApplicationController
     @message = Message.new
     @messages = @room.messages
   end
+  
 end

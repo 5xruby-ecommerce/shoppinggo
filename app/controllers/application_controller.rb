@@ -20,7 +20,4 @@ class ApplicationController < ActionController::Base
       stored_location_for(resource_or_scope) || super
     end
     
-    def after_sign_out_path_for(resource_or_scope)
-      stored_location_for(resource_or_scope) || super
-    end
 end
