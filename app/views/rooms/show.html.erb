@@ -1,3 +1,6 @@
+
+<div> <%= render @rooms if @rooms %> </div>
+
 <div class = "message_box" data-room= "<%= @room.id %>" data-user="<%= current_user.id%>">
   <div><%= @room.with(current_user).name %></div>
   <div class="container">

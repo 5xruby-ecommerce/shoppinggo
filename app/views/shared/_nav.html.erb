@@ -26,6 +26,7 @@
     <div class='inline-flex py-5 space-x-4 w-full'>
       <!-- <div><%= link_to '首頁', root_path %></div> -->
         <% if user_signed_in? %>
+        <%=link_to '聊聊', rooms_path %>
         <div class='hover:bg-gray-900'><%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %></div>
           <%= link_to carts_path do %>
             <i class="fas fa-cart-plus"></i></i>(<%= current_cart.items.count %>) / <%= current_cart.total_price %>

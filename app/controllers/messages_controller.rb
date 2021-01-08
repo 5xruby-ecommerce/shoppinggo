@@ -9,6 +9,7 @@ class MessagesController < ApplicationController
     if @message.save
       MessageBroadcastJob.perform_later(@message)
     end
+
   end
 
   private

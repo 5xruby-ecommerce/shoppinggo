@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_06_080239) do
+ActiveRecord::Schema.define(version: 2021_01_05_072028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 2021_01_06_080239) do
     t.integer "discount_amount"
     t.index ["shop_id"], name: "index_coupons_on_shop_id"
   end
-
 
   create_table "messages", force: :cascade do |t|
     t.text "content"
@@ -67,7 +66,6 @@ ActiveRecord::Schema.define(version: 2021_01_06_080239) do
     t.string "content"
     t.integer "price"
     t.integer "quantity"
-    t.string "references"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "shop_id"
