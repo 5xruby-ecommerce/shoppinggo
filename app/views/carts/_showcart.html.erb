@@ -50,13 +50,13 @@
           <td data-updatecart-target="price"><%= item.product.price %></td>
           <td data-updatecart-target="totalprice" class="item_total_price" data-shopid="<%= item.product.shop_id %>"></td>
           <td>
-            <a href='#' data-action="click->updatecart#destroy">取消</ㄇ>
+            <a href='#' data-action="click->updatecart#destroy">取消</a>
           </td>
         </tr>
     <% end %>
     <tr>
       <td>
-        總金額 : <span data-shopid="<%=items.first.product.shop_id%>"></span>
+        總金額 : <span data-shopid="<%=items.first.product.shop_id%>"> </span>
       </td>
     </tr>
     <tr>
