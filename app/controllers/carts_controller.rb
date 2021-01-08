@@ -66,17 +66,6 @@ class CartsController < ApplicationController
   def create_order
     if current_user
       order = Order.new(user: current_user, sum: current_cart.total_price)
-
-      # {
-      #   shopA_id => {
-      #     productAA_id => productAA,
-      #     productAB_id => productAB
-      #   },
-      #   shopB_id => {
-      #     productBA_id => productBA,
-      #     productBB_id => productBB
-      #   },
-      # }
       products_all = Product.includes(:shop).
         where(id: current_cart.product_ids).
         reduce({}) do |rs, product|
@@ -90,15 +79,6 @@ class CartsController < ApplicationController
         sum = items.sum(&:total_price)
         order.sub_orders.new(sum: sum)
       end
-
-      # current_cart.items.each do |cart_item|
-      #   sub_order.order_items.new(
-      #     product_id: cart_item.product_id,
-      #     quantity: cart_item.quantity,
-      #     price: cart_item.product_price
-      #   )
-      # end
-      byebug
       order.save!
       order
     else
