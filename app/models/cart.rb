@@ -1,10 +1,13 @@
 class Cart 
-  def initialize(items = [])
+  def initialize(items = [], coupons = [], total = 0, subtotals=[])
     @items = items
+    @coupons = coupons
+    @total = total
+    @subtotals = subtotals
   end 
 
   def add_item(item_id, quantity = 1, shop_id)
-    found_item = @items.find { |item| item.item_id == item_id}
+    found_item = @items.find { |item| item.item_id == item_id }
     if found_item
       found_item.increament(quantity)
     else
@@ -21,12 +24,38 @@ class Cart
   end
 
   def total_price
-    total = @items.reduce(0) { |total, item| total + item.total_price}
+    total = @items.reduce(0) { |total, item| total + item.total_price }
 
     if Date.today.month == 12 && Date.today.day == 25
       total = total * 0.9
     end
+
+    @total = total
     total
+  end
+
+  def use_coupon()
+    @coupons << usercoupon_id
+  end
+
+  def unuse_coupon(shop_id, coupon_id)
+    @coupons.delete(usercoupon_id)
+  end
+
+  def totalprice_use_coupon(shop_id)
+    shop_items = @items.filter { |item| item.shop_id == shop_id }
+    
+    total = 0
+    shop_items.each do |item|
+      total += item.total_price
+    end
+
+    if @subtotals.each.filter { |item| item[1] == shop_id }.empty?
+      @subtotals << [total, shop_id]
+    else
+
+    end
+
   end
 
   def serialize
@@ -41,7 +70,7 @@ class Cart
 
   def self.from_hash(hash)
     if hash && hash["items"]
-      items = hash["items"].map { |item| CartItem.new(item["item_id"], item["quantity"], item["shop_id"])}
+      items = hash["items"].map { |item| CartItem.new(item["item_id"], item["quantity"], item["shop_id"]) }
       Cart.new(items)
     else
       Cart.new

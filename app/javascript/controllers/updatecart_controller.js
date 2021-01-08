@@ -107,11 +107,12 @@ export default class extends Controller {
   }
 
   shoptotalpriceChanged() {
-    const itemstotalprice = document.querySelectorAll('.item_total_price')
-    let shoptotalprice = 0
-    itemstotalprice.forEach(el => {
-      shoptotalprice += Number(el.textContent)
-    })
+    console.log(this)
+    // const itemstotalprice = document.querySelectorAll(`span[data-shopid=${}]`)
+    // let shoptotalprice = 0
+    // itemstotalprice.forEach(el => {
+    //   shoptotalprice += Number(el.textContent)
+    // })
     // const shopTotalPrice = document.querySelector(`span[data-shopid="${}"]`)
   }
 
@@ -239,6 +240,20 @@ export default class extends Controller {
                 type: 'get',
                 data: JSON.stringify(usercouponID),
                 success: (resp) => {
+                  const status = resp['status']
+
+                  // calculate the total price of the cart
+                  magicRails.ajax({
+                    url: `/carts/cal_totalprice`,
+                    type: 'get',
+                    data: JSON.stringify(usercouponID),
+                    success: (resp) => {
+                      
+                    },
+                    error: (err) => {
+
+                    }
+                  })
                 },
                 error: (err) => {
                   console.log(err)
@@ -326,8 +341,18 @@ export default class extends Controller {
                     type: 'get',
                     data: JSON.stringify(usercouponID),
                     success: (resp) => {
-                      console.log('resp')
-                    },
+                      // calculate the total price of the cart
+                      magicRails.ajax({
+                        url: `/carts/cal_totalprice`,
+                        type: 'get',
+                        data: JSON.stringify(usercouponID),
+                        success: (resp) => {
+                          
+                        },
+                        error: (err) => {
+
+                        }
+                    })},
                     error: (err) => {
                       console.log('err')
                     }

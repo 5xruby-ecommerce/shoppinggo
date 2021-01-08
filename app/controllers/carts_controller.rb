@@ -85,4 +85,11 @@ class CartsController < ApplicationController
       } 
     end
   end
+
+  def cal_totalprice
+    usercoupon_id = JSON.parse(params.keys.filter{|i| i[/.usercouponID/]}.first)["usercouponID"].to_i
+    shop_id = UserCoupon.where(id: usercoupon_id).pluck(:shop_id)
+    current_cart.use_coupon(usercoupon_id)
+    current_cart.totalprice_use_coupon(shop_id)
+  end
 end

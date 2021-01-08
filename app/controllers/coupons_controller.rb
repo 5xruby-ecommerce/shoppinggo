@@ -61,9 +61,6 @@ class CouponsController < ApplicationController
     end
   end
 
-
-
-
   private
     def coupon_params
       params.require(:coupon).permit(:title, :discount_rule, :discount_amount, :min_consumption, :discount_start, :discount_end, :amount)

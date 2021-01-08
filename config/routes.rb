@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     get :checkout
     get :cancel
     get 'get_coupon_info/:id', action: 'get_coupon_info', as: 'get_coupon'
+    get 'cal_totalprice', action: 'cal_totalprice', as: 'cal_totalprice'
     delete 'destroy/:id', action: 'destroy', as: 'destroy'
     post 'update_item/:id', action: 'update_item', as: 'update_item'
   end
