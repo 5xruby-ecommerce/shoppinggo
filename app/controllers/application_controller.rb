@@ -1,34 +1,26 @@
-# frozen_string_literal: true
-
 class ApplicationController < ActionController::Base
-
-  before_action :store_location
-
+  before_action :store_user_location!, if: :storable_location?
+  # The callback which stores the current location must be added before you authenticate the user
+  # as authenticate_user! (or whatever your resource is) will halt the filter chain and redirect
+  # before the location can be stored.
   include CartsHelper
 
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
-
   private
-  def render_not_found
-    render :file => '/public/404.html', layout: false, :status => 404
-  end
-
-  def store_location
-    if(request.path != "/users/sign_in" &&
-      request.path != "/users/sign_up" &&
-      request.path != "/users/password/new" &&
-      request.path != "/users/password/edit" &&
-      request.path != "/users/confirmation" &&
-      request.path != "/users/sign_out" &&
-      !request.xhr? && !current_user) # don't store ajax calls
-      session[:previous_url] = request.fullpath
+    # Its important that the location is NOT stored if:
+    # - The request method is not GET (non idempotent)
+    # - The request is handled by a Devise controller such as Devise::SessionsController as that could cause an 
+    #    infinite redirect loop.
+    # - The request is an Ajax request as this can lead to very unexpected behaviour.
+    def storable_location?
+      request.get? && is_navigational_format? && !devise_controller? && !request.xhr? 
     end
-  end
 
-  def after_sign_in_path_for(resource)
-    previous_path = session[:previous_url]
-    session[:previous_url] = nil
-    previous_path || root_path
-  end
+    def store_user_location!
+      # :user is the scope we are authenticating
+      store_location_for(:user, request.fullpath)
+    end
 
+    def after_sign_in_path_for(resource_or_scope)
+      stored_location_for(resource_or_scope) || super
+    end
 end

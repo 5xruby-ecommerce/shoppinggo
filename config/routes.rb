@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: "user/registrations" }
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: 'users/registrations' }
+
   root 'pages#home'
 
   resources :shops do
@@ -9,10 +10,6 @@ Rails.application.routes.draw do
   end
 
   get :search, to: 'products#search'
-
-  devise_scope :user do
-    get 'change_password', to: 'user/registrations#change_password'
-  end
 
   resources :coupons do
     collection do
