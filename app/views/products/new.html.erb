@@ -1,21 +1,34 @@
 
-<div class='w-4/5 flex justify-center text-gray-500 pt-20'>
   <%# <%= render "form", product: @product %> 
-
-
-
-  <%= form_for(@product) do |f| %>
-    <%= f.label :image, "商品圖片" %>
-    <%= f.file_field :image, id: :product_image, class: "form-control" %>
-    <br/>
-    <%= f.label :name, "商品名稱" %>
-    <%= f.text_field :name %><br/>
-    <%= f.label :content, "商品描述" %>
-    <%= f.text_area :content %><br/>
-    <%= f.label :quantity, "商品數量" %>
-    <%= f.text_field :quantity %><br/>
-    <%= f.label :price, "商品價格" %>
-    <%= f.text_field :price %><br/>
-    <%= f.submit "更新商品" %>
-  <% end %>
+<div class='w-full flex justify-center text-gray-500 pt-20'>
+  <div class='w-3/5  h-4/5 border shadow rounded-sm p-5 bg-gray-100'>
+    <%= form_for(@product) do |f| %>
+    <div class='p-2'>
+      <%= f.label :image, "商品圖片" %></ br>
+      <%= f.file_field :image, id: :product_image, class: "form-control" %>
+    </div>
+    <div class='p-2'>
+      <%= f.label :name, "商品名稱" %>
+      <%= f.text_field :name, class:'w-full p-2 outline-none'%>
+    </div>
+    <div class='p-2'>
+      <%= f.label :quantity, "商品數量" %>
+      <%= f.text_field :quantity, class:'w-full p-2 outline-none' %>
+    </div>
+    <div class='p-2'>
+      <%= f.label :price, "商品價格"%>
+      <%= f.text_field :price, class:'w-full p-2 outline-none' %>
+    </div>
+    <div class='p-2'>
+      <%= f.label :content, "商品描述" %>
+      <%= f.text_area :content, class:'w-full p-2 outline-none' %>
+    </div>
+    <div class='p-2'>
+      <%= f.submit "更新商品", class:'primary-button float-right' %>
+    </div>
+    <% end %>
+  </div>
 </div>
+
+
+  

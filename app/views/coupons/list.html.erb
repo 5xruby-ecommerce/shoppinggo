@@ -1,8 +1,10 @@
-<h2>Coupons</h2>
-<table class="table">
-  <thead class="thead-dark">
+<div class='flex w-full items-center flex-col pt-20 space-y-2'>
+  <div class='h-5/6 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow'>
+
+<table class="w-full text-center border-collapse">
+  <thead class="bg-gray-100 text-gray-500">
     <tr>
-      <th>優惠卷名稱</th>
+      <th class='p-3'>優惠卷名稱</th>
       <th>優惠方式</th>
       <th>優惠價格</th>
       <th>最低消費</th>
@@ -15,7 +17,7 @@
 
   <tbody>
     <% @coupons.each do |coupon| %>
-      <tr>
+      <tr class='border-b-2 border-fuchsia-600 h-20'>
         <td><%= coupon.title %></td>
         <td><%= coupon.discount_rule %></td>
         <td><%= coupon.discount_amount %></td>
@@ -29,4 +31,5 @@
     <% end %>
   </tbody>
 </table>
-
+</div>
+</div>
