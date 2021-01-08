@@ -1,5 +1,4 @@
 <h2>個人資料</h2>
-<%= link_to '修改密碼', change_password_path %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>

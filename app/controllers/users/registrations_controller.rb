@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
+  #before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -20,10 +20,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def account_update_params
+    params.require(:user).permit(:image, :name, :password, :email, :phone, :password_confirmation, :current_password)
+    # devise_parameter_sanitizer.sanitize(:account_update)
+  end
 
+  protected
+
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
   # DELETE /resource
   # def destroy
   #   super
