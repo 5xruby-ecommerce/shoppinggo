@@ -80,7 +80,8 @@ class CartsController < ApplicationController
         order.sub_orders.new(sum: sum)
       end
       order.save!
-      order
+      session[:cartgo] = nil
+      order.reload
     else
       redirect_to new_user_session_path
     end
@@ -89,14 +90,14 @@ class CartsController < ApplicationController
   def sample_params(order)
     @hash = {
       'MerchantID' => '2000132',
-      'MerchantTradeNo' => 'shoppinggoA0000012',
+      'MerchantTradeNo' => order.number,
       'MerchantTradeDate' => Time.zone.now.strftime('%Y/%m/%d %T'),
       'PaymentType' => 'aio',
       'TotalAmount' => current_cart.total_price,
       'TradeDesc' => '123',
-      'ItemName' => current_cart.items.first.product.name,
-      'ReturnURL' => 'http://localhost:3000/carts/checkout',
-      'ClientBackURL' => 'http://localhost:3000/carts/checkout',
+      'ItemName' => current_cart.items_name,
+      'ReturnURL' => 'http://localhost:5000/carts/checkout',
+      'ClientBackURL' => 'http://localhost:5000/carts/checkout',
       'ChoosePayment' => 'Credit',
       'EncryptType' => '1',
     }
