@@ -13,7 +13,6 @@
       <div class='w-full md:w-3/5 px-8 pt-4'>
         <h2 class="text-4xl mb-2 font-semibold"><%= @product.name %></h2>
 
-        
         <div class="w-full flex">
           <div><a href="#">5.0</a><span>&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</span></div>
           <div><a href="#">0</a><span>評價</span></div>
@@ -22,13 +21,13 @@
         <div class=" bg-gray-50 w-full p-2">
           <h2 class="text-4xl text-red-400">$<%= @product.price %></h2>
         </div>
-        <h2>
+        <h2 data-controller="favorite" data-favorite-id="<%= @product.id %>">
           <% if user_signed_in? %>
-            <%= link_to '#', id: 'favorite_btn', data: { id: @product.id } do %>
-              <% if current_user.favorite?(@post) %>
-                <i class='fas fa-heart'>已收藏</i>
+            <%= link_to '#', data: { action: 'favorite#go' } do %>
+              <% if current_user.favorite?(@product) %>
+                <i class='fas fa-heart' data-target='favorite.icon'>已收藏</i>
               <% else %>
-                <i class='far fa-heart'>我的最愛</i>
+                <i class='far fa-heart' data-target='favorite.icon'>我的最愛</i>
               <% end %>
             <% end %>
           <% else %>
