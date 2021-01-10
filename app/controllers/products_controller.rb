@@ -52,7 +52,15 @@ class ProductsController < ApplicationController
   end
 
   def favorite
-    render html: '1'
+    product = Product.find(params[:id])
+
+    if current_user.favorite?(product)
+      current_user.my_favorites.destroy(product)
+      render html: '0'
+    else
+      current_user.my_favorites << product
+      render html: '1'
+    end
   end
 
   private
