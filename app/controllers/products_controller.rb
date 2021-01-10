@@ -56,10 +56,10 @@ class ProductsController < ApplicationController
 
     if current_user.favorite?(product)
       current_user.my_favorites.destroy(product)
-      render html: '0'
+      render json: { status: 'removed' }
     else
       current_user.my_favorites << product
-      render html: '1'
+      render json: { status: 'added' }
     end
   end
 
