@@ -51,6 +51,10 @@ class ProductsController < ApplicationController
     end
   end
 
+  def favorite
+    render html: '1'
+  end
+
   private
 
   def find_shop

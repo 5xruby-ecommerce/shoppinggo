@@ -1,9 +1,31 @@
 document.addEventListener("DOMContentLoaded", function(){
   const favorite_btn = document.querySelector('#favorite_btn')
 
-  favorite_btn.addEventListener("click", function(e) {
-    e.preventDefault()
-    console.log(e.currentTarget.dataset.id);
-    //alert('收藏至我的最愛')
-  })
+  if (favorite_btn) {
+    favorite_btn.addEventListener("click", function(e) {
+      e.preventDefault()
+      const ax = require('axios')
+      const token = document.querySelector('[name=csrf-token]').content
+        ax.defaults.headers.common['X-CSRF-TOKEN'] = token
+    
+      const productId = e.currentTarget.dataset.id
+      const icon = e.target
+
+      ax.post(`/products/${productId}/favorite`, {})
+        .then(function(resp){
+          if (resp.data == "1") {
+            icon.classList.remove("far")
+            icon.classList.add("fas")
+          } else {
+            icon.classList.remove("fas")
+            icon.classList.add("far")
+          }
+          console.log(resp.data);
+        })
+          
+        .catch(function(err) {
+          console.log(err);
+        })
+    })
+  }
 })
