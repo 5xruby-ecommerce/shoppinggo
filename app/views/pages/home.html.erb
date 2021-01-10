@@ -4,67 +4,73 @@
     jumbotron
   </span>
   </header>
-  <section class="py-5 bg-pink-100 flex justify-center items-center">
-  <div class="container max-auto max-w-screen-xl">
-  分類
-    <div class="px-2">
-      <div class="flex flex-wrap">
-        <div class="w-4/12 md:w-2/12 p-2">
-          <div class="bg-pink-200" style="height:100px"></div>
+
+  <section class="py-5 flex justify-center items-center">
+    <div class="container max-auto max-w-screen-x bg-red-100">
+        <div class="flex flex-wrap">
+          <div class="w-4/12 md:w-2/12 p-2">
+            <div class="bg-pink-200" style="height:100px"></div>
+          </div>
+          <div class="w-4/12 md:w-2/12 p-2">
+            <div class="bg-pink-200" style="height:100px"></div>
+          </div>
+          <div class="w-4/12 md:w-2/12 p-2">
+            <div class="bg-pink-200" style="height:100px"></div>
+          </div>
+          <div class="w-4/12 md:w-2/12 p-2">
+            <div class="bg-pink-200" style="height:100px"></div>
+          </div>
+          <div class="w-4/12 md:w-2/12 p-2">
+            <div class="bg-pink-200" style="height:100px"></div>
+          </div>
+          <div class="w-4/12 md:w-2/12 p-2">
+            <div class="bg-pink-200" style="height:100px"></div>
+          </div>
         </div>
-        <div class="w-4/12 md:w-2/12 p-2">
-          <div class="bg-pink-200" style="height:100px"></div>
-        </div>
-        <div class="w-4/12 md:w-2/12 p-2">
-          <div class="bg-pink-200" style="height:100px"></div>
-        </div>
-        <div class="w-4/12 md:w-2/12 p-2">
-          <div class="bg-pink-200" style="height:100px"></div>
-        </div>
-        <div class="w-4/12 md:w-2/12 p-2">
-          <div class="bg-pink-200" style="height:100px"></div>
-        </div>
-        <div class="w-4/12 md:w-2/12 p-2">
-          <div class="bg-pink-200" style="height:100px"></div>
-        </div>
-      </div>
-  </div>
+    </div>
   </section>
-  <section class="py-5 bg-pink-100 flex justify-center items-center">
-  <div class="container max-auto max-w-screen-xl">
-      <div class="flex flex-wrap">
-        <div class="w-6/12 md:w-4/12 lg:w-2/12 p-2">
-          <div class="rounded bg-pink-200 p-2 h-60">
-            <div class='w-full h-3/5'><img src="https://picsum.photos/id/684/600/400" class='w-full'></div>
-            <div class='flex h-2/5 content-between flex-wrap'>
-              <div class='w-full'>title</div>
+ 
+
+ 
+
+  <section class="py-5 flex justify-center items-center">
+  <div class="container max-auto max-w-screen-x flex flex-wrap">
+    <% @products.each do |product|%>
+        <div class="w-6/12 sm:w-4/12 md:w-2/12 p-0.5">
+          <div class="bg-gray-100 h-96 rounded-sm p-0.5">
+            <%= link_to product_path(product) do %>
+
+            <div class='w-full'>
+              <% if product.image_url.present? %>
+                <div style='width:100%;padding-top:100%;position:relative'><%= image_tag product.image_url,style:'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0' %></div>
+              <% end %>
+            </div>
+              
+            <div class='flex h-28 content-between flex-wrap'>
+              <div class='w-full'><%= product.name %></div>
               <div class='flex justify-between w-full'>
-                <div>$1000</div>
+                <div>$<%= product.price %></div>
                 <div>已售出<span>10</span></div>
               </div>
             </div>
           </div>
+        <% end %> 
         </div>
-        <div class="w-6/12 md:w-4/12 lg:w-2/12 p-2 ">
-          <div class="rounded bg-pink-200 h-60"></div>
-        </div>
-        <div class="w-6/12 md:w-4/12 lg:w-2/12 p-2 ">
-          <div class="rounded bg-pink-200 h-60"></div>
-        </div>
-        <div class="w-6/12 md:w-4/12 lg:w-2/12 p-2 ">
-          <div class="rounded bg-pink-200 h-60"></div>
-        </div>
-        <div class="w-6/12 md:w-4/12 lg:w-2/12 p-2 ">
-          <div class="rounded bg-pink-200 h-60"></div>
-        </div>
-        <div class="w-6/12 md:w-4/12 lg:w-2/12 p-2 ">
-          <div class="rounded bg-pink-200 h-60"></div>
-        </div>
-      </div>
+    <% end %>
   </div>
   </section>
+
+
   
-  <div class="wrap">
+
+
+
+
+  
+
+  </section>
+  
+  <!-- <div class="wrap">
   <div class="rows">
     <% @products.each do |product|%>
       <%= link_to product_path(product) do %>
@@ -78,5 +84,5 @@
       <% end %>
     <% end %>
   </div>
-  </div>
+  </div> -->
 </div>

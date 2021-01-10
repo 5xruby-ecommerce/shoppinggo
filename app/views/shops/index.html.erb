@@ -1,5 +1,5 @@
    
- <div class='flex w-full items-center flex-col pt-16 space-y-2'>
+ <div class='flex w-full items-center flex-col space-y-2 pt-10'>
 <%# 選項列 %>
   <div class='w-4/5 flex justify-between text-gray-500'>
     <div class=' w-3/5 input-store'>
@@ -27,11 +27,11 @@
     </div>
   </div>
   <%# 商品顯示 %>
-  <div class='h-5/6 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow mt-20 ml-5 '>
+  <div class='h-120 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow mt-20 ml-5 '>
     <table class='w-full text-center border-collapse' >
       <thead class='bg-gray-100 text-gray-500'>
         <tr>
-            <td class='p-3'>商品圖片</td>
+            <td>商品圖片</td>
             <td>商品名稱</td>
             <td>商品描述</td>
             <td>商品數量</td>
@@ -42,14 +42,18 @@
 
       <tbody>
         <% @products.each do |product|%>
-          <tr class='border-b-2 border-fuchsia-600 h-20'>
-              <td><%= image_tag product.image_url if product.image_url.present? %></td>
-              <td><%= product.name %></td>
-              <td><%= product.content %></td>
-              <td><%= product.quantity %></td>
-              <td><%= product.price %></td>
-              <td><%= link_to "編輯商品", edit_product_path(product) ,class:'primary-button text-xs' %></td>
-              <td><%= link_to "刪除商品", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"} ,class:'primary-button text-xs' %></td>
+          <tr class='border-b-2 border-fuchsia-600 h-24'>
+              <td class='flex justify-center items-center w-full h-24'>
+                <% if product.image_url.present? %>
+                  <div class='w-20 h-20'><%= image_tag product.image_url, style:'width:100%;height:100%;object-fit:cover' %></div>
+                <% end %>
+              </td>
+              <td class='w-1/6'><%= product.name %></td>
+              <td class='w-1/6'><%= product.content %></td>
+              <td class='w-1/6'><%= product.quantity %></td>
+              <td class='w-1/6'><%= product.price %></td>
+              <td class='w-1/12'><%= link_to "編輯", edit_product_path(product) ,class:'primary-button text-xs' %></td>
+              <td class='w-1/12'><%= link_to "刪除", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"} ,class:'primary-button text-xs' %></td>
           </tr>
         <% end %>
       </tbody>
