@@ -31,7 +31,7 @@
       <td>處理</td>
     </tr>
   </thead>
-  <% items = (cart.items.sort_by {|item| Product(id: item.product_id).shop.id })%>
+  <% items = (cart.items.sort_by {|item| Product.find_by(id: item.product_id).shop.id })%>
   <% items.each do |item| %>
     <tbody data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totaprice-value="0">
       <tr>

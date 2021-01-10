@@ -1,6 +1,5 @@
 import { Controller } from "stimulus"
 import magicRails from '@rails/ujs'
-
 function updateCartTotal() {
   let carttotal = document.querySelector('.cart_total')
   let items = document.querySelectorAll('.item_total_price')
@@ -19,7 +18,6 @@ export default class extends Controller {
  
   connect() {
     this.numberValueChanged()
-    this.shoptotalpriceChanged()
   }
 
   plusbtn(e) {
@@ -35,7 +33,8 @@ export default class extends Controller {
         const event = new CustomEvent('plusbtn', {
           detail: {
             count: resp.count,
-            total_price: resp.total_price
+            total_price: resp.total_price,
+            shoptotal: resp.shoptotal
           }
         })
         window.dispatchEvent(event)
@@ -104,16 +103,6 @@ export default class extends Controller {
       this.totalpriceTarget.textContent = Number(this.priceTarget.textContent) * Number(this.amountTarget.value)  
     }
     updateCartTotal()
-  }
-
-  shoptotalpriceChanged() {
-    console.log(this)
-    // const itemstotalprice = document.querySelectorAll(`span[data-shopid=${}]`)
-    // let shoptotalprice = 0
-    // itemstotalprice.forEach(el => {
-    //   shoptotalprice += Number(el.textContent)
-    // })
-    // const shopTotalPrice = document.querySelector(`span[data-shopid="${}"]`)
   }
 
   destroy(e) {
@@ -193,6 +182,7 @@ export default class extends Controller {
       url: `/carts/get_coupon_info/${couponID}`,
       type: 'get',
       success: (resp) => {
+        console.log(resp)
         const rule = resp['discount_rule']
         const discountStart = resp['discount_start']
         const discountEnd = resp['discount_end']
@@ -240,18 +230,17 @@ export default class extends Controller {
                 type: 'get',
                 data: JSON.stringify(usercouponID),
                 success: (resp) => {
-                  const status = resp['status']
-
-                  // calculate the total price of the cart
+                  const msg = {usercouponID: usercoupon_id, couponStatus: 'use'}
+                  // calculate the total price of all shops
                   magicRails.ajax({
                     url: `/carts/cal_totalprice`,
                     type: 'get',
-                    data: JSON.stringify(usercouponID),
+                    data: JSON.stringify(msg),
                     success: (resp) => {
-                      
+                      console.log(resp)
                     },
                     error: (err) => {
-
+                      console.log(err)
                     }
                   })
                 },
@@ -341,18 +330,20 @@ export default class extends Controller {
                     type: 'get',
                     data: JSON.stringify(usercouponID),
                     success: (resp) => {
+                      const msg = {usercouponID: usercoupon_id, couponStatus: 'unuse'}
                       // calculate the total price of the cart
                       magicRails.ajax({
                         url: `/carts/cal_totalprice`,
                         type: 'get',
-                        data: JSON.stringify(usercouponID),
+                        data: JSON.stringify(msg),
                         success: (resp) => {
-                          
+                          console.log(resp)
                         },
                         error: (err) => {
-
+                          console.log(err)
                         }
-                    })},
+                      })
+                    },
                     error: (err) => {
                       console.log('err')
                     }

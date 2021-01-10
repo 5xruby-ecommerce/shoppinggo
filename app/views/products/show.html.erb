@@ -40,7 +40,6 @@
             <% @product.shop.coupons.each do |coupon| %>
               <div>
                 <% userOwnCoupon = user_own_coupon?(coupon) %>
-                <%= userOwnCoupon %>
                 <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
                 <% if userOwnCoupon %>
                   <span href="#">已領取</span>

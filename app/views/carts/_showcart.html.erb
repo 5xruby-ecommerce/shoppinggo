@@ -21,23 +21,22 @@
 <table>
   <thead>
     <tr>
+      <td>商品照片</td>
       <td>商品名稱</td>
       <td>商店名稱</td>
-      <td></td>
       <td>數量</td>
       <td>單價</td>
       <td>小計</td>
       <td>處理</td>
-      <td>總計</td>
     </tr>
   </thead>
-  <% items = (cart.items.sort_by {|item| item.shop_id})%>
-  <% temp = items.group_by { |item| item.shop_id.itself} %>
+  <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
+  <% temp = items.group_by { |item| item.product.shop_id.itself} %>
   <% temp.values.each do |items|%>
     <% items.each do |item| %>
-      <tbody data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0" >
+      <tbody data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0">
         <tr>
-          <td><img src="https://picsum.photos/100/100/?random=1"></td>
+          <td><%= link_to product_path(item.product) do %><%= image_tag item.product.image_url if item.product.image_url.present? %><% end %></td>
           <td><%= item.product.name %></td>
           <td><%= item.product.shop.name %></td>
           <td>
@@ -48,15 +47,17 @@
             </div>
           </td>
           <td data-updatecart-target="price"><%= item.product.price %></td>
-          <td data-updatecart-target="totalprice" class="item_total_price" data-shopid="<%= item.product.shop_id %>"></td>
+          <td data-updatecart-target="totalprice" class="item_total_price" data-shopid="<%= item.product.shop_id %>"><%= item.total_price %></td>
           <td>
             <a href='#' data-action="click->updatecart#destroy">取消</a>
           </td>
         </tr>
     <% end %>
     <tr>
-      <td>
-        總金額 : <span data-shopid="<%=items.first.product.shop_id%>"> </span>
+      <td data-controller="shoptotal" data-action="plusbtn@window->shoptotal#update changequantity@window->shoptotal#update minusbtn@window->shoptotal#update usecoupon@window->shoptotal#update unusecoupon@window->shoptotal#update" >
+        總金額 : <span data-shoptotal-target='shoptotal' data-shopid="<%=items.first.product.shop_id%>">
+          <%#= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
+        </span>
       </td>
     </tr>
     <tr>

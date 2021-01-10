@@ -1,6 +1,6 @@
 <h1>結帳</h1>
 
-<%= render 'cart', cart: current_cart %>
+<%= render 'checkoutcart', cart: current_cart %>
 
 <form id="cart-form" action='https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5' method="post">
   <%= hidden_field_tag :MerchantID, @hash['MerchantID'] %>

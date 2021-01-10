@@ -8,6 +8,7 @@ export default class extends Controller {
                   }
  
   connect() {
+    console.log('add item')
     this.numberValueChanged()
   }
 
@@ -51,7 +52,6 @@ export default class extends Controller {
   }
 
   getcoupon(e) {
-
     if (e.currentTarget.getAttribute('class').split(' ').includes('occupy')) {
       e.preventDefault()
     } else {

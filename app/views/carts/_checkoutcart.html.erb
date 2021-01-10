@@ -31,8 +31,8 @@
       <td>總計</td>
     </tr>
   </thead>
-  <% items = (cart.items.sort_by {|item| item.shop_id})%>
-  <% temp = items.group_by { |item| item.shop_id.itself} %>
+  <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
+  <% temp = items.group_by { |item| item.product.shop_id.itself} %>
   <% temp.values.each do |items|%>
     <% items.each do |item| %>
       <tbody data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0" >
@@ -50,10 +50,10 @@
           <td data-updatecart-target="price"><%= item.product.price %></td>
           <td data-updatecart-target="totalprice" class="item_total_price" data-shopid="<%= item.product.shop_id %>"></td>
           <td>
-            <a href='#' data-action="click->updatecart#destroy">取消</ㄇ>
+            <a href='#' data-action="click->updatecart#destroy">取消</a>
           </td>
         </tr>
-        <tbody>
+      <tbody>
     <% end %>
     <tr><span>總金額</span></tr>
   <% end %>
