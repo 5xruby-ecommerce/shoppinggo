@@ -21,4 +21,10 @@ class Order < ApplicationRecord
     end
   end
 
+  before_create :build_trade_no
+
+  private
+  def build_trade_no
+    self.number = "shopA#{user.id.to_i}#{Time.zone.now.to_i.to_s}"
+  end
 end

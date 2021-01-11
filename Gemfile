@@ -35,7 +35,7 @@ gem 'omniauth-google-oauth2', '~> 0.8.1'
 gem 'omniauth-github', '~> 1.4'
 gem 'figaro', '~> 1.2'
 gem 'pg', '~> 1.2', '>= 1.2.3'
-gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'carrierwave', '~> 2.1'
 gem 'fog-aws', '~> 3.7'
 gem "mini_magick"
 

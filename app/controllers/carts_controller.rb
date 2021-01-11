@@ -1,10 +1,8 @@
 class CartsController < ApplicationController
-
   # before_action :authenticate_user! ,only:[:add_item]
   def add_item
     if current_user
       product = Product.find(params[:id])
-      # quantity = params[:amount].to_i
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
       current_cart.add_item(product.id, quantity)
       session[:cartgo] = current_cart.serialize
@@ -54,10 +52,6 @@ class CartsController < ApplicationController
     add_mac_value(sample_params(@order))
   end
 
-  def initialize(params={})
-    @params = params
-  end
-
   def check_mac_value
     compute_check_mac_value(@params)
   end
@@ -80,6 +74,7 @@ class CartsController < ApplicationController
         order.sub_orders.new(sum: sum)
       end
       order.save!
+      session[:cartgo] = nil
       order
     else
       redirect_to new_user_session_path
@@ -89,14 +84,14 @@ class CartsController < ApplicationController
   def sample_params(order)
     @hash = {
       'MerchantID' => '2000132',
-      'MerchantTradeNo' => 'shoppinggoA0000012',
+      'MerchantTradeNo' => order.number,
       'MerchantTradeDate' => Time.zone.now.strftime('%Y/%m/%d %T'),
       'PaymentType' => 'aio',
       'TotalAmount' => current_cart.total_price,
       'TradeDesc' => '123',
-      'ItemName' => current_cart.items.first.product.name,
-      'ReturnURL' => 'http://localhost:3000/carts/checkout',
-      'ClientBackURL' => 'http://localhost:3000/carts/checkout',
+      'ItemName' => current_cart.items_name,
+      'ReturnURL' => 'http://localhost:5000/carts/checkout',
+      'ClientBackURL' => 'http://localhost:5000/carts/checkout',
       'ChoosePayment' => 'Credit',
       'EncryptType' => '1',
     }
