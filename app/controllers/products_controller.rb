@@ -51,6 +51,12 @@ class ProductsController < ApplicationController
       redirect_to shops_path, notice: '刪除商品失敗'
     end
   end
+  
+  def shop_new
+    @shop = current_user.shop || current_user.create_shop
+    @product = @shop.products.new
+    render :new      
+  end
 
   private
 

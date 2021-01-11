@@ -1,0 +1,16 @@
+// Place all the styles related to the shops controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+* {
+  outline: none;
+}
+input {
+  // background: transparent;
+}
+img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  height: inherit;
+}
+

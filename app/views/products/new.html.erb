@@ -1,6 +1,6 @@
 <h1>新增商品</h1>
 
-<%= form_for @product, url: {action: "create"} do |f| %>
+<%= form_for @product, url: shop_products_path(@product.shop) do |f| %>
   <%= f.label :image, "商品首圖" %>
   <%= f.file_field :image, id: :product_image, class: "form-control" %><br/>
   <%= f.label :images, "更多商品圖片" %>

@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   resources :shops do
-    resources :products, shallow: true
+    resources :products, shallow: true 
   end
 
+  get :shop_product_new, to: 'products#shop_new'
   get :search, to: 'products#search'
 
   resources :coupons do

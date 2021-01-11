@@ -1,5 +1,4 @@
-
-<nav class='flex w-full items-center bg-gray-800 px-2 lg:px-10 text-white flex-wrap'>
+<nav class='flex w-full items-center bg-gray-800 px-2 lg:px-10 text-white flex-wrap top-0 z-50'>
   <div>
     <%= link_to root_path do %>
       <%= image_tag "logo.png" , class:'w-20 lg:w-32' %>
@@ -19,9 +18,7 @@
     <% end %>
   </div>
 
-  <button class='hidden'>
-    <i class="fas fa-bars"></i>
-  </button>
+
   <div>
     <div class='inline-flex py-5 space-x-4 w-full'>
       <!-- <div><%= link_to '首頁', root_path %></div> -->
@@ -44,8 +41,4 @@
   </div>
 </nav>
     
-<script>
-  document.querySelector('.fas').addEventListener('click',(e)=>{
-    console.log("hello")
-  })
-</script>
+
