@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(){
   if (favorite_btn) {
     favorite_btn.addEventListener("click", function(e) {
       e.preventDefault()
-      const ax = require('axios')
+      const ax = require('@rails/ujs')
       const token = document.querySelector('[name=csrf-token]').content
         ax.defaults.headers.common['X-CSRF-TOKEN'] = token
     
