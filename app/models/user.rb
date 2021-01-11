@@ -10,7 +10,6 @@ class User < ApplicationRecord
   has_one :shop
   has_many :messages
   
-  has_many:product
   has_many :favorite_products
   has_many :my_favorites, through: :favorite_products, source: 'product'
 
