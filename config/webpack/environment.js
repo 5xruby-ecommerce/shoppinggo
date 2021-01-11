@@ -6,7 +6,8 @@ environment.plugins.prepend(
   'Provide',
   new webpack.ProvidePlugin({
     jQuery: 'jquery',
-    moment: 'moment'
+    moment: 'moment',
+    Swiper: 'swiper'
   })
 )
 

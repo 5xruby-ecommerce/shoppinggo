@@ -1,1 +1,2 @@
 import './shops'
+import './swiper'
