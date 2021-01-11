@@ -22,6 +22,7 @@ class ProductsController < ApplicationController
   end
 
   def create
+    @product
     @product = Product.new(product_params)
     @product.shop = current_user.shop
 
@@ -54,15 +55,20 @@ class ProductsController < ApplicationController
   private
 
   def find_shop
-    @shop = Shop.find(current_user.shop.id)
+    @shop = Shop.find(current_user.shop)
   end
 
   def find_product
-    @product = @shop.products.find(params['id'])
+    @product = current_user.shop.products.find(params['id'])
   end
 
   def product_params
-    params.require(:product).permit(:image, :name, :content, :quantity, :price, {images:[]})
+    params.require(:product).permit(
+      :image,
+      :name,
+      :content,
+      :quantity,
+      :price,
+      {images:[]})
   end
-
 end
