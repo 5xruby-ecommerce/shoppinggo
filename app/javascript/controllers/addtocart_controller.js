@@ -27,7 +27,7 @@ export default class extends Controller {
   }
 
   numberValueChanged() {
-    if (this.numberValue !== NaN || this.numberValue != '') {
+    if (isNaN(this.numberValue) || this.numberValue != '') {
       this.amountTarget.value = this.numberValue
     }
   }

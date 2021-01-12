@@ -30,10 +30,11 @@ Rails.application.routes.draw do
   resource :carts, only:[:show, :destroy] do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
     get :checkout
-    get :cancel
+    delete :cancel 
+    # delete :empty
     get 'get_coupon_info/:id', action: 'get_coupon_info', as: 'get_coupon'
     get 'cal_totalprice', action: 'cal_totalprice', as: 'cal_totalprice'
     delete 'destroy/:id', action: 'destroy', as: 'destroy'
-    post 'update_item/:id', action: 'update_item', as: 'update_item'
+    put 'update_item/:id', action: 'update_item', as: 'update_item'
   end
 end

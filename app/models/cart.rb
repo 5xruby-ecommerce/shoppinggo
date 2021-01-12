@@ -1,6 +1,6 @@
 class Cart
   attr_reader :items, :coupons, :total, :subtotals
-  def initialize(items = [], coupons=[], total= 0, subtotals= [])
+  def initialize(items = [], coupons = [], total= 0, subtotals= [])
     @items = items
     @coupons = coupons
     @total = total
@@ -46,6 +46,7 @@ class Cart
     if @coupons.filter { |usercoupon, shop| usercoupon == usercoupon_id}.empty?
       @coupons << [usercoupon_id, shop_id]
     end
+
   end
 
   def unuse_coupon(usercoupon_id, shop_id)
@@ -76,7 +77,7 @@ class Cart
     if @subtotals.filter { |shoptotal, shopid| shopid == shop_id }.empty?
       @subtotals << [shoptotal, shop_id]
     else
-      @subtotals = @subtotals.map { |origin_shoptotal, shopid| shopid == shop_id ? [shoptotal, shopid] : [origin_shoptotal, shop_id] }
+      @subtotals = @subtotals.map { |origin_shoptotal, shopid| shopid == shop_id ? [shoptotal, shop_id] : [origin_shoptotal, shopid] }
     end
   end
 

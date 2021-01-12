@@ -61,7 +61,8 @@ export default class extends Controller {
           const event = new CustomEvent('minusbtn', {
             detail: {
               count: resp.count,
-              total_price: resp.total_price
+              total_price: resp.total_price,
+              shoptotal: resp.shoptotal
             }
           })
           window.dispatchEvent(event)
@@ -78,16 +79,18 @@ export default class extends Controller {
     let varyamount = Number(this.amountTarget.value) - this.numberValue 
     this.numberValue = Number(this.amountTarget.value) 
     const amount = { amount: varyamount }
+    console.log(id, varyamount, amount)
     magicRails.ajax({
       url:  `/carts/update_item/${id}`,
-      type: 'post',
+      type: 'put',
       contentType: 'application/json', // 指定傳送到 server 的資料類型
       data: JSON.stringify(amount),
       success: (resp) => {
         const event = new CustomEvent('changequantity', {
           detail: {
             count: resp.count,
-            total_price: resp.total_price
+            total_price: resp.total_price,
+            shoptotal: resp.shoptotal
           }
         })
         window.dispatchEvent(event)
