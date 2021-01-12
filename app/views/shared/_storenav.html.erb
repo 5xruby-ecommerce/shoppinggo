@@ -6,18 +6,10 @@
     <h2>賣家中心</h2>
   </div>
 
-
-
   <div>
     <div class='inline-flex py-5 space-x-4 w-full'>
-      <!-- <div><%= link_to '首頁', root_path %></div> -->
         <% if user_signed_in? %>
         <div class='hover:bg-gray-900'><%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %></div>
-        <!-- <% if current_user.shop.blank? %>
-          <div><%= link_to '我要開店', new_shop_path %></div>
-        <% else %>
-          <div><%= link_to '賣家中心', shops_path %></div>
-        <% end %> -->
       <% else %>
         <div class='hover:text-pink-300'><%= link_to '註冊', new_user_registration_path %></div>
         <div class='hover:text-pink-300'><%= link_to '登入',  new_user_session_path  %></div>
@@ -25,4 +17,3 @@
     </div>
   </div>
 </nav>
-    

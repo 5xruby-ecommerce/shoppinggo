@@ -11,25 +11,24 @@ class ProductsController < ApplicationController
 
   def search
     if params[:search]
-        @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
+      @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
     else
-        @product = Product.all
+      @product = Product.all
     end
   end
 
   def new
-    @product = Product.new
+    @product = current_user.shop.products.new
   end
 
   def create
-    @product
     @product = Product.new(product_params)
     @product.shop = current_user.shop
 
     if @product.save
-      redirect_to shops_path, notice: '新增商品成功'
+      redirect_to shops_path
     else
-      render :new, notice: '沒成功，再試一次吧'
+      render :new
     end
   end
 
@@ -38,30 +37,24 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(product_params)
-      redirect_to shops_path, notice: '更新商品成功'
+      redirect_to shops_path
     else
-      render :edit, notice: '更新商品失敗'
+      render :edit
     end
   end
 
   def destroy
     if @product.destroy
-      redirect_to shops_path, notice: '已刪除商品'
+      redirect_to shops_path
     else
-      redirect_to shops_path, notice: '刪除商品失敗'
+      redirect_to shops_path
     end
-  end
-  
-  def shop_new
-    @shop = current_user.shop || current_user.create_shop
-    @product = @shop.products.new
-    render :new      
   end
 
   private
 
   def find_shop
-    @shop = Shop.find(current_user.shop)
+    @shop = current_user.shop
   end
 
   def find_product
