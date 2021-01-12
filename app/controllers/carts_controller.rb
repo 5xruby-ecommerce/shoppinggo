@@ -126,6 +126,7 @@ class CartsController < ApplicationController
       products_all.each do |(shop_id, products)|
         items = current_cart.items.filter { |item| item.product_id.in?(products.keys) }
         sum = items.sum(&:total_price)
+                                                                                                                
         order.sub_orders.new(sum: sum)
       end
       order.save!

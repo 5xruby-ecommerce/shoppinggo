@@ -100,6 +100,10 @@ class Cart
     }
   end
 
+  def items_name
+    items.map { |item| "#{item.product.name} x #{item.quantity}" }.join('#')
+  end
+
   def self.from_hash(hash)
     if hash && hash["items"] && hash["subtotals"]
       items = hash["items"].map do |item|

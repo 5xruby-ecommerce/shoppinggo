@@ -4,6 +4,8 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :sub_orders
 
+  before_create :build_trade_no
+
   enum status: { pending: 0, paid: 1, cancelled: 2, deliver: 3 }
 
   include AASM
@@ -21,4 +23,8 @@ class Order < ApplicationRecord
     end
   end
 
+  private
+  def build_trade_no
+    self.number = "shopA#{user.id.to_i}#{Time.zone.now.to_i.to_s}"
+  end
 end

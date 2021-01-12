@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ShopsController < ApplicationController
+  layout "store"
+
   def index
     # @products = Product.where(shops: current_user.shop)
     @products = current_user.shop.products

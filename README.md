@@ -6,7 +6,7 @@ Demo video 示範影片: -->
 
 <!-- ![ShoppingGO]](png) -->
 
-ShoppingGO 是向電商平台 Shopee 致敬的產品，是一個網路拍賣平台，有以下三個主要功能
+ShoppingGO 是向電商平台 Shopee 致敬的產品，是一個網路拍賣平台，有以下主要功能
 ## 買家
 1. 商品搜尋：透過關鍵字找尋自己喜歡的商品
 2. 購物車機制：將喜歡商品放入購物車在結帳
@@ -39,14 +39,14 @@ Feel free to [open an issue](https://github.com/5xruby-ecommerce/shoppinggo/issu
   - 
 - Github: https://github.com/
 #### 謝家銘
-- Responsibility負責項目 
+- Responsibility負責項目
   - 優惠卷功能
   - 
   - 
 - Github: https://github.com/
 
 #### 簡君倪
-- Responsibility負責項目 
+- Responsibility負責項目
   - rontend Design 前端設計
   - search bar 商品搜尋功能
   - 第三方登入

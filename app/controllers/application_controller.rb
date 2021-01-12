@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     #    infinite redirect loop.
     # - The request is an Ajax request as this can lead to very unexpected behaviour.
     def storable_location?
-      request.get? && is_navigational_format? && !devise_controller? && !request.xhr? 
+      request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
     end
 
     def store_user_location!

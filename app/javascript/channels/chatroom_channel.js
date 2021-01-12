@@ -5,7 +5,7 @@ document.addEventListener('turbolinks:load',()=>{
   const room = document.querySelector('.message_box')
   if(!room)return
   const room_id = room.dataset.room
-  if (consumer.subscriptions.subscriptions.length === 0){
+  if (consumer.subscriptions.subscriptions.length === 1 ){consumer.subscriptions.subscriptions.length = 0 }
     consumer.subscriptions.create({channel:"ChatroomChannel", room_id: room_id}, {
       connected() {
         console.log('connecting'+ room_id)
@@ -35,7 +35,6 @@ document.addEventListener('turbolinks:load',()=>{
   
       }
     });
-  }
 
 })
 
