@@ -56,7 +56,7 @@ class CouponsController < ApplicationController
     @coupon = Coupon.find(params[:id])
     @coupon.destroy
     respond_to do |format|
-      format.html {redirect_to list_coupons_path, notice: 'Coupon was successfully destroyed',}
+      format.html {redirect_to list_coupons_path, notice: 'Coupon was successfully destroyed'}
       format.json { head :no_content}
     end
   end
