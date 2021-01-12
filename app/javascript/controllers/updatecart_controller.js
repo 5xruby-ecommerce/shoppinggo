@@ -26,7 +26,7 @@ export default class extends Controller {
     const amount = { amount: 1 }
     magicRails.ajax({
       url:  `/carts/update_item/${id}`,
-      type: 'post',
+      type: 'put',
       contentType: 'application/json', // 指定傳送到 server 的資料類型
       data: JSON.stringify(amount),
       success: (resp) => {
@@ -53,7 +53,7 @@ export default class extends Controller {
 
       magicRails.ajax({
         url:  `/carts/update_item/${id}`,
-        type: 'post',
+        type: 'put',
         contentType: 'application/json', // 指定傳送到 server 的資料類型
         data: JSON.stringify(amount),
         success: (resp) => {
