@@ -1,12 +1,12 @@
 class CouponsController < ApplicationController
 
   def index
-
   end
 
   def new
     @shop = Shop.find(current_user.shop.id)
     @coupon = Coupon.new
+    render layout: "store"
   end
 
   def create
@@ -39,24 +39,25 @@ class CouponsController < ApplicationController
         format.json { render json: @coupon.errors, status: :unprocessable_entity}
       end
     end
-  end 
+  end
 
   def list
     @coupons = Coupon.where(shop_id: current_user.shop.id)
+    render layout: "store"
   end
 
   def edit
     @coupon = Coupon.find(params[:id])
   end
 
-  def show 
-  end 
+  def show
+  end
 
   def destroy
-    @coupon = Coupon.find(params[:id]) 
+    @coupon = Coupon.find(params[:id])
     @coupon.destroy
     respond_to do |format|
-      format.html {redirect_to list_coupons_path, notice: 'Coupon was successfully destroyed'}
+      format.html {redirect_to list_coupons_path, notice: 'Coupon was successfully destroyed',}
       format.json { head :no_content}
     end
   end

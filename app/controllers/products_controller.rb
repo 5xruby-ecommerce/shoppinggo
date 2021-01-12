@@ -11,14 +11,14 @@ class ProductsController < ApplicationController
 
   def search
     if params[:search]
-        @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
+      @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
     else
-        @product = Product.all
+      @product = Product.all
     end
   end
 
   def new
-    @product = Product.new
+    @product = current_user.shop.products.new
   end
 
   def create
@@ -26,9 +26,9 @@ class ProductsController < ApplicationController
     @product.shop = current_user.shop
 
     if @product.save
-      redirect_to shops_path, notice: '新增商品成功'
+      redirect_to shops_path
     else
-      render :new, notice: '沒成功，再試一次吧'
+      render :new
     end
   end
 
@@ -37,32 +37,37 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(product_params)
-      redirect_to shops_path, notice: '更新商品成功'
+      redirect_to shops_path
     else
-      render :edit, notice: '更新商品失敗'
+      render :edit
     end
   end
 
   def destroy
     if @product.destroy
-      redirect_to shops_path, notice: '已刪除商品'
+      redirect_to shops_path
     else
-      redirect_to shops_path, notice: '刪除商品失敗'
+      redirect_to shops_path
     end
   end
 
   private
 
   def find_shop
-    @shop = Shop.find(current_user.shop.id)
+    @shop = current_user.shop
   end
 
   def find_product
-    @product = @shop.products.find(params['id'])
+    @product = current_user.shop.products.find(params['id'])
   end
 
   def product_params
-    params.require(:product).permit(:image, :name, :content, :quantity, :price, {images:[]})
+    params.require(:product).permit(
+      :image,
+      :name,
+      :content,
+      :quantity,
+      :price,
+      {images:[]})
   end
-
 end

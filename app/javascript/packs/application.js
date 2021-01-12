@@ -18,12 +18,17 @@ require("scripts")
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"
 
-//tailwind
+
 import 'stylesheet'
-// import "tailwindcss/tailwind.css"
+import 'styles'
+
 import "tempusdominus-bootstrap-4"
 import "tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css"
 import "font-awesome/css/font-awesome.min.css"
 import $ from "jquery"
-
 window.$ = $
+
+import 'swiper/swiper-bundle.css';
+// window.Swiper = require('Swiper');
+
+window.Swiper = Swiper
