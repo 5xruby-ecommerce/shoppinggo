@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :rooms do 
+  resources :rooms do
     resources :messages , shallow: true
   end
 

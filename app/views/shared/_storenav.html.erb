@@ -1,0 +1,19 @@
+<nav class='flex w-full items-center bg-gray-50 px-2 lg:px-10 text-black shadow flex-wrap justify-between fixed top-0'>
+  <div class="flex items-center">
+    <%= link_to root_path do %>
+      <%= image_tag "logo.png" , class:'w-20' %>
+    <% end %>
+    <h2>賣家中心</h2>
+  </div>
+
+  <div>
+    <div class='inline-flex py-5 space-x-4 w-full'>
+        <% if user_signed_in? %>
+        <div class='hover:bg-gray-900'><%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %></div>
+      <% else %>
+        <div class='hover:text-pink-300'><%= link_to '註冊', new_user_registration_path %></div>
+        <div class='hover:text-pink-300'><%= link_to '登入',  new_user_session_path  %></div>
+      <% end %>
+    </div>
+  </div>
+</nav>

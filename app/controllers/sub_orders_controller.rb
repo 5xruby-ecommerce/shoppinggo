@@ -1,7 +1,0 @@
-class SubOrdersController < ApplicationController
-
-
-
-
-
-end
