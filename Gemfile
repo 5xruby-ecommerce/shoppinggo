@@ -38,7 +38,7 @@ gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'carrierwave', '~> 2.1'
 gem 'fog-aws', '~> 3.7'
 gem "mini_magick"
-
+gem 'dotenv', '~> 0.7.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 11.1', '>= 11.1.3', platforms: %i[mri mingw x64_mingw]
