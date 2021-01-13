@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :shops do
     resources :products, shallow: true do 
       member do
-        post :favorite 
+        post :favorite
       end
     end
   end
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   resource :carts, only:[:show, :destroy] do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
     get :checkout
-    get :cancel
+    get :empty
     delete 'destroy/:id', action: 'destroy', as: 'destroy'
     post 'update_item/:id', action: 'update_item', as: 'update_item'
   end

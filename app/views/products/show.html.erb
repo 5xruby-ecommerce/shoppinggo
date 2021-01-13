@@ -25,14 +25,14 @@
           <% if user_signed_in? %>
             <%= link_to '#', data: { action: 'favorite#go' } do %>
               <% if current_user.favorite?(@product) %>
-                <i class='fas fa-heart' data-target='favorite.icon'>已收藏</i>
+                <i class='fas fa-heart' data-target='favorite.icon'>已喜歡</i>
               <% else %>
-                <i class='far fa-heart' data-target='favorite.icon'>我的最愛</i>
+                <i class='far fa-heart' data-target='favorite.icon'>喜歡</i>
               <% end %>
             <% end %>
           <% else %>
             <%= link_to new_user_session_path do %>
-              <i class='far fa-heart'>我的最愛</i>
+              <i class='far fa-heart'>喜歡</i>
             <% end %>
           <% end %>
         </h2>
