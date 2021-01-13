@@ -13,17 +13,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   process resize_to_fill: [20, 20]
   # end
 
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
+  def extension_white_list
+     %w(jpg jpeg gif png)
+  end
 
   # Choose what kind of storage to use for this uploader:
   #storage :file
-  if true
-    storage :fog #Heroku, Use Amazon S3
-  else
-    storage :file
-  end  
+  storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
