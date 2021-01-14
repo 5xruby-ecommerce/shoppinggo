@@ -5,8 +5,8 @@ export default class extends Controller {
  
   update(e) {
     e.preventDefault()
-    const {count, total_price} = e.detail
+    const {count, cart_total} = e.detail
     this.cartcountTarget.innerText = `${count}`
-    this.carttotalpriceTarget.innerText = `${total_price}`
+    this.carttotalpriceTarget.innerText = `${cart_total}`
   }
 }

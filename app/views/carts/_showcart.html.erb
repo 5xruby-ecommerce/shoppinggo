@@ -98,8 +98,11 @@
   <div class="row">
     <div>總價</div>
     <div class="cart_total">
-      <%#= cart.total_price %>
-      <%= cart.total %>
+      <% if cart.subtotals.empty? %>
+        <span><%= cart.total %> origin</span>
+      <% else%>
+        <span><%= cart.subtotals.reduce(0) {|sum, item| sum + item[0]} %> user coupon </span>
+      <% end %>
     </div>
   </div>
 </div>

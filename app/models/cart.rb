@@ -1,6 +1,6 @@
 class Cart
   attr_reader :items, :coupons, :total, :subtotals
-  def initialize(items = [], coupons = [], total= 0, subtotals= [])
+  def initialize(items = [], coupons = [], total = 0, subtotals = [])
     @items = items
     @coupons = coupons
     @total = total
@@ -14,10 +14,6 @@ class Cart
     else
       @items << CartItem.new(product_id, quantity)
     end
-    
-    shop_id = Product.find_by(id: product_id).shop_id
-    shop_totalprice(shop_id)
-    @total = @subtotals.reduce(0) { |total, shoptotal| total + shoptotal[0] }
   end
 
   def empty?
@@ -29,24 +25,51 @@ class Cart
   end
 
   def total_price
-    if @items
-      total = @items.reduce(0) { |total, item| total + item.total_price }
-    else 
-      total = 0
-    end 
+    # if @items
+    #   total = @items.reduce(0) { |total, item| total + item.total_price }
+    # else 
+    #   total = 0
+    # end 
 
-    if Date.today.month == 12 && Date.today.day == 25
-      total = total * 0.9
-    end
+    if not @subtotals.empty?
+      total = @subtotals.reduce(0) {|sum, item| sum + item[0]}
+    end  
 
+    byebug
     total
+  end
+
+  def cal_discount(shop_id,current_user, sum)
+    coupon_id = Shop.find(shop_id).coupons.pluck(:id) & current_user.user_coupons.pluck(:coupon_id) 
+    if not coupon_id.empty?
+      coupon = Coupon.find(coupon_id[0])
+      discount_rule = coupon.discount_rule
+      discount_amount = coupon.discount_amount.to_i
+      min_consumption = coupon.min_consumption.to_i
+      if min_consumption < sum
+        if discount_rule == 'percent'
+          discount = (sum * discount_amount * 0.01).floor()
+        elsif discount_rule == 'dollor'
+          discount = discount_amount
+        end
+      else 
+        discount = 0
+      end
+    else
+      discount = 0
+    end
+    if @subtotals.filter { |shoptotal, shopid| shopid == shop_id }.empty?
+      @subtotals << [sum-discount, shop_id]
+    else
+      @subtotals = @subtotals.map { |origin_shoptotal, shopid| shopid == shop_id ? [sum-discount, shop_id] : [origin_shoptotal, shopid] }
+    end
+    discount
   end
 
   def use_coupon(usercoupon_id, shop_id)
     if @coupons.filter { |usercoupon, shop| usercoupon == usercoupon_id}.empty?
       @coupons << [usercoupon_id, shop_id]
     end
-
   end
 
   def unuse_coupon(usercoupon_id, shop_id)
@@ -70,7 +93,7 @@ class Cart
       if discount_rule == 'dollar'
         shoptotal -= discount_amount
       elsif discount_rule == 'percent'
-        shoptotal = shoptotal * 0.01 * (1 - discount_amount.to_i)
+        shoptotal = (shoptotal * (1 - 0.01 * discount_amount.to_i)).floor()
       end 
     end
 
@@ -79,6 +102,12 @@ class Cart
     else
       @subtotals = @subtotals.map { |origin_shoptotal, shopid| shopid == shop_id ? [shoptotal, shop_id] : [origin_shoptotal, shopid] }
     end
+  end
+
+  def cal_cart_total 
+    if not @subtotals.empty?
+      @total = @subtotals.reduce(0) {|sum, item| sum + item[0]}
+    end      
   end
 
   def serialize
@@ -94,9 +123,19 @@ class Cart
         "shop_id" => subtotal[1]
       }
     end
+    coupons = @coupons.map do |coupon|
+      {
+        "usercoupon" => coupon[0],
+        "shop_id" => coupon[1]
+      }
+    end
+    total = {"total" => @total}
+
     { 
       "items" => items,
-      "subtotals" => sub_totals 
+      "subtotals" => sub_totals,
+      "coupons" => coupons,
+      "total" => total
     }
   end
 
@@ -105,14 +144,18 @@ class Cart
   end
 
   def self.from_hash(hash)
-    if hash && hash["items"] && hash["subtotals"]
+    if hash && hash["items"] && hash["subtotals"] && hash["coupons"] && hash["total"]
       items = hash["items"].map do |item|
         CartItem.new(item["product_id"], item["quantity"])
       end
       sub_totals = hash["subtotals"].map do |subtotal|
         [subtotal["shoptotal"], subtotal["shop_id"]]
       end
-      Cart.new(items,coupons=[], total=0, subtotals=sub_totals)
+      _coupons = hash["coupons"].map do |coupon|
+        [coupon["usercoupon"], coupon["shop_id"]]
+      end
+      _total = hash["total"]["total"].to_i
+      Cart.new(items,coupons=_coupons, total=_total, subtotals=sub_totals)
     else
       Cart.new
     end

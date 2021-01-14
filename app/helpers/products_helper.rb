@@ -1,6 +1,6 @@
 module ProductsHelper
   def user_own_coupon?(coupon)
-    if current_user.user_coupon.where(coupon_id: coupon).empty?
+    if current_user.user_coupons.where(coupon_id: coupon).empty?
       return false
     else 
       return true
@@ -8,7 +8,7 @@ module ProductsHelper
   end
 
   def user_use_coupon?(coupon)
-    if current_user.user_coupon.where(coupon_id: coupon).pluck(:coupon_status)[0] == 'used'
+    if current_user.user_coupons.where(coupon_id: coupon).pluck(:coupon_status)[0] == 'used'
       return true
     else 
       return false

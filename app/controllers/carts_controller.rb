@@ -4,6 +4,8 @@ class CartsController < ApplicationController
       product = Product.find(params[:id])
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
       current_cart.add_item(product.id, quantity)
+      current_cart.shop_totalprice(product.shop_id)
+      current_cart.cal_cart_total
       session[:cartgo] = current_cart.serialize
       redirect_to root_path, notice: '已加入購物車'
     else
@@ -16,12 +18,13 @@ class CartsController < ApplicationController
       product = Product.find(params[:id])
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
       current_cart.add_item(product.id, quantity)
+      current_cart.shop_totalprice(product.shop_id)
+      current_cart.cal_cart_total
       session[:cartgo] = current_cart.serialize
       render json:{ status: 'ok', 
                     count: current_cart.items.count, 
                     total_price: current_cart.total_price,
-                    change: quantity,
-                    shoptotal: current_cart.subtotals.filter {|shoptotal, shopid| shopid == product.shop_id}[0][0]
+                    change: quantity
                   }
     else
       redirect_to user_session_path
@@ -56,8 +59,7 @@ class CartsController < ApplicationController
 
   def get_coupon_info
     coupon = Coupon.find(params[:id])
-
-    user_coupons = current_user.user_coupon.where(coupon_id: params[:id])
+    user_coupons = current_user.user_coupons.where(coupon_id: params[:id])
     own = !(user_coupons.empty?)
 
     if own
@@ -90,19 +92,6 @@ class CartsController < ApplicationController
     end
   end
 
-  def cal_totalprice
-    usercoupon_id = JSON.parse(params.keys.filter{|i| i[/.usercouponID/]}.first)["usercouponID"].to_i
-    coupon_status = JSON.parse(params.keys.filter{|i| i[/.couponStatus/]}.first)["couponStatus"]
-    shop_id = Coupon.find(UserCoupon.where(id: usercoupon_id).pluck(:coupon_id)).pluck(:shop_id)[0]
-    if coupon_status == 'use'      
-      current_cart.use_coupon(usercoupon_id, shop_id)
-      current_cart.shop_totalprice(shop_id)
-    elsif coupon_status == 'unuse'
-      current_cart.unuse_coupon(usercoupon_id, shop_id)
-      current_cart.shop_totalprice(shop_id)
-    end
-  end
-
   # def initialize(params={})
   #   @params = params
   # end
@@ -126,7 +115,9 @@ class CartsController < ApplicationController
       products_all.each do |(shop_id, products)|
         items = current_cart.items.filter { |item| item.product_id.in?(products.keys) }
         sum = items.sum(&:total_price)
-                                                                                                                
+        discount = current_cart.cal_discount(shop_id,current_user, sum)     
+        byebug   
+        sum = sum - discount
         order.sub_orders.new(sum: sum)
       end
       order.save!
@@ -139,14 +130,14 @@ class CartsController < ApplicationController
   def sample_params(order)
     @hash = {
       'MerchantID' => '2000132',
-      'MerchantTradeNo' => 'shoppinggoA0000012',
+      'MerchantTradeNo' => order.number,
       'MerchantTradeDate' => Time.zone.now.strftime('%Y/%m/%d %T'),
       'PaymentType' => 'aio',
       'TotalAmount' => current_cart.total_price,
       'TradeDesc' => '123',
-      'ItemName' => current_cart.items.first.product.name,
-      'ReturnURL' => 'http://localhost:3000/carts/checkout',
-      'ClientBackURL' => 'http://localhost:3000/carts/checkout',
+      'ItemName' => current_cart.items_name,
+      'ReturnURL' => 'http://localhost:5000/carts/checkout',
+      'ClientBackURL' => 'http://localhost:5000/',
       'ChoosePayment' => 'Credit',
       'EncryptType' => '1',
     }

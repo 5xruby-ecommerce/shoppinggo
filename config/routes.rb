@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     get :checkout
     delete :cancel 
     # delete :empty
-    get 'get_coupon_info/:id', action: 'get_coupon_info', as: 'get_coupon'
+    get 'get_coupon_info/:id', action: 'get_coupon_info', as: 'get_coupon_info'
     get 'cal_totalprice', action: 'cal_totalprice', as: 'cal_totalprice'
     delete 'destroy/:id', action: 'destroy', as: 'destroy'
     put 'update_item/:id', action: 'update_item', as: 'update_item'

@@ -102,11 +102,13 @@ export default class extends Controller {
               if (rule == "dollor") {
                 // direct minus the discountAmount of the coupon to the cart total price 
                 document.querySelector('.cart_total').textContent -= discountAmount
+                document.querySelector('.cartTotalPrice').textContent -= discountAmount
               } else if (rule == 'percent') {
                 // if its rule is percent, first calculate the discount dollar based on the total price of the shop(note: not the cart total price, is the shop total price)
                 // then minus the discount dollar to the cart total price
                 let discountDollor = Math.floor(cartShopTotalprice * discountAmount * 0.01)
-                document.querySelector('.cart_total').textContent -= discountDollor
+                document.querySelector('.cart_total').textContent = Number(document.querySelector('.cart_total').textContent) - discountDollor
+                document.querySelector('.cartTotalPrice').textContent = Number(document.querySelector('.cartTotalPrice').textContent) - discountDollor
               }
               // if the coupon is used, then add class tag to it to ensure it is not clickable
               clickedbtn.classList.add('occupy')
@@ -118,19 +120,29 @@ export default class extends Controller {
                 type: 'get',
                 data: JSON.stringify(usercouponID),
                 success: (resp) => {
-                  const msg = {usercouponID: usercoupon_id, couponStatus: 'use'}
-                  // calculate the total price of all shops
-                  magicRails.ajax({
-                    url: `/carts/cal_totalprice`,
-                    type: 'get',
-                    data: JSON.stringify(msg),
-                    success: (resp) => {
-                      console.log(resp)
-                    },
-                    error: (err) => {
-                      console.log(err)
+                  console.log(resp)
+                  // it is for broadcasting to thoses who listen to the usecoupon action
+                  const cartShopProductsNumber = document.querySelectorAll(`div[data-updatecart-target="totalprice"]`)
+                  const event = new CustomEvent('usecoupon', {
+                    detail: {
+                      count: cartShopProductsNumber.length,
+                      cart_total: resp['cart_total'].to_i
                     }
                   })
+                  window.dispatchEvent(event)
+                  // const msg = {usercouponID: usercoupon_id, couponStatus: 'use'}
+                  // // calculate the total price of all shops
+                  // magicRails.ajax({
+                  //   url: `/carts/cal_totalprice`,
+                  //   type: 'get',
+                  //   data: JSON.stringify(msg),
+                  //   success: (resp) => {
+                  //     console.log(resp)
+                  //   },
+                  //   error: (err) => {
+                  //     console.log(err)
+                  //   }
+                  // })
                 },
                 error: (err) => {
                   console.log(err)
@@ -141,15 +153,6 @@ export default class extends Controller {
               console.log('未達使用Coupon條件')
             }
             console.log(itemTotalPrice.length)
-            // it is for broadcasting to thoses who listen to the usecoupon action
-            const cartShopProductsNumber = document.querySelectorAll(`div[data-updatecart-target="totalprice"]`)
-            const event = new CustomEvent('usecoupon', {
-              detail: {
-                count: cartShopProductsNumber.length,
-                total_price: document.querySelector('.cart_total').textContent
-              }
-            })
-            window.dispatchEvent(event)
           } else {
             console.log('你已經使用過該優惠卷')
           }
@@ -166,13 +169,11 @@ export default class extends Controller {
   unusecoupon(e) {
 
     const coupon = e.currentTarget.parentNode.querySelector('div')
-
-    if (coupon.textContent == "使用中") {
+    if (coupon.textContent.trim() == "使用中") {
 
       const shopID = coupon.getAttribute('data-shopid')
       const itemTotalPrice= e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price');   // select all product's total price of the shop        
       const couponID = coupon.getAttribute('data-couponid')
-        
       magicRails.ajax({
         url: `/carts/get_coupon_info/${couponID}`,
         type: 'get',
@@ -187,7 +188,6 @@ export default class extends Controller {
           const occupy = resp['occupy']
           const status = resp['status'][0]
           const usercoupon_id = resp['usercoupon_id'][0]
-
           if (occupy == true) {
             if (status === 'used') {
                 // query all products of the shop
@@ -204,11 +204,13 @@ export default class extends Controller {
                 if (rule == "dollor") {
                   // direct minus the discountAmount of the coupon to the cart total price 
                   document.querySelector('.cart_total').textContent = Number(document.querySelector('.cart_total').textContent) + discountAmount
+                  document.querySelector('.cartTotalPrice').textContent = Number(document.querySelector('.cartTotalPrice').textContent) + discountAmount
                 } else if (rule == 'percent') {
                   // if its rule is percent, first calculate the discount dollar based on the total price of the shop(note: not the cart total price, is the shop total price)
                     // then minus the discount dollar to the cart total price
                   let discountDollor = Math.floor(cartShopTotalprice * discountAmount * 0.01)
                   document.querySelector('.cart_total').textContent = Number(document.querySelector('.cart_total').textContent) + discountDollor
+                  document.querySelector('.cartTotalPrice').textContent = Number(document.querySelector('.cartTotalPrice').textContent) +  discountDollor
                 }
 
                   // change usercoupon state to 'unused'
@@ -218,20 +220,24 @@ export default class extends Controller {
                   type: 'get',
                   data: JSON.stringify(usercouponID),
                   success: (resp) => {
-                    const msg = {usercouponID: usercoupon_id, couponStatus: 'unuse'}
-                    console.log(msg)
-                    // calculate the total price of the cart
-                    magicRails.ajax({
-                      url: `/carts/cal_totalprice`,
-                      type: 'get',
-                      data: JSON.stringify(msg),
-                      success: (resp) => {
-                        console.log(resp)
-                      },
-                      error: (err) => {
-                        console.log(err)
-                      }
-                    })
+                    console.log(resp)
+                    console.log('change coupon status')
+                    coupon.classList.remove('occupy')
+                    coupon.textContent = "未使用"
+                    // const msg = {usercouponID: usercoupon_id, couponStatus: 'unuse'}
+                    // console.log(msg)
+                    // // calculate the total price of the cart
+                    // magicRails.ajax({
+                    //   url: `/carts/cal_totalprice`,
+                    //   type: 'get',
+                    //   data: JSON.stringify(msg),
+                    //   success: (resp) => {
+                    //     console.log(resp)
+                    //   },
+                    //   error: (err) => {
+                    //     console.log(err)
+                    //   }
+                    // })
                   },
                   error: (err) => {
                     console.log('err')
@@ -259,7 +265,5 @@ export default class extends Controller {
         }
       })
     }
-    coupon.classList.remove('occupy')
-    coupon.textContent = "未使用"
   }
 }
