@@ -1,10 +1,11 @@
 class CartsController < ApplicationController
-  # before_action :authenticate_user! ,only:[:add_item]
   def add_item
     if current_user
       product = Product.find(params[:id])
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
       current_cart.add_item(product.id, quantity)
+      current_cart.shop_totalprice(product.shop_id)
+      current_cart.cal_cart_total
       session[:cartgo] = current_cart.serialize
       redirect_to root_path, notice: '已加入購物車'
     else
@@ -15,13 +16,19 @@ class CartsController < ApplicationController
   def update_item
     if current_user
       product = Product.find(params[:id])
-      quantity = JSON.parse(params.keys.first)["amount"].to_i
+      quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
       current_cart.add_item(product.id, quantity)
+      current_cart.shop_totalprice(product.shop_id)
+      current_cart.cal_cart_total
+      shoptotal = current_cart.subtotals.filter {|total, shopid| shopid == product.shop_id}[0][0]
       session[:cartgo] = current_cart.serialize
-      render json: {status: 'ok',
-      count: current_cart.items.count,
-      total_price: current_cart.total_price
-      }
+      render json:{ status: 'ok', 
+                    count: current_cart.items.count, 
+                    total_price: current_cart.total_price,
+                    change: quantity,
+                    shoptotal: shoptotal,
+                    shopID: product.shop_id
+                  }
     else
       redirect_to user_session_path
     end
@@ -53,6 +60,45 @@ class CartsController < ApplicationController
     add_mac_value(sample_params(@order))
   end
 
+  def get_coupon_info
+    coupon = Coupon.find(params[:id])
+    user_coupons = current_user.user_coupons.where(coupon_id: params[:id])
+    own = !(user_coupons.empty?)
+
+    if own
+      status = user_coupons.pluck(:coupon_status)      
+      id = user_coupons.pluck(:id)
+
+      render json: { 
+        discount_rule: coupon[:discount_rule], 
+        discount_start: coupon_TimeWithZone_convert(coupon[:discount_start]),
+        discount_end: coupon_TimeWithZone_convert(coupon[:discount_end]),
+        min_consumption: coupon[:min_consumption],
+        discount_amount: coupon[:discount_amount],
+        amount: coupon[:amount],
+        counter_catch: coupon[:counter_catch],
+        usercoupon_id: id,
+        occupy: own,
+        status: status
+      }
+    else
+      render json: {
+        discount_rule: coupon[:discount_rule], 
+        discount_start: coupon_TimeWithZone_convert(coupon[:discount_start]),
+        discount_end: coupon_TimeWithZone_convert(coupon[:discount_end]),
+        min_consumption: coupon[:min_consumption],
+        discount_amount: coupon[:discount_amount],
+        amount: coupon[:amount],
+        counter_catch: coupon[:counter_catch],
+        occupy: own
+      } 
+    end
+  end
+
+  # def initialize(params={})
+  #   @params = params
+  # end
+
   def check_mac_value
     compute_check_mac_value(@params)
   end
@@ -72,10 +118,11 @@ class CartsController < ApplicationController
       products_all.each do |(shop_id, products)|
         items = current_cart.items.filter { |item| item.product_id.in?(products.keys) }
         sum = items.sum(&:total_price)
+        discount = current_cart.cal_discount(shop_id,current_user, sum)     
+        sum = sum - discount
         order.sub_orders.new(sum: sum)
       end
       order.save!
-      session[:cartgo] = nil
       order
     else
       redirect_to new_user_session_path

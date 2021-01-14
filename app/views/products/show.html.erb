@@ -1,3 +1,18 @@
+<style>
+  .taken {
+    background-color: grey;
+  }
+  .coupon {
+    display: inline-block;
+    width: 25vh;
+    text-align: center;
+  }
+
+  .occupy {
+    background-color: grey;
+  }
+</style>
+
 <div data-controller="addtocart" data-addtocart-id="<%= @product.id %>" data-addtocart-number-value=1 >
   <section class='flex justify-center pt-10'>
     <div class='flex w-full flex-wrap max-w-screen-xl px-8 shadow bg-white'>
@@ -15,16 +30,16 @@
       <div class='w-full md:w-3/5 px-8 pt-4'>
         <h2 class="text-4xl mb-2 font-semibold"><%= @product.name %></h2>
 
-        <div class="w-full flex">
-          <div><a href="#">5.0</a><span>&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</span></div>
-          <div><a href="#">0</a><span>評價</span></div>
-          <div><a href="#">0</a><span>已出售</span></div>
-        </div>
-        <div class=" bg-gray-50 w-full p-2">
-          <h2 class="text-4xl text-red-400">$<%= @product.price %></h2>
-        </div>
-
-        <h2 data-controller="favorite" data-favorite-id="<%= @product.id %>">
+      <div class="w-full flex">
+        <div><a href="#">5.0</a><span>&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</span></div>
+        <div><a href="#">0</a><span>評價</span></div>
+        <div><a href="#">0</a><span>已出售</span></div>
+      </div>
+      <div class=" bg-gray-50 w-full p-2">
+        <h2 class="text-4xl text-red-400">$<%= @product.price %></h2>
+      </div>
+      
+      <h2 data-controller="favorite" data-favorite-id="<%= @product.id %>">
           <% if user_signed_in? %>
             <%= link_to '#', data: { action: 'favorite#go' } do %>
               <% if current_user.favorite?(@product) %>
@@ -38,22 +53,33 @@
               <i class='far fa-heart'>喜歡</i>
             <% end %>
           <% end %>
-        </h2>
-
-        運送 較長備貨(出貨天數20 天)
-            運費
-        尺寸
-        數量
-        <button>加入購物車</button>
-        <button>直接購買</button>
-        <div class="amount"> 
-          <div>數量</div>
-          <button class="minus" data-action="click->addtocart#minusbtn">-</button>
-          <input type="text" class="inputamount" data-addtocart-target="amount">
-          <button class="plus" data-action="click->addtocart#plusbtn">+</button>
-        </div>
-        <button data-action="click->addtocart#add_item" class="inline-block py-4 px-8 leading-none text-white bg-indigo-600 hover:bg-indigo-700 font-semibold rounded">Buy Now!</button>
+      </h2>
+            
+      運送 較長備貨(出貨天數20 天)
+           運費
+      尺寸
+      數量
+      <button>加入購物車</button>
+      <button>直接購買</button>
+      <div class="amount">
+        <div>數量</div>
+        <button class="minus" data-action="click->addtocart#minusbtn">-</button>
+        <input type="text" class="inputamount" data-addtocart-target="amount">
+        <button class="plus" data-action="click->addtocart#plusbtn">+</button>
+        <% @product.shop.coupons.each do |coupon| %>
+          <div>
+            <% userOwnCoupon = user_own_coupon?(coupon) %>
+              <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
+              <% if userOwnCoupon %>
+                <span href="#">已領取</span>
+              <% else %>
+                <span>領取</span>
+              <% end %>
+          </div>
+        <% end %>
       </div>
+      <button data-action="click->addtocart#add_item" class="inline-block py-4 px-8 leading-none text-white bg-indigo-600 hover:bg-indigo-700 font-semibold rounded">Buy Now!</button>
+      </div>        
     </div>
   </section>
 </div>

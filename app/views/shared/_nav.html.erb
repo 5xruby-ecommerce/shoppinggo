@@ -23,9 +23,15 @@
       <% if user_signed_in? %>
         <%=link_to '聊聊', rooms_path %>
         <div class='hover:bg-gray-900'><%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %></div>
-          <%= link_to carts_path do %>
-            <i class="fas fa-shopping-cart"></i></i>(<%= current_cart.items.count %>) / <%= current_cart.total_price %>
+        <%= link_to carts_path do %>
+          <% if current_user %>    
+            <li data-controller="navcart" data-action="plusbtn@window->navcart#update changequantity@window->navcart#update minusbtn@window->navcart#update usecoupon@window->navcart#update unusecoupon@window->navcart#update">
+              <i class="fas fa-shopping-cart"></i> <span class="cartCount" data-navcart-target="cartcount"><%= current_cart.items.count %></span> / <span class="cartTotalPrice" data-navcart-target="carttotalprice"><%= current_cart.total %> </span>
+            </li>
+          <% else %>
+            <li><i class="fas fa-shopping-cart"></i>0 / 0</li>
           <% end %>
+        <% end %>
         <% if current_user.shop.blank? %>
           <div><%= link_to '我要開店', new_shop_path %></div>
         <% else %>
