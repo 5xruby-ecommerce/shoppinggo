@@ -1,4 +1,3 @@
-
 class Coupon < ApplicationRecord
   belongs_to :shop
   has_many :user_coupons

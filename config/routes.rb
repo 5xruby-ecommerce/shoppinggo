@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   resources :shops do
-    resources :products, shallow: true
+    resources :products, shallow: true do 
+      member do
+        post :favorite
+      end
+    end
   end
 
   get :search, to: 'products#search'
@@ -30,10 +34,9 @@ Rails.application.routes.draw do
   resource :carts, only:[:show, :destroy] do
     post 'add_item/:id', action: 'add_item', as: 'add_item'
     get :checkout
-    delete :cancel 
-    # delete :empty
     get 'get_coupon_info/:id', action: 'get_coupon_info', as: 'get_coupon_info'
     get 'cal_totalprice', action: 'cal_totalprice', as: 'cal_totalprice'
+    delete :empty
     delete 'destroy/:id', action: 'destroy', as: 'destroy'
     put 'update_item/:id', action: 'update_item', as: 'update_item'
   end

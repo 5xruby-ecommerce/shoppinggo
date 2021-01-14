@@ -44,13 +44,13 @@ class CartsController < ApplicationController
     @order = Order.new
   end
 
-  def cancel
+  def empty
     session[:cartgo] = nil
     redirect_to root_path, notice: '購物車已清除'
   end
 
   def destroy
-    result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:id].to_i }
+    result_ary = session[:cartgo]["items"].filter { |item| item["product_id"] != params[:id].to_i }
     session[:cartgo] = { 'items' => result_ary }
     redirect_to carts_path, notice: "已刪除訂單"
   end
