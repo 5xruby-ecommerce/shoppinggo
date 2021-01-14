@@ -41,10 +41,10 @@
             <td data-updatecart-target="price"><%= item.product.price %></td>
             <td data-updatecart-target="totalprice" class="item_total_price"></td>
             <td>
-              <a href='#' data-action="click->updatecart#destroy">取消</ㄇ>
+              
+              <%= link_to '取消', destroy_carts_path(item.product_id), method: "delete" %>
             </td>
       </tr>
-
     <% end %>
   </tbody>
   <tfoot>
