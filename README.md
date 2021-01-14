@@ -43,7 +43,7 @@ Feel free to [open an issue](https://github.com/5xruby-ecommerce/shoppinggo/issu
   - 優惠卷功能
   - 
   - 
-- Github: https://github.com/
+- Github: https://github.com/XieJiaming
 
 #### 簡君倪
 - Responsibility負責項目
