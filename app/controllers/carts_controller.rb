@@ -83,7 +83,6 @@ class CartsController < ApplicationController
     order = Order.find_by(number:params['MerchantTradeNo'])
       if callback_val == rtn_value
         render plain: "1|OK"
-        byebug
         order.pay!
       end
     end
@@ -110,7 +109,6 @@ class CartsController < ApplicationController
         sum = items.sum(&:total_price)
         order.sub_orders.new(sum: sum)
       end
-      byebug
       order.save!
       session[:cartgo] = nil
       order
@@ -128,8 +126,8 @@ class CartsController < ApplicationController
       'TotalAmount' => current_cart.total_price,
       'TradeDesc' => '123',
       'ItemName' => current_cart.items_name,
-      'ReturnURL' => 'https://d114c4de9579.ngrok.io/carts/return',
-      'ClientBackURL' => 'https://d114c4de9579.ngrok.io',
+      'ReturnURL' => 'http://localhost:5000/carts/return',
+      'ClientBackURL' => 'http://localhost:5000/',
       'ChoosePayment' => 'Credit',
       'EncryptType' => '1',
     }
