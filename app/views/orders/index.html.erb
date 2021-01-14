@@ -1,0 +1,7 @@
+<%# <h1>購買清單</h1>
+
+<%= @orders.each do |order| %>
+<%= order.number %>
+<%= order.sum %>
+<%= order.created_at %>
+<% end %> %>
