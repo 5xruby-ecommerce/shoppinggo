@@ -1,0 +1,28 @@
+.chatbtn {
+  @apply text-2xl p-3 flex justify-between;
+}
+
+.chatroom {
+  @apply bg-green-300 fixed bottom-0 right-5 z-50;
+}
+
+.show {
+  width: 510px;
+  height:390px
+}
+
+.btn {
+  cursor: pointer
+}
+
+.mini {
+  width: 85px;
+}
+
+.none{
+  visibility: hidden;
+}
+
+.zone {
+  // @apply flex
+}
