@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :my_favorites, through: :favorite_products, source: 'product'
 
   mount_uploader :image, ImageUploader
+  has_many :user_coupons
+  has_many :orders
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info

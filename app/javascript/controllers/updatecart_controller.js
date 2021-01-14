@@ -1,6 +1,5 @@
 import { Controller } from "stimulus"
 import magicRails from '@rails/ujs'
-
 function updateCartTotal() {
   let carttotal = document.querySelector('.cart_total')
   let items = document.querySelectorAll('.item_total_price')
@@ -10,12 +9,11 @@ function updateCartTotal() {
     totalprice += Number(items[i].textContent)
   }
   carttotal.textContent = totalprice
-  // carttotal.textContent = items.reduce((total, item) => {total += Number(item.textContent)})
 }
 
 
 export default class extends Controller {
-  static targets = [ "amount", "additem", "totalprice" , 'price']
+  static targets = [ "amount", "totalprice" , "price" ]
   static values = { number: Number, totalprice: Number }
  
   connect() {
@@ -25,23 +23,23 @@ export default class extends Controller {
   plusbtn(e) {
     this.numberValue++
     const id = this.data.get('id');
-    const additemController = document.querySelector('.content')
     const amount = { amount: 1 }
     magicRails.ajax({
       url:  `/carts/update_item/${id}`,
-      type: 'post',
+      type: 'put',
       contentType: 'application/json', // 指定傳送到 server 的資料類型
       data: JSON.stringify(amount),
-      success: (resp) => {
+      success: (resp) => { 
+        const shopID = resp['shopID']
+        document.querySelector(`span[data-shoptotal-target="shoptotal"][data-shopid="${shopID}"]`).textContent = resp.shoptotal
         const event = new CustomEvent('plusbtn', {
           detail: {
             count: resp.count,
-            total_price: resp.total_price
+            total_price: resp.total_price,
+            shoptotal: resp.shoptotal
           }
         })
         window.dispatchEvent(event)
-        // document.querySelector('.cartCount').textContent = resp["count"]
-        // document.querySelector('.cartTotalPrice').textContent = resp["total_price"]
       },
       error: (err) => {
       }
@@ -53,54 +51,54 @@ export default class extends Controller {
       this.numberValue--;
 
       const id = this.data.get('id');
-      const additemController = document.querySelector('.content')
       const amount = { amount: -1 }
 
       magicRails.ajax({
         url:  `/carts/update_item/${id}`,
-        type: 'post',
+        type: 'put',
         contentType: 'application/json', // 指定傳送到 server 的資料類型
         data: JSON.stringify(amount),
         success: (resp) => {
-          const event = new CustomEvent('plusbtn', {
+          const shopID = resp['shopID']
+          document.querySelector(`span[data-shoptotal-target="shoptotal"][data-shopid="${shopID}"]`).textContent = resp.shoptotal
+          const event = new CustomEvent('minusbtn', {
             detail: {
               count: resp.count,
-              total_price: resp.total_price
+              total_price: resp.total_price,
+              shoptotal: resp.shoptotal
             }
           })
           window.dispatchEvent(event)
-          // document.querySelector('.cartCount').textContent = resp["count"]
-          // document.querySelector('.cartTotalPrice').textContent = resp["total_price"]
         },
         error: (err) => {
+          console.log(err)
         }
       })
     }
   }
 
   changequantity(e) {
-    console.log("target value: ",this.amountTarget.value)
-    console.log("number value",this.numberValue)
     const id = this.data.get('id');
     let varyamount = Number(this.amountTarget.value) - this.numberValue 
-    console.log(varyamount)
     this.numberValue = Number(this.amountTarget.value) 
     const amount = { amount: varyamount }
+    console.log(id, varyamount, amount)
     magicRails.ajax({
       url:  `/carts/update_item/${id}`,
-      type: 'post',
+      type: 'put',
       contentType: 'application/json', // 指定傳送到 server 的資料類型
       data: JSON.stringify(amount),
       success: (resp) => {
-        const event = new CustomEvent('plusbtn', {
+        const shopID = resp['shopID']
+        document.querySelector(`span[data-shoptotal-target="shoptotal"][data-shopid="${shopID}"]`).textContent = resp.shoptotal
+        const event = new CustomEvent('changequantity', {
           detail: {
             count: resp.count,
-            total_price: resp.total_price
+            total_price: resp.total_price,
+            shoptotal: resp.shoptotal
           }
         })
         window.dispatchEvent(event)
-        // document.querySelector('.cartCount').textContent = resp["count"]
-        // document.querySelector('.cartTotalPrice').textContent = resp["total_price"]
       },
       error: (err) => {
       }
@@ -112,11 +110,9 @@ export default class extends Controller {
       this.amountTarget.value = this.numberValue
       this.totalpriceTarget.textContent = Number(this.priceTarget.textContent) * Number(this.amountTarget.value)  
     }
-    updateCartTotal()
   }
 
   destroy(e) {
-
     const id = this.data.get('id')
 
     magicRails.ajax({
@@ -131,4 +127,53 @@ export default class extends Controller {
     })
   }
 
+  getcoupon(e) {
+    if (e.currentTarget.getAttribute('class').split(' ').includes('opacity')) {
+      e.preventDefault()
+    } else {
+      const couponID = e.currentTarget.getAttribute('data-couponid');
+      const totalPrice= e.currentTarget.parentNode.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.querySelector('.item_total_price');
+      const shopID = totalPrice.getAttribute('data-shopid');
+  
+      magicRails.ajax({
+        url: `/carts/get_coupon_info/${couponID}`,
+        type: 'get',
+        success: (resp) => {
+
+          const amount = resp['amount'];
+          const counterCatch = resp['counter_catch'];
+          const occupy = resp['occupy'];
+
+          if (occupy === false ) {
+            if (amount > counterCatch) {
+              // change backgroun color after clicked
+              document.querySelector(`a[data-couponid="${couponID}"]`).classList.add('occupy')
+      
+              const key = { coupon_key: couponID }
+              magicRails.ajax({
+                url: `/users/add_coupon`,
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(key),
+                success: (resp) => {
+                  console.log(resp)
+                },
+                error: (err) => {
+                  console.log(err)
+                }
+              })            
+            } else {
+              console.log('該優惠卷已經被領取完')
+            }
+          } else {
+            console.log('你已經擁有此優惠卷')
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      })
+        
+    }
+  }
 }
