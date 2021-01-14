@@ -29,7 +29,9 @@ export default class extends Controller {
       type: 'put',
       contentType: 'application/json', // 指定傳送到 server 的資料類型
       data: JSON.stringify(amount),
-      success: (resp) => {
+      success: (resp) => { 
+        const shopID = resp['shopID']
+        document.querySelector(`span[data-shoptotal-target="shoptotal"][data-shopid="${shopID}"]`).textContent = resp.shoptotal
         const event = new CustomEvent('plusbtn', {
           detail: {
             count: resp.count,
@@ -57,7 +59,8 @@ export default class extends Controller {
         contentType: 'application/json', // 指定傳送到 server 的資料類型
         data: JSON.stringify(amount),
         success: (resp) => {
-          console.log(resp)
+          const shopID = resp['shopID']
+          document.querySelector(`span[data-shoptotal-target="shoptotal"][data-shopid="${shopID}"]`).textContent = resp.shoptotal
           const event = new CustomEvent('minusbtn', {
             detail: {
               count: resp.count,
@@ -86,6 +89,8 @@ export default class extends Controller {
       contentType: 'application/json', // 指定傳送到 server 的資料類型
       data: JSON.stringify(amount),
       success: (resp) => {
+        const shopID = resp['shopID']
+        document.querySelector(`span[data-shoptotal-target="shoptotal"][data-shopid="${shopID}"]`).textContent = resp.shoptotal
         const event = new CustomEvent('changequantity', {
           detail: {
             count: resp.count,

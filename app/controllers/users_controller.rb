@@ -39,9 +39,11 @@ class UsersController < ApplicationController
     end
     current_cart.shop_totalprice(shop_id)
     current_cart.cal_cart_total
+    session[:cartgo] = current_cart.serialize
     render json: {
       status: usercoupon.coupon_status,
-      cart_total: current_cart.total
+      cart_total: current_cart.total,
+      shop_total: current_cart.subtotals
     }
   end
 end

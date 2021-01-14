@@ -81,7 +81,7 @@ export default class extends Controller {
         const discountAmount = resp['discount_amount']
         const occupy = resp['occupy']
         const usercoupon_id = resp['usercoupon_id'][0]
-        console.log(resp['status'])
+
         if (occupy == true) {
           const status = resp['status'][0]
           if (status == 'unused') {
@@ -92,23 +92,18 @@ export default class extends Controller {
               cartShopTotalprice += Number(e.innerHTML)
             })
 
-            console.log(counterCatch)
-            console.log(amount)
-            console.log(cartShopTotalprice)
-            console.log(minConsumption)
             // First check whether it satisfy the rule of the coupon
             if (counterCatch < amount && cartShopTotalprice > minConsumption) {
               // check which rule it is
               if (rule == "dollor") {
                 // direct minus the discountAmount of the coupon to the cart total price 
                 document.querySelector('.cart_total').textContent -= discountAmount
-                document.querySelector('.cartTotalPrice').textContent -= discountAmount
+                // document.querySelector('.cartTotalPrice').textContent -= discountAmount
               } else if (rule == 'percent') {
                 // if its rule is percent, first calculate the discount dollar based on the total price of the shop(note: not the cart total price, is the shop total price)
                 // then minus the discount dollar to the cart total price
                 let discountDollor = Math.floor(cartShopTotalprice * discountAmount * 0.01)
                 document.querySelector('.cart_total').textContent = Number(document.querySelector('.cart_total').textContent) - discountDollor
-                document.querySelector('.cartTotalPrice').textContent = Number(document.querySelector('.cartTotalPrice').textContent) - discountDollor
               }
               // if the coupon is used, then add class tag to it to ensure it is not clickable
               clickedbtn.classList.add('occupy')
@@ -120,29 +115,21 @@ export default class extends Controller {
                 type: 'get',
                 data: JSON.stringify(usercouponID),
                 success: (resp) => {
-                  console.log(resp)
+                  const cart_total = resp['cart_total']
+                  let shop_total = resp['shop_total']
                   // it is for broadcasting to thoses who listen to the usecoupon action
                   const cartShopProductsNumber = document.querySelectorAll(`div[data-updatecart-target="totalprice"]`)
                   const event = new CustomEvent('usecoupon', {
                     detail: {
                       count: cartShopProductsNumber.length,
-                      cart_total: resp['cart_total'].to_i
+                      total_price: cart_total,
+                      shoptotal: shop_total
                     }
                   })
                   window.dispatchEvent(event)
-                  // const msg = {usercouponID: usercoupon_id, couponStatus: 'use'}
-                  // // calculate the total price of all shops
-                  // magicRails.ajax({
-                  //   url: `/carts/cal_totalprice`,
-                  //   type: 'get',
-                  //   data: JSON.stringify(msg),
-                  //   success: (resp) => {
-                  //     console.log(resp)
-                  //   },
-                  //   error: (err) => {
-                  //     console.log(err)
-                  //   }
-                  // })
+
+                  shop_total = shop_total.filter((e)=> {return e[1] === Number(shopID)})
+                  document.querySelector(`span[data-shoptotal-target="shoptotal"][data-shopid="${shopID}"]`).textContent = shop_total[0][0]
                 },
                 error: (err) => {
                   console.log(err)
@@ -220,39 +207,28 @@ export default class extends Controller {
                   type: 'get',
                   data: JSON.stringify(usercouponID),
                   success: (resp) => {
-                    console.log(resp)
-                    console.log('change coupon status')
                     coupon.classList.remove('occupy')
                     coupon.textContent = "未使用"
-                    // const msg = {usercouponID: usercoupon_id, couponStatus: 'unuse'}
-                    // console.log(msg)
-                    // // calculate the total price of the cart
-                    // magicRails.ajax({
-                    //   url: `/carts/cal_totalprice`,
-                    //   type: 'get',
-                    //   data: JSON.stringify(msg),
-                    //   success: (resp) => {
-                    //     console.log(resp)
-                    //   },
-                    //   error: (err) => {
-                    //     console.log(err)
-                    //   }
-                    // })
+                    const cart_total = resp['cart_total']
+                    let shop_total = resp['shop_total']
+                    // it is for broadcasting to thoses who listen to the usecoupon action
+                    const event = new CustomEvent('unusecoupon', {
+                      detail: {
+                        count: cartShopProductsNumber.length,
+                        total_price: cart_total,
+                        shoptotal: shop_total
+                      }
+                    })
+                    window.dispatchEvent(event)
+
+                    shop_total = shop_total.filter((e)=> {return e[1] === Number(shopID)})
+                    document.querySelector(`span[data-shoptotal-target="shoptotal"][data-shopid="${shopID}"]`).textContent = shop_total[0][0]
                   },
                   error: (err) => {
                     console.log('err')
                   }
                 })
               }
-
-              // it is for broadcasting to thoses who listen to the usecoupon action
-              const event = new CustomEvent('unusecoupon', {
-                detail: {
-                  count: cartShopProductsNumber.length,
-                  total_price: document.querySelector('.cart_total').textContent
-                }
-              })
-              window.dispatchEvent(event)
             } else {
               console.log('你尚未使用此優惠卷')
             }

@@ -30,12 +30,12 @@ class Cart
     # else 
     #   total = 0
     # end 
-
     if not @subtotals.empty?
-      total = @subtotals.reduce(0) {|sum, item| sum + item[0]}
-    end  
-
-    byebug
+      @total = @subtotals.reduce(0) {|sum, item| sum + item[0]}
+    else
+      @total = 0
+    end      
+    total = @total
     total
   end
 

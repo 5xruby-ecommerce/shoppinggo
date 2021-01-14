@@ -5,8 +5,10 @@ export default class extends Controller {
  
   update(e) {
     e.preventDefault()
-    const {count, cart_total} = e.detail
+    console.log(e.detail)
+    console.log(this.carttotalpriceTarget)
+    const {count, total_price, shoptotal} = e.detail
     this.cartcountTarget.innerText = `${count}`
-    this.carttotalpriceTarget.innerText = `${cart_total}`
+    this.carttotalpriceTarget.innerText = `${total_price}`
   }
 }

@@ -72,8 +72,7 @@
   <div class="row">
     <div>總價</div>
     <div class="cart_total">
-      <span><%= cart.subtotals.reduce(0) {|sum, item| sum + item[0]} %></span>
+      <span><%= cart.total%></span>
     </div>
-    <% byebug%>
   </div>
 </div>

@@ -65,10 +65,10 @@
         </div>
       <% end %>
       <div class="row">
-        <div data-action="plusbtn@window->shoptotal#update changequantity@window->shoptotal#update minusbtn@window->shoptotal#update usecoupon@window->shoptotal#update unusecoupon@window->shoptotal#update">
+        <div>
           總金額 : 
           <span data-shoptotal-target="shoptotal" data-shopid="<%= items.first.product.shop_id %>">
-          <%#= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
+          <%= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
           </span>
         </div>
       </div>
@@ -97,12 +97,8 @@
   <% end %>
   <div class="row">
     <div>總價</div>
-    <div class="cart_total">
-      <% if cart.subtotals.empty? %>
-        <span><%= cart.total %> origin</span>
-      <% else%>
-        <span><%= cart.subtotals.reduce(0) {|sum, item| sum + item[0]} %> user coupon </span>
-      <% end %>
+    <div class="cart_total">   
+      <span><%= cart.total %></span>
     </div>
   </div>
 </div>

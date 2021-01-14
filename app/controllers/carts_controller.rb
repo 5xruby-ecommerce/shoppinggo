@@ -20,11 +20,14 @@ class CartsController < ApplicationController
       current_cart.add_item(product.id, quantity)
       current_cart.shop_totalprice(product.shop_id)
       current_cart.cal_cart_total
+      shoptotal = current_cart.subtotals.filter {|total, shopid| shopid == product.shop_id}[0][0]
       session[:cartgo] = current_cart.serialize
       render json:{ status: 'ok', 
                     count: current_cart.items.count, 
                     total_price: current_cart.total_price,
-                    change: quantity
+                    change: quantity,
+                    shoptotal: shoptotal,
+                    shopID: product.shop_id
                   }
     else
       redirect_to user_session_path
@@ -116,7 +119,6 @@ class CartsController < ApplicationController
         items = current_cart.items.filter { |item| item.product_id.in?(products.keys) }
         sum = items.sum(&:total_price)
         discount = current_cart.cal_discount(shop_id,current_user, sum)     
-        byebug   
         sum = sum - discount
         order.sub_orders.new(sum: sum)
       end
