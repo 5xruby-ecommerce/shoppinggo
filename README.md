@@ -1,6 +1,6 @@
 # ShoppingGo 電商平台
 
-# Website 網站:https://shoppinggo.site/
+## Website 網站:https://shoppinggo.site/
 
 <!-- Demo video 示範影片: -->
 
