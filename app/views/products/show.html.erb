@@ -4,9 +4,11 @@
       <div class='md:w-2/5 pb-10 bg-gray-600'>
         <div class="mb-4 bg-red-200" style='width:100%;padding-top:100%;position:relative'><%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
         <div class="flex flex-wrap -mx-2">
-          <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
-          <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
-          <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
+        <% @product.images.each do |image| %>
+          <div class="w-1/3 px-2">
+            <%= image_tag(image.url, class:"px-2") %>
+          </div>
+          <% end %>
         </div>
       </div>
     
@@ -21,6 +23,7 @@
         <div class=" bg-gray-50 w-full p-2">
           <h2 class="text-4xl text-red-400">$<%= @product.price %></h2>
         </div>
+
         <h2 data-controller="favorite" data-favorite-id="<%= @product.id %>">
           <% if user_signed_in? %>
             <%= link_to '#', data: { action: 'favorite#go' } do %>
@@ -36,7 +39,7 @@
             <% end %>
           <% end %>
         </h2>
-         
+
         運送 較長備貨(出貨天數20 天)
             運費
         尺寸
