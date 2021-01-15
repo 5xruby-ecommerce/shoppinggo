@@ -1,22 +1,22 @@
-<section class="flex justify-center items-center h-screen">
+<section class="flex justify-center pt-20 h-screen">
   <div class="w-full max-w-sm mx-auto">
-  <div class="mt-10"><%= image_tag "logo.png" %></div>
-  <h2 class="text-center sans">Hello</h2>
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <div><%= image_tag "simplelogo.png" %></div>
+  <h2 class="text-center font-extrabold  pb-2">Hello</h2>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="input-devise rounded-t-lg">
     <%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder: "e-mail", class:'w-full outline-none' %>
   </div>
 
   <div class="input-devise">
-    <% if @minimum_password_length %>
-    <%= f.password_field :password, autocomplete: "new-password",placeholder:"characters minimum" , class:'w-full outline-none' %>
-    <% end %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password" , class:'w-full outline-none' %>
   </div>
 
   <div class="input-devise rounded-b-lg">
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password" , class:'w-full outline-none' %>
+    <% if @minimum_password_length %>
+      <%= f.password_field :password, autocomplete: "new-password",placeholder:"characters minimum" , class:'w-full outline-none' %>
+    <% end %><br />
   </div>
 
   <button class="bg-gray-800 btn-login">

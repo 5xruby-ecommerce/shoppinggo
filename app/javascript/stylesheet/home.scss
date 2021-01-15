@@ -1,0 +1,42 @@
+//首頁
+.home {
+  @apply bg-gray-50;
+  padding-top: 100px;
+//分類
+.classification {
+  @apply py-10 px-10;  
+}
+// 商品卡片
+.card {
+  @apply  flex justify-center items-center ;
+  .content {
+     @apply container  flex flex-wrap px-10;
+     }
+  .cardstyle {
+     @apply rounded-sm p-0.5 bg-white shadow-sm;
+     .picture {
+        width:100%;
+        padding-top:100%;
+        position:relative;   
+     }
+     .picture img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        position:absolute;
+        top:0;
+        left:0;
+     }
+     .dark{
+        -webkit-filter:grayscale(1);
+        opacity: 0.3;
+     }
+     .item {
+        @apply flex h-20 md:h-28 content-between flex-wrap;
+     }
+     .item>div {
+        @apply flex justify-between w-full;
+     }
+  }
+}
+}
