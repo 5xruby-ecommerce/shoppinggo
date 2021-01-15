@@ -1,8 +1,9 @@
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
+body {
+   @apply bg-gray-50;
+}
 .btn-login {
    @apply mt-4 w-full rounded-lg py-2 font-semibold text-white;
 }
@@ -15,3 +16,4 @@
 .input-store {
    @apply bg-transparent outline-none border rounded-lg p-1;
 }
+

@@ -18,7 +18,6 @@ require("scripts")
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"
 
-
 import 'stylesheet'
 import 'styles'
 
@@ -30,5 +29,4 @@ window.$ = $
 
 import 'swiper/swiper-bundle.css';
 // window.Swiper = require('Swiper');
-
 window.Swiper = Swiper
