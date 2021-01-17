@@ -1,7 +1,18 @@
 <div class= "message <%= message.user_id == current_user.id ? 'me' : 'other'%>">
+    <div>
+      <% if message == message.room.messages.first%>
+        <%= message.created_at %>
+      <% end %>
+    </div>
+    
     <div class= "content">
       <%= message.content %>
-      <%= message.created_at.strftime('%Y年/%m月%d日/%k:%M')%>
+    </div>
+
+    <div>
+      <% if message == message.room.messages.last%>
+        <%= message.created_at %>
+      <% end %>
     </div>
 </div>
 

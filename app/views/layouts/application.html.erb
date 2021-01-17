@@ -13,7 +13,8 @@
     <p class="alert"><%= alert %></p>
     <%= yield %>
 
-    <div class='chatroom'>
+    <% if user_signed_in? %>
+      <div class='chatroom'>
       <div class='chatbtn'>
         <div>
           <i class="fas fa-comments"></i>
@@ -26,7 +27,7 @@
       </div>
 
       <div class='zone hidden flex'>  
-        <div class='w-4/5 h-full'>
+        <div class='w-4/5 h-full' id='chatroom'>
           <p class='text-center'>請開始你的聊天</p>
         </div>
 
@@ -36,6 +37,7 @@
       </div>
 
     </div>
+    <% end %>
 
   </body>
 </html>
