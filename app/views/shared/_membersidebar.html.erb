@@ -1,0 +1,15 @@
+<div class="h-screen flex pt-16">
+  <div class=" bg-gray-50 flex items-center flex-col shadow pt-10 px-20">
+
+    <div class="border-b-2 border-pink-400 ">
+      <p>會員中心</p>
+    </div>
+
+    <div class="pt-4">
+      <%= link_to '我的帳戶', edit_user_registration_path if current_user.shop.present?%>
+    </div>
+
+    <div>
+      <%= link_to '購買清單', orders_path if current_user.shop.present?  %>
+    </div>
+</div>

@@ -1,7 +1,20 @@
-<%# <h1>購買清單</h1>
+  <div class='h-120 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow mt-20 ml-5 '>
+    <table class='w-full text-center border-collapse' >
+      <thead class='bg-gray-100 text-gray-500'>
+        <tr>
+            <td>訂單編號</td>
+            <td>購買日期</td>
+            <td>訂單金額</td>
+        <tr>
+      </thead>
 
-<%= @orders.each do |order| %>
-<%= order.number %>
-<%= order.sum %>
-<%= order.created_at %>
-<% end %> %>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr class='border-b-2 border-fuchsia-600 h-24'>
+              <td class='w-1/4'><%= order.send(:number) %></td>
+              <td class='w-1/4'><%= order.created_at %></td>
+              <td class='w-1/4'><%= order.sum %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
