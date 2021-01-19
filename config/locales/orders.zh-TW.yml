@@ -1,0 +1,5 @@
+zh-TW:
+  order_status:
+    pending: '待付款'
+    paid: '已付款'
+    cancelled: '已取消'
