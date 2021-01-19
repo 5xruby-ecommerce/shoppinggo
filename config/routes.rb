@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :orders
 
   resources :shops do
-    resources :products, shallow: true do 
+    resources :products, shallow: true do
       member do
         post :favorite
       end
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get :search, to: 'products#search'
 
   resources :users do
-    collection do 
+    collection do
       post :add_coupon
       get :change_coupon_status
     end

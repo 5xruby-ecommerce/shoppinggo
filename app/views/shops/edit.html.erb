@@ -1,0 +1,21 @@
+<div class='h-120 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow mt-20 ml-5 '>
+  <table class='w-full text-center border-collapse' >
+    <thead class='bg-gray-100 text-gray-500'>
+      <tr>
+        <td>賣場名稱</td>
+        <td>聯絡電話</td>
+        <td>設定</td>
+      <tr>
+    </thead>
+
+    <tbody>
+      <tr class='border-b-2 border-fuchsia-600 h-24'>
+        <%= form_for @shop do |f| %>
+          <td><%= f.text_field :name %></td>
+          <td><%= f.text_field :tel %></td>
+          <td><%= f.submit "資訊更新" %></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>

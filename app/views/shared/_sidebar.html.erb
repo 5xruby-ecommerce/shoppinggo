@@ -6,9 +6,10 @@
     </div>
 
     <div class="pt-4">
-      <%= link_to '商品列表', shops_path if current_user.shop.present?%></div>
-    <div>
+      <%= link_to '商品列表', shops_path if current_user.shop.present?%>
+    </div>
 
+    <div>
       <%= link_to '新增商品', new_shop_product_path(current_user.shop) if current_user.shop.present?  %>
     </div>
 
@@ -18,5 +19,9 @@
 
     <div>
       <%= link_to '檢視Coupon', list_coupons_path if current_user.shop.present?%>
+    </div>
+
+    <div>
+      <%= link_to '賣場設定', edit_shop_path(current_user.shop) if current_user.shop.present?%>
     </div>
 </div>
