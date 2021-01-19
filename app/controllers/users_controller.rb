@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
-  def index 
+  layout "member"
+
+  def index
     redirect_to root_path
   end
-  
+
+  def show
+    @user = current_user
+  end
+
   def add_coupon
     coupon_key = JSON.parse(params.keys.filter{|i| i[/.coupon_key/]}.first)["coupon_key"].to_i
     user_own_coupon_key = current_user.user_coupons.pluck(:coupon_id).uniq
@@ -10,16 +16,16 @@ class UsersController < ApplicationController
 
     if (not user_own_coupon_key.include?(coupon_key)) && @coupon.counter_catch < @coupon.amount
       @usercoupon = current_user.user_coupons.create(coupon_id: coupon_key)
-      @usercoupon.save 
+      @usercoupon.save
 
-      @coupon.increment(:counter_catch) 
+      @coupon.increment(:counter_catch)
       @coupon.save
       msg = '領取'
     elsif (not user_own_coupon_key.include?(coupon_key)) && @coupon.counter_catch >= @coupon.amount
       msg = '已被領完'
-    else 
+    else
       msg = '已領取'
-    end  
+    end
 
     render json: { message: msg, rest: @coupon.amount-@coupon.counter_catch}
   end
