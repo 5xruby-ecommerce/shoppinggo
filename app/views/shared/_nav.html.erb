@@ -1,12 +1,16 @@
 <nav class='primarynav'>
-  <div>
+  <button class="text-gray-900 inline-flex mr-2 p-2 hover:bg-gray-900 rounded lg:hidden ml-auto hover:text-white focus:outline-none nav-toggler">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class='logo'>
     <%= link_to root_path do %>
-      <%= image_tag "logoblack.png" , class:'w-20 lg:w-32' %>
+      <%= image_tag "logoblack.png" %>
     <% end %>
   </div>
 
 
-  <div class='searchbar w-1/5 sm:3/5'>
+  <div class='searchbar w-1/5 md:1/2 sm:3/5'>
     <%= form_tag products_path, method: :get do %>
       <div class="search">
         <span class="btn">
@@ -19,9 +23,11 @@
     <% end %>
   </div>
 
+    <%= link_to carts_path do %>
+      <div class='text-gray-900 flex items-center'><%= image_tag 'bag.png' ,class:'w-8'%>(<%= current_cart.items.count %>) / <%= current_cart.total_price %></div>
+    <% end %>
 
-  <div>
-    <div class='login'>
+    <div class='hidden top-navbar w-full md:inline-flex md:w-auto text-gray-900 navigation bg-white pl-2 md:space-x-2'>
       <!-- <div><%= link_to '首頁', root_path %></div> -->
         <% if user_signed_in? %>
         <%=link_to '聊聊', rooms_path %>
@@ -29,18 +35,18 @@
 
           <%= link_to carts_path do %>
             <i class="fas fa-cart-plus"></i></i>(<%= current_cart.items.count %>) / <%= current_cart.total_price %>
-          <% end %>
         <% if current_user.shop.blank? %>
-          <%= link_to '我要開店', new_shop_path %>
+          <div class='py-4'><%= link_to '我要開店', new_shop_path %></div>
         <% else %>
-          <%= link_to '賣家中心', shops_path %>
+          <div class='py-4'><%= link_to '賣家中心', shops_path %></div>
         <% end %>
       <% else %>
-        <%= link_to '註冊', new_user_registration_path %>
-        <%= link_to '登入',  new_user_session_path  %>
+        <div class='py-4 pl-2'><%= link_to '註冊', new_user_registration_path %></div>
+        <div class='py-4 pl-2'><%= link_to '登入',  new_user_session_path  %></div>
       <% end %>
     </div>
-  </div>
 </nav>
-    
+
+
+
 

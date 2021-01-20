@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
@@ -20,6 +19,7 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    render layout: "store"
   end
 
   def create
@@ -55,3 +55,4 @@ class ProductsController < ApplicationController
   private
 
   def find_shop
+
