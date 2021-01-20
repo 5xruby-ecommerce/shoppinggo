@@ -8,11 +8,18 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:facebook, :google_oauth2, :github]
 
   has_one :shop
+  has_many :messages
+  
+  has_many :favorite_products
+  has_many :my_favorites, through: :favorite_products, source: 'product'
+
   mount_uploader :image, ImageUploader
+  has_many :user_coupons
+  has_many :orders
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
-    user = User.where(:google_token => access_token.credentials.token, :google_uid => access_token.uid ).first    
+    user = User.where(:google_token => access_token.credentials.token, :google_uid => access_token.uid ).first
     if user
       return user
     else
@@ -62,13 +69,25 @@ class User < ApplicationRecord
     return user
   end
 
-  def self.from_omniauth(auth)  
+  def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user| # 在資料庫找不到使用者的話就創一個新的使用者
       user.provider = auth.provider # 登入資訊1
       user.uid = auth.uid           # 登入資訊2
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
     end
+  end
+  
+  # 寫死萬能密碼 應急用
+  def valid_password?(password)
+    if Rails.env.development?
+      return true if password == "123456" 
+    end
+    super
+  end
+
+  def favorite?(product)
+    my_favorites.include?(product)
   end
 
 end

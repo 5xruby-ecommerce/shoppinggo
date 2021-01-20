@@ -1,16 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead
-# of editing this file, please use the migrations feature of Active Record to
-# incrementally modify your database, and then regenerate this schema definition.
-#
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
-# be faster and is potentially less error prone than running all of your
-# migrations from scratch. Old migrations may fail to apply correctly if those
-# migrations use external dependencies or application code.
-#
-# It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema.define(version: 2021_01_04_064854) do
+ActiveRecord::Schema.define(version: 2021_01_13_075817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,12 +10,42 @@ ActiveRecord::Schema.define(version: 2021_01_04_064854) do
     t.datetime "discount_end"
     t.integer "min_consumption"
     t.integer "amount"
-    t.integer "counter_catch"
+    t.integer "counter_catch", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "shop_id"
     t.integer "discount_amount"
     t.index ["shop_id"], name: "index_coupons_on_shop_id"
+  end
+
+  create_table "favorite_products", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_favorite_products_on_product_id"
+    t.index ["user_id"], name: "index_favorite_products_on_user_id"
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.bigint "room_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -37,7 +55,7 @@ ActiveRecord::Schema.define(version: 2021_01_04_064854) do
     t.bigint "sub_order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "products_id"
+    t.bigint "product_id"
     t.index ["sub_order_id"], name: "index_order_items_on_sub_order_id"
   end
 
@@ -47,6 +65,7 @@ ActiveRecord::Schema.define(version: 2021_01_04_064854) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "number"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -60,7 +79,19 @@ ActiveRecord::Schema.define(version: 2021_01_04_064854) do
     t.bigint "shop_id"
     t.string "image"
     t.string "images"
+    t.string "slug"
     t.index ["shop_id"], name: "index_products_on_shop_id"
+    t.index ["slug"], name: "index_products_on_slug", unique: true
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["receiver_id"], name: "index_rooms_on_receiver_id"
+    t.index ["sender_id", "receiver_id"], name: "index_rooms_on_sender_id_and_receiver_id", unique: true
+    t.index ["sender_id"], name: "index_rooms_on_sender_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -81,6 +112,16 @@ ActiveRecord::Schema.define(version: 2021_01_04_064854) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["order_id"], name: "index_sub_orders_on_order_id"
+  end
+
+  create_table "user_coupons", force: :cascade do |t|
+    t.integer "coupon_status", default: 0
+    t.bigint "user_id", null: false
+    t.bigint "coupon_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["coupon_id"], name: "index_user_coupons_on_coupon_id"
+    t.index ["user_id"], name: "index_user_coupons_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -107,8 +148,14 @@ ActiveRecord::Schema.define(version: 2021_01_04_064854) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "favorite_products", "products"
+  add_foreign_key "favorite_products", "users"
+  add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "order_items", "sub_orders"
   add_foreign_key "orders", "users"
   add_foreign_key "shops", "users"
   add_foreign_key "sub_orders", "orders"
+  add_foreign_key "user_coupons", "coupons"
+  add_foreign_key "user_coupons", "users"
 end
