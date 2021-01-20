@@ -27,20 +27,19 @@ document.addEventListener('ajax:success',()=>{
           message_area.innerHTML += data.my_message
         }else{
           message_area.innerHTML += data.other_message
+          if(Notification.permission === "granted"){
+          var title = '你有一則新通知'
+          var body  = data.message.content
+          var options = { body: body}
+          new Notification(title, options)  
+          }
         }
   
         form.reset()
   
         message_area.scrollTop = message_area.scrollHeight
         
-        if(Notification.permission === "granted"){
-          var title = '你有一則新通知'
-          var body  = data.message.content
-          var options = { body: body}
-          new Notification(title, options)
-        }
       }
     });
-
 })
 

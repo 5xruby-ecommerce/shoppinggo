@@ -23,7 +23,6 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    byebug
     @product.shop = current_user.shop
     
 
