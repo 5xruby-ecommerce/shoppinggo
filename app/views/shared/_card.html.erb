@@ -1,0 +1,26 @@
+<section class="cards">
+    <div class="content max-auto">
+      <% @products.each do |product|%>
+        <div>
+          <div class="cardstyle">
+            <%= link_to product_path(product) do %>
+            <div>
+              <% if product.image_url.present? %>
+                <div class="picture"><%= image_tag product.image_url %></div>
+              <% else %>
+                <div class="picture dark"><%= image_tag 'bag.png' %></div>
+              <% end %>
+            </div>
+            <div class='item'>
+              <%= product.name %>
+              <div>
+                <div>$<%= product.price %></div>
+                <div>已售出<span>10</span></div>
+              </div>
+            </div>
+          </div>
+        <% end %> 
+        </div>
+      <% end %>
+    </div>
+</section>

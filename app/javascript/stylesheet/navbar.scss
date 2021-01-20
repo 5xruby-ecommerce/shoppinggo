@@ -1,13 +1,16 @@
 //navbar
 .primarynav {
   height: 100px;
-  @apply flex w-full items-center px-2 lg:px-20 text-white flex-wrap top-0 z-50 fixed bg-white shadow-sm;
+  @apply flex w-full items-center px-4 lg:px-20 text-white flex-wrap top-0 z-50 fixed bg-white shadow-sm justify-between ;
+  .logo {
+    @apply w-12 lg:w-32;
+  }
   .searchbar {
-     @apply flex-grow mx-12 ;
+     @apply flex-grow mx-12 relative;
      .search {
-        @apply relative  text-black bg-white rounded-full border-gray-800 border-2;
+        @apply  text-black bg-white rounded-full border-gray-800 border-2;
         .btn{
-           @apply absolute inset-y-0 right-0 flex items-center pl-4 bg-gray-800 p-2 rounded-full m-1 text-white w-10;
+           @apply absolute -top-3 right-1 flex items-center bg-gray-800 rounded-full text-white w-10;
            .icon {
               @apply absolute right-3 focus:outline-none;
            }
@@ -19,8 +22,8 @@
   }
   .login {
      @apply inline-flex py-5 space-x-4 w-full text-gray-800 text-lg ;
-     a {
-        @apply hover:text-gray-900 ;
-     }
+  }
+  .alink {
+    @apply lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-gray-400 items-center justify-center hover:bg-gray-900 hover:text-white;
   }
 }

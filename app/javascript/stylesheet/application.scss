@@ -1,17 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 body {
    @apply bg-gray-50;
 }
-
-.btn-login {
-   @apply mt-4 w-full rounded-lg py-2 font-semibold text-white;
+input {
+   @apply outline-none focus:outline-none;
 }
-.input-devise {
-   @apply p-2 bg-white border;
+.btn {
+   height: 40px;
+   @apply mt-4 w-full rounded-lg py-2 font-semibold text-white shadow-sm focus:outline-none;
 }
 .primary-button {
    @apply bg-gray-800 p-2 text-white rounded-sm;
 }
 .input-store {
-   @apply bg-transparent outline-none border rounded-lg p-1;
+   @apply bg-transparent  border rounded-lg p-1;
 }
-
+.field_with_errors {
+   border: 0px;
+   margin-bottom: 0;
+}
