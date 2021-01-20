@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_18_063106) do
+ActiveRecord::Schema.define(version: 2021_01_18_101412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2021_01_18_063106) do
     t.bigint "shop_id"
     t.datetime "schedule_start"
     t.datetime "schedule_end"
+    t.integer "status", default: 0
     t.index ["shop_id"], name: "index_products_on_shop_id"
   end
 

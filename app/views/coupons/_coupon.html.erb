@@ -38,7 +38,7 @@
     <%= form.label :discount_end, "優惠結束" %>
     <div class="input-group date relative" id="discount_end" data-target-input="nearest">
       <input type="text" class="form-control datetimepicker-input p-2" data-target="#discount_end" name="coupon[discount_end]" value=<%= coupon.discount_end.nil? ? '' : coupon.discount_end.strftime("%Y/%m/%d")  %>/>
-      <div class="input-group-append" data-target="#discount_end" data-toggle="datetimepicker">
+      <div class="input-group-append " data-target="#discount_end" data-toggle="datetimepicker">
         <div class="input-group-text absolute top-2 right-1"><i class="fa fa-calendar"></i></div>
       </div>
     </div>

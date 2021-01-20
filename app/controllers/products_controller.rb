@@ -26,6 +26,11 @@ class ProductsController < ApplicationController
     @product.shop = current_user.shop
 
     if @product.save
+      if @product.schedule_start > Time.now 
+        @product.status = 1
+        ScheduleWorker.perform_at(@product.schedule_start, @product.id)
+      end
+      byebug
       redirect_to shops_path
     else
       render :new
@@ -68,6 +73,8 @@ class ProductsController < ApplicationController
       :content,
       :quantity,
       :price,
+      :schedule_start,
+      :schedule_end,
       {images:[]})
   end
 end

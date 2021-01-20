@@ -1,9 +1,10 @@
 document.addEventListener('turbolinks:load', () => {
   $('#discount_start').datetimepicker({
-    format: 'YYYY/MM/DD'
+    format: 'yyyy/MM/DD/HH:mm'
   })
   $('#discount_end').datetimepicker({
-    format: 'YYYY/MM/DD'
+    format: 'yyyy/MM/DD/HH:mm',
+    useCurrent: false
   })
 
   $('#discount_start').on('change.datetimepicker', (e) => {
@@ -12,6 +13,4 @@ document.addEventListener('turbolinks:load', () => {
   $('#discount_end').on('change.datetimepicker', (e) => {
     $('#discount_start').datetimepicker('maxDate', e.date)
   })
-  
-
 })

@@ -13,6 +13,14 @@
   <%= f.text_field :quantity %><br/>
   <%= f.label :price, "商品價格" %>
   <%= f.text_field :price %><br/>
+  <div>
+    <%= f.label :schedule_start, "商品上架時間" %>
+    <%= f.datetime_select :schedule_start %>
+  </div>
+  <div>
+    <%= f.label :schedule_end, "商品下架時間" %>
+    <%= f.datetime_select :schedule_end %>
+  </div>
   <%= f.submit "更新商品" %>
 <% end %>
 
