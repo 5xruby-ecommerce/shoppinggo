@@ -35,6 +35,7 @@
             <td>商品描述</td>
             <td>商品數量</td>
             <td>商品價格</td>
+            <td>商品狀態</td>
             <td colspan='2'>商品設定</td>
         <tr>
       </thead>
@@ -50,7 +51,8 @@
               <td class='w-1/6'><%= product.name %></td>
               <td class='w-1/6'><%= product.content %></td>
               <td class='w-1/6'><%= product.quantity %></td>
-              <td class='w-1/6'><%= product.price %></td>
+              <td class='w-1/12'><%= product.price %></td>
+              <td class='w-1/12'><%= product.status == 0 ? '上架' : '未上架'%></td>
               <td class='w-1/12'><%= link_to "編輯", edit_product_path(product) ,class:'primary-button text-xs' %></td>
               <td class='w-1/12'><%= link_to "刪除", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"} ,class:'primary-button text-xs' %></td>
           </tr>

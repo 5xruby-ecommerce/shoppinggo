@@ -24,13 +24,14 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @product.shop = current_user.shop
+    if @product.schedule_start > Time.now 
+      @product.status = 1
+    end
 
     if @product.save
       if @product.schedule_start > Time.now 
-        @product.status = 1
         ScheduleWorker.perform_at(@product.schedule_start, @product.id)
       end
-      byebug
       redirect_to shops_path
     else
       render :new

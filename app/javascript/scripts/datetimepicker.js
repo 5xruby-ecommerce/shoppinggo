@@ -1,16 +1,19 @@
-document.addEventListener('turbolinks:load', () => {
-  $('#discount_start').datetimepicker({
-    format: 'yyyy/MM/DD/HH:mm'
-  })
-  $('#discount_end').datetimepicker({
-    format: 'yyyy/MM/DD/HH:mm',
-    useCurrent: false
-  })
+import flatpickr from "flatpickr"
 
-  $('#discount_start').on('change.datetimepicker', (e) => {
-    $('#discount_end').datetimepicker('minDate', e.date)
+document.addEventListener('turbolinks:load', () => {
+
+  flatpickr(".datetimepicker_start", {
+    "dateFormat":"Y/n/j H:i", 
+    "enableTime":true, 
+    "allowInput":true,
+    onClose: function(dataObj, dateStr, instance) {      
+    }
   })
-  $('#discount_end').on('change.datetimepicker', (e) => {
-    $('#discount_start').datetimepicker('maxDate', e.date)
+  flatpickr(".datetimepicker_end", {
+    "dateFormat":"Y/n/j H:i", 
+    "enableTime":true, 
+    "allowInput":true,
+    onClose: function(dataObj, dateStr, instance) {
+    }
   })
 })

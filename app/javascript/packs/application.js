@@ -22,6 +22,9 @@ import "@fortawesome/fontawesome-free/css/all.css"
 import 'stylesheet'
 import 'styles'
 
+require("flatpickr")
+import("flatpickr/dist/flatpickr.min.css")
+
 import "tempusdominus-bootstrap-4"
 import "tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css"
 import "font-awesome/css/font-awesome.min.css"
