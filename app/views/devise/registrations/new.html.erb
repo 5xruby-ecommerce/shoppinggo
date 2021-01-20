@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <section class="flex justify-center pt-44 h-screen">
   <div class="w-full max-w-sm mx-auto">
     <div class='mb-8'><%= image_tag "simplelogo.png" %></div>
@@ -20,3 +21,34 @@
   <% end %>
 <%= render 'devise/shared/social' %>
 </section
+=======
+<section class="flex justify-center items-center h-screen">
+  <div class="w-full max-w-sm mx-auto">
+  <div class="mt-10"><%= image_tag "logo.png" %></div>
+  <h2 class="text-center sans">Hello</h2>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="input-devise rounded-t-lg">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder: "e-mail", class:'w-full outline-none' %>
+  </div>
+
+  <div class="input-devise">
+    <%= f.password_field :password_confirmation, autocomplete: "new-password",placeholder: "password" %>
+  </div>
+
+  <div class="input-devise rounded-b-lg">
+    <% if @minimum_password_length %>
+    <%= f.password_field :password, autocomplete: "new-password",placeholder:"characters minimum" , class:'w-full outline-none' %>
+    <% end %><br />
+  </div>
+
+  <button class="bg-gray-800 btn-login">
+    <h2 class="text-center font-extrabold "><%= f.submit "註冊" ,class:'bg-transparent' %></h2>
+  </button>
+
+<% end %>
+
+<%= render "devise/shared/links" %>
+</section>
+>>>>>>> 601938dd8645ad88191889284507e5dc0c998743

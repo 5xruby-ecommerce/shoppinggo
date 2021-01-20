@@ -18,6 +18,10 @@ require("scripts")
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 601938dd8645ad88191889284507e5dc0c998743
 import 'stylesheet'
 import 'styles'
 
@@ -29,4 +33,8 @@ window.$ = $
 
 import 'swiper/swiper-bundle.css';
 // window.Swiper = require('Swiper');
+<<<<<<< HEAD
+=======
+
+>>>>>>> 601938dd8645ad88191889284507e5dc0c998743
 window.Swiper = Swiper

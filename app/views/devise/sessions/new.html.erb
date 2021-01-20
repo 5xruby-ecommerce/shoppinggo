@@ -1,5 +1,6 @@
 <section class="flex justify-center pt-44 h-screen">
   <div class="w-full max-w-sm mx-auto">
+<<<<<<< HEAD
   <div class='mb-8'><%= image_tag "simplelogo.png" %></div>
   <div class='text-red-500 login_notice'></div>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -8,6 +9,17 @@
     </div>
     <div class="input-devise rounded-b-lg">
       <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class:'w-full outline-none password'%>
+=======
+  <div class="mt-10"><%= image_tag "logo.png" %></div>
+  <h2 class="text-center font-extrabold  pb-2">Hello, welcome back</h2>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="input-devise rounded-t-lg">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "e-mail", class:'w-full outline-none' %>
+    </div>
+
+    <div class="input-devise rounded-b-lg ">
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class:'w-full outline-none'%>
+>>>>>>> 601938dd8645ad88191889284507e5dc0c998743
     </div>
     <!-- devise forgot password -->
     <div class="text-xs text-gray-400 mt-2">
@@ -16,12 +28,24 @@
       <% end %>
     </div>
 
+<<<<<<< HEAD
     <button class="bg-gray-800 btn login">
+=======
+    <button class="bg-gray-800 btn-login">
+>>>>>>> 601938dd8645ad88191889284507e5dc0c998743
       <h2 class="text-center font-extrabold"><%= f.submit "登入" ,class:'bg-transparent'%></h2>
     </button>
     
   <% end %>
+<<<<<<< HEAD
   <%= render 'devise/shared/social' %>
 </section>
 
 
+=======
+  <%= render "devise/shared/links" %>
+
+  </div>
+</section>
+
+>>>>>>> 601938dd8645ad88191889284507e5dc0c998743

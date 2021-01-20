@@ -1,0 +1,17 @@
+
+<div> <%= render @rooms if @rooms %> </div>
+
+<div class = "message_box" data-room= "<%= @room.id %>" data-user="<%= current_user.id%>">
+  <div><%= @room.with(current_user).name %></div>
+  <div class="container">
+        <div class="message_area">
+          <%= render @messages %>
+        </div>
+        <div class="input">
+          <%= form_for @message ,remote: true ,url: room_messages_path(@room) do |form| %>
+            <%= form.text_field :content %>
+            <%= form.submit %>
+          <% end %>
+        </div>
+  </div>
+</div>
