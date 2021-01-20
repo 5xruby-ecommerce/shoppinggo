@@ -23,7 +23,9 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
+    byebug
     @product.shop = current_user.shop
+    
 
     if @product.save
       redirect_to shops_path
@@ -68,6 +70,7 @@ class ProductsController < ApplicationController
       :content,
       :quantity,
       :price,
+      :category_list,
       {images:[]})
   end
 end

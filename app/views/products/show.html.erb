@@ -22,8 +22,12 @@
       <div class=" bg-gray-50 w-full p-2">
         <h2 class="text-4xl text-red-400">$<%= @product.price %></h2>
       </div>
-      <% if @product.shop.user != current_user %>
-        <%= link_to '聊聊', rooms_path( user: @product.shop.user ),remote: true ,method:'post', id:'getchat' %>
+      <% if user_signed_in? %>
+          <% if @product.shop.user != current_user %>
+            <%= link_to '聊聊', rooms_path( user: @product.shop.user ),remote: true ,method:'post', id:'getchat' %>
+          <% end %>
+        <% else %>
+           <%= link_to '聊聊', new_user_session_path %>
       <% end %>
       運送 較長備貨(出貨天數20 天)
            運費

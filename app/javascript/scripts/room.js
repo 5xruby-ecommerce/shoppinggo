@@ -1,11 +1,15 @@
 document.addEventListener('turbolinks:load',()=>{
   const getchat = document.querySelector('#getchat')
-  getchat.addEventListener('click',clickHandler)
+  if (getchat) {
+    getchat.addEventListener('click',clickHandler)
+  }
 })
 
 document.addEventListener('turbolinks:load',()=>{
   const btn = document.querySelector('.btn')
-  btn.addEventListener('click',clickHandler)
+  if (btn) {
+    btn.addEventListener('click',clickHandler)
+  }
 })
 
 function clickHandler(){
