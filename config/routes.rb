@@ -6,20 +6,24 @@ Rails.application.routes.draw do
   root 'pages#home'
   get :search, to: 'products#search'
 
-  resources :orders
+  resources :orders do
+    collection do
+      post :return
+    end
+  end
 
   resources :shops do
-    resources :products, shallow: true do 
+    resources :products, shallow: true do
       member do
         post :favorite
       end
     end
   end
 
-  get :search, to: 'products#search'
+  resources :order_list, shallow: true
 
   resources :users do
-    collection do 
+    collection do
       post :add_coupon
       get :change_coupon_status
     end

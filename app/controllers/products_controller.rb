@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
 
   before_action :find_shop, only: [:create, :edit, :update, :destroy]
   before_action :find_product, only: [:edit, :update, :destroy]
+  layout 'store', only: [:new, :edit]
 
   def show
     @product = Product.find(params[:id])

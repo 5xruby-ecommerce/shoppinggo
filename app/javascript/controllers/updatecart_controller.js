@@ -15,7 +15,7 @@ function updateCartTotal() {
 export default class extends Controller {
   static targets = [ "amount", "totalprice" , "price" ]
   static values = { number: Number, totalprice: Number }
- 
+
   connect() {
     this.numberValueChanged()
   }

@@ -1,7 +1,7 @@
 class CartsController < ApplicationController
   # before_action :authenticate_user! ,only:[:add_item]
   skip_before_action :verify_authenticity_token, only: :return
-  
+
   def add_item
     if current_user
       product = Product.find(params[:id])
@@ -17,10 +17,6 @@ class CartsController < ApplicationController
   end
 
   def update_item
-    # check_service = Ecpay::Checkcode::CreateService.new(...)
-
-    # check_service.perform
-
     if current_user
       product = Product.find(params[:id])
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
@@ -47,10 +43,6 @@ class CartsController < ApplicationController
     end
   end
 
-  def checkout
-    @order = Order.new
-  end
-
   def empty
     session[:cartgo] = nil
     redirect_to root_path, notice: '購物車已清除'
@@ -62,50 +54,17 @@ class CartsController < ApplicationController
     redirect_to carts_path, notice: "已刪除訂單"
   end
 
-  def checkout
-    @order = create_order
-    add_mac_value(sample_params(@order))
-  end
-
-  def return
-    @callback_value = {
-      'CustomField1' => params['CustomField1'],
-      'CustomField2' => params['CustomField2'],
-      'CustomField3' => params['CustomField3'],
-      'CustomField4' => params['CustomField4'],
-      'MerchantID' => params['MerchantID'],
-      'MerchantTradeNo' => params['MerchantTradeNo'],
-      'PaymentDate' => params['PaymentDate'],
-      'PaymentType' => params['PaymentType'],
-      'PaymentTypeChargeFee' => params['PaymentTypeChargeFee'],
-      'RtnCode' => params['RtnCode'],
-      'RtnMsg' => params['RtnMsg'],
-      'SimulatePaid' => params['SimulatePaid'],
-      'StoreID' => params['StoreID'],
-      'TradeAmt' => params['TradeAmt'],
-      'TradeDate' => params['TradeDate'],
-      'TradeNo' => params['TradeNo'],
-    }
-    callback_val = compute_check_mac_value(@callback_value)
-    rtn_value = params['CheckMacValue']
-    order = Order.find_by(number:params['MerchantTradeNo'])
-      if callback_val == rtn_value
-        render plain: "1|OK"
-        order.pay!
-      end
-    end
-
   def get_coupon_info
     coupon = Coupon.find(params[:id])
     user_coupons = current_user.user_coupons.where(coupon_id: params[:id])
     own = !(user_coupons.empty?)
 
     if own
-      status = user_coupons.pluck(:coupon_status)      
+      status = user_coupons.pluck(:coupon_status)
       id = user_coupons.pluck(:id)
 
-      render json: { 
-        discount_rule: coupon[:discount_rule], 
+      render json: {
+        discount_rule: coupon[:discount_rule],
         discount_start: coupon_TimeWithZone_convert(coupon[:discount_start]),
         discount_end: coupon_TimeWithZone_convert(coupon[:discount_end]),
         min_consumption: coupon[:min_consumption],
@@ -118,7 +77,7 @@ class CartsController < ApplicationController
       }
     else
       render json: {
-        discount_rule: coupon[:discount_rule], 
+        discount_rule: coupon[:discount_rule],
         discount_start: coupon_TimeWithZone_convert(coupon[:discount_start]),
         discount_end: coupon_TimeWithZone_convert(coupon[:discount_end]),
         min_consumption: coupon[:min_consumption],
@@ -126,90 +85,130 @@ class CartsController < ApplicationController
         amount: coupon[:amount],
         counter_catch: coupon[:counter_catch],
         occupy: own
-      } 
+      }
     end
   end
 
-  def check_mac_value
-    compute_check_mac_value(@params)
-  end
+  # def checkout
+    # check_service = Ecpay::Checkcode::CreateService.new(...)
 
-  private
-  def create_order
-    if current_user
-      order = Order.new(user: current_user,
-                        sum: current_cart.total_price)
-      products_all = Product.includes(:shop).
-        where(id: current_cart.product_ids).
-        reduce({}) do |rs, product|
-          rs[product.shop_id] ||= {}
-          rs[product.shop_id][product.id] = product
-          rs
-        end
+    # check_service.perform
+    # @order = Order.new
+    # add_mac_value(sample_params(@order))
+  # end
 
-      products_all.each do |(shop_id, products)|
-        items = current_cart.items.filter { |item| item.product_id.in?(products.keys) }
-        sum = items.sum(&:total_price)
-        discount = current_cart.cal_discount(shop_id,current_user, sum)     
-        sum = sum - discount
-        order.sub_orders.new(sum: sum)
-      end
-      order.save!
-      order
-    else
-      redirect_to new_user_session_path
-    end
-  end
+  # def check_mac_value
+  #   compute_check_mac_value(@params)
+  # end
 
-  def sample_params(order)
-    @hash = {
-      'MerchantID' => '2000132',
-      'MerchantTradeNo' => order.number,
-      'MerchantTradeDate' => Time.zone.now.strftime('%Y/%m/%d %T'),
-      'PaymentType' => 'aio',
-      'TotalAmount' => current_cart.total_price,
-      'TradeDesc' => '123',
-      'ItemName' => current_cart.items_name,
-      'ReturnURL' => 'http://localhost:5000/carts/return',
-      'ClientBackURL' => 'http://localhost:5000/',
-      'ChoosePayment' => 'Credit',
-      'EncryptType' => '1',
-    }
-  end
+  # def return
+  #   @callback_value = {
+  #     'CustomField1' => params['CustomField1'],
+  #     'CustomField2' => params['CustomField2'],
+  #     'CustomField3' => params['CustomField3'],
+  #     'CustomField4' => params['CustomField4'],
+  #     'MerchantID' => params['MerchantID'],
+  #     'MerchantTradeNo' => params['MerchantTradeNo'],
+  #     'PaymentDate' => params['PaymentDate'],
+  #     'PaymentType' => params['PaymentType'],
+  #     'PaymentTypeChargeFee' => params['PaymentTypeChargeFee'],
+  #     'RtnCode' => params['RtnCode'],
+  #     'RtnMsg' => params['RtnMsg'],
+  #     'SimulatePaid' => params['SimulatePaid'],
+  #     'StoreID' => params['StoreID'],
+  #     'TradeAmt' => params['TradeAmt'],
+  #     'TradeDate' => params['TradeDate'],
+  #     'TradeNo' => params['TradeNo'],
+  #   }
+  #   callback_val = compute_check_mac_value(@callback_value)
+  #   rtn_value = params['CheckMacValue']
+  #   order = Order.find_by(number:params['MerchantTradeNo'])
+  #     if callback_val == rtn_value
+  #       render plain: "1|OK"
+  #       order.pay!
+  #     end
+  #   end
 
-  def add_mac_value(params)
-    params['CheckMacValue'] = compute_check_mac_value(params) # 計算檢查碼
-  end
+  # private
+  # def create_order
+  #   if current_user
+  #     order = Order.new(user: current_user,
+  #                       sum: current_cart.total_price)
+  #     products_all = Product.includes(:shop).
+  #       where(id: current_cart.product_ids).
+  #       reduce({}) do |rs, product|
+  #         rs[product.shop_id] ||= {}
+  #         rs[product.shop_id][product.id] = product
+  #         rs
+  #       end
 
-  def compute_check_mac_value(params)
-    params = params.dup
-    query_string = to_query_string(params)
-    query_string = "HashKey=5294y06JbISpM5x9&#{query_string}&HashIV=v77hoKGq4kWxNNIS"
-    raw = urlencode_dot_net(query_string)
-    @shavalue = Digest::SHA256.hexdigest(raw).upcase
-  end
+  #     products_all.each do |(shop_id, products)|
+  #       items = current_cart.items.filter { |item| item.product_id.in?(products.keys) }
+  #       sum = items.sum(&:total_price)
+  #       discount = current_cart.cal_discount(shop_id,current_user, sum)
+  #       sum = sum - discount
+  #       order.sub_orders.new(sum: sum)
+  #     end
+  #     order.save!
+  #     order
+  #   else
+  #     redirect_to new_user_session_path
+  #   end
+  # end
 
-  def urlencode_dot_net(raw_data)
-    encoded_data = CGI.escape(raw_data).downcase
-    encoded_data.gsub!('%2d', '-')
-    encoded_data.gsub!('%5f', '_')
-    encoded_data.gsub!('%2e', '.')
-    encoded_data.gsub!('%21', '!')
-    encoded_data.gsub!('%2a', '*')
-    encoded_data.gsub!('%28', '(')
-    encoded_data.gsub!('%29', ')')
-    encoded_data.gsub!('%20', '+')
-    encoded_data
-  end
+  # def sample_params(order)
+  #   @hash = {
+  #     'MerchantID' => '2000132',
+  #     'MerchantTradeNo' => order.number,
+  #     'MerchantTradeDate' => Time.zone.now.strftime('%Y/%m/%d %T'),
+  #     'PaymentType' => 'aio',
+  #     'TotalAmount' => current_cart.total_price,
+  #     'TradeDesc' => '123',
+  #     'ItemName' => current_cart.items_name,
+  #     'ReturnURL' => 'http://localhost:5000/carts/return',
+  #     'ClientBackURL' => 'http://localhost:5000/',
+  #     'ChoosePayment' => 'Credit',
+  #     'EncryptType' => '1',
+  #   }
+  # end
 
-  def to_query_string(params)
-    params = params.sort_by do |key, _val|
-      key.downcase
-    end
+  # def add_mac_value(params)
+  #   params['CheckMacValue'] = compute_check_mac_value(params) # 計算檢查碼
+  # end
 
-    params = params.map do |key, val|
-      "#{key}=#{val}"
-    end
-    params.join('&')
-  end
+  # def compute_check_mac_value(params)
+  #   # params = params.dup
+  #   query_string = to_query_string(params)
+  #   query_string = "HashKey=5294y06JbISpM5x9&#{query_string}&HashIV=v77hoKGq4kWxNNIS"
+  #   raw = urlencode_dot_net(query_string)
+  #   @shavalue = Digest::SHA256.hexdigest(raw).upcase
+  # end
+
+  # def to_query_string(params)
+  #   params = params.sort_by do |key, _val|
+  #     key.downcase
+  #   end
+
+  #   params = params.map do |key, val|
+  #     "#{key}=#{val}"
+  #   end
+  #   params.join('&')
+  # end
+
+  # def urlencode_dot_net(raw_data)
+  #   encoded_data = CGI.escape(raw_data).downcase
+  #   encoded_data.gsub!('%2d', '-')
+  #   encoded_data.gsub!('%5f', '_')
+  #   encoded_data.gsub!('%2e', '.')
+  #   encoded_data.gsub!('%21', '!')
+  #   encoded_data.gsub!('%2a', '*')
+  #   encoded_data.gsub!('%28', '(')
+  #   encoded_data.gsub!('%29', ')')
+  #   encoded_data.gsub!('%20', '+')
+  #   encoded_data
+  # end
+
+  # def order_params
+  #   params.require(:order).permit(:receiver, :tel, :address)
+  # end
 end
