@@ -40,6 +40,7 @@ export default class extends Controller {
           }
         })
         window.dispatchEvent(event)
+        document.querySelector('.cart_total').textContent = resp.total_price
       },
       error: (err) => {
       }
@@ -69,6 +70,7 @@ export default class extends Controller {
             }
           })
           window.dispatchEvent(event)
+          document.querySelector('.cart_total').textContent = resp.total_price
         },
         error: (err) => {
           console.log(err)
@@ -99,6 +101,7 @@ export default class extends Controller {
           }
         })
         window.dispatchEvent(event)
+        document.querySelector('.cart_total').textContent = resp.total_price
       },
       error: (err) => {
       }

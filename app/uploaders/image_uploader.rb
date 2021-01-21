@@ -4,25 +4,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
 
   # process resize_to_fit: [300, 200]
-<<<<<<< HEAD
-
-  # version :thumb do
-  #   process resize_to_fill: [400,300]
-  # end
-
-  # version :small_thumb, from_version: :thumb do
-  #   process resize_to_fill: [20, 20]
-  # end
-
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
-=======
 
   def extension_white_list
      %w(jpg jpeg gif png)
   end
->>>>>>> 601938dd8645ad88191889284507e5dc0c998743
 
   # Choose what kind of storage to use for this uploader:
   #storage :file

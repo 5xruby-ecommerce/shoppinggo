@@ -1,12 +1,12 @@
 //navbar
 .primarynav {
   height: 100px;
-  @apply flex w-full items-center px-4 lg:px-20 text-white flex-wrap top-0 z-50 fixed bg-white shadow-sm justify-between ;
+  @apply flex w-full items-center  lg:px-20 text-white flex-wrap top-0 z-50 fixed bg-white shadow-sm justify-between ;
   .logo {
     @apply w-12 lg:w-32;
   }
   .searchbar {
-     @apply flex-grow mx-12 relative;
+     @apply flex-grow md:mx-12 relative;
      .search {
         @apply  text-black bg-white rounded-full border-gray-800 border-2;
         .btn{

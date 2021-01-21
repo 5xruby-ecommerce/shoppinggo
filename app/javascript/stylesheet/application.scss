@@ -1,5 +1,8 @@
-<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 body {
    @apply bg-gray-50;
 }
@@ -19,24 +22,7 @@ input {
 .field_with_errors {
    border: 0px;
    margin-bottom: 0;
-=======
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
-.btn-login {
-   @apply mt-4 w-full rounded-lg py-2 font-semibold text-white;
 }
 .btn-signup {
    @apply mt-4 w-full rounded-lg py-2 font-semibold text-white;
-}
-.input-devise {
-   @apply p-2 bg-white border;
-}
-.primary-button {
-   @apply bg-gray-800 p-2 text-white rounded-sm;
-}
-.input-store {
-   @apply bg-transparent outline-none border rounded-lg p-1;
->>>>>>> 601938dd8645ad88191889284507e5dc0c998743
 }

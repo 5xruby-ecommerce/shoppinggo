@@ -17,14 +17,8 @@ require("scripts")
 // const imagePath = (name) => images(name, true)
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 601938dd8645ad88191889284507e5dc0c998743
 import 'stylesheet'
 import 'styles'
-
 import "tempusdominus-bootstrap-4"
 import "tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css"
 import "font-awesome/css/font-awesome.min.css"
@@ -33,8 +27,4 @@ window.$ = $
 
 import 'swiper/swiper-bundle.css';
 // window.Swiper = require('Swiper');
-<<<<<<< HEAD
-=======
-
->>>>>>> 601938dd8645ad88191889284507e5dc0c998743
 window.Swiper = Swiper
