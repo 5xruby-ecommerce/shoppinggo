@@ -35,4 +35,6 @@ class Product < ApplicationRecord
   mount_uploader :image, ImageUploader
   mount_uploaders :images, ImageUploader
   serialize :images
+
+  default_scope{ where(status: 0) }
 end
