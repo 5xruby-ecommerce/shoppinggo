@@ -1,37 +1,38 @@
-<div class='flex w-full items-center flex-col pt-20 space-y-2'>
+<div class='flex flex-grow items-center flex-col space-y-4 pb-10 pt-36'>
   <div class='h-5/6 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow'>
 
-<table class="w-full text-center border-collapse">
-  <thead class="bg-gray-100 text-gray-500">
-    <tr>
-      <th class='p-3'>優惠卷名稱</th>
-      <th>優惠方式</th>
-      <th>優惠價格</th>
-      <th>最低消費</th>
-      <th>優惠開始</th>
-      <th>優惠結束</th>
-      <th>發行數量</th>
-      <th>領取數量</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @coupons.each do |coupon| %>
-      <tr class='border-b-2 border-fuchsia-600 h-20'>
-        <td><%= coupon.title %></td>
-        <td><%= coupon.discount_rule %></td>
-        <td><%= coupon.discount_amount %></td>
-        <td><%= coupon.min_consumption %></td>
-        <td><%= coupon.discount_start.strftime('%Y/%m/%d') %></td>
-        <td><%= coupon.discount_end.strftime('%Y/%m/%d') %></td>
-        <td><%= coupon.amount %></td>
-        <td><%= coupon.counter_catch %></td>
-        <td><%= link_to '編輯', edit_coupon_path(coupon) %></td>
-        <td><%= link_to '真刪除', coupon_path(coupon), method: :delete%></td>
+    <table class="w-full text-center border-collapse">
+      <thead class="bg-gray-100 text-gray-500">
+      <tr>
+        <th class='p-3'>優惠卷名稱</th>
+        <th>優惠方式</th>
+        <th>優惠價格</th>
+        <th>最低消費</th>
+        <th>優惠開始</th>
+        <th>優惠結束</th>
+        <th>發行數量</th>
+        <th>領取數量</th>
+        <th colspan="2"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
+      </thead>
+
+      <tbody>
+      <% @coupons.each do |coupon| %>
+        <tr class='border-b-2 border-fuchsia-600 h-20'>
+          <td><%= coupon.title %></td>
+          <td><%= coupon.discount_rule %></td>
+          <td><%= coupon.discount_amount %></td>
+          <td><%= coupon.min_consumption %></td>
+          <td><%= coupon.discount_start.strftime('%Y/%m/%d') %></td>
+          <td><%= coupon.discount_end.strftime('%Y/%m/%d') %></td>
+          <td><%= coupon.amount %></td>
+          <td><%= coupon.counter_catch %></td>
+          <td><%= link_to '編輯', edit_coupon_path(coupon) %></td>
+          <td><%= link_to '真刪除', coupon_path(coupon), method: :delete%></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+  </div>
 </div>

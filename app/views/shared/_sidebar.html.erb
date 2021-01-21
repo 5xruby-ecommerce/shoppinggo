@@ -1,6 +1,31 @@
-<div class="h-screen flex pt-16">
-  <div class="pt-4"><%= link_to '商品列表', shops_path if current_user.shop.present? %></div>
-  <%= link_to '新增商品', new_shop_product_path(current_user.shop) if current_user.shop.present? %>
-  <%= link_to '新增優惠卷', new_coupon_path if current_user.shop.present? %>
-  <%= link_to '檢視優惠卷', list_coupons_path if current_user.shop.present? %>
+<div class="h-screen bg-gray-50 pt-16 w-60 shadow text-lg text-gray-600">
+  <div class="flex pl-12 flex-col pt-20 space-y-2">
+
+    <div>
+      <i class="fas fa-store mr-2"></i>
+      <%= link_to '商品列表', shops_path if current_user.shop.present? %>
+    </div>
+
+    <div class="pl-7">
+      <%= link_to '新增商品', new_shop_product_path(current_user.shop) if current_user.shop.present? %>
+    </div>
+
+    <div>
+      <i class="fas fa-ticket-alt mr-2"></i>
+      <%= link_to '檢視優惠卷', list_coupons_path if current_user.shop.present? %>
+    </div>
+
+    <div class="pl-7">
+      <%= link_to '新增優惠卷', new_coupon_path if current_user.shop.present? %>
+    </div>
+
+    <div class='pl-7'>
+      <%= link_to '訂單列表', order_list_index_path if current_user.shop.present?%>
+    </div>
+
+    <div class='pl-7'>
+      <%= link_to '賣場設定', edit_shop_path(current_user.shop) if current_user.shop.present?%>
+    </div>
+
+  </div>
 </div>

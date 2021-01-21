@@ -1,19 +1,17 @@
-<div class="h-screen flex pt-16">
-  <div class=" bg-gray-50 flex items-center flex-col shadow pt-10 px-20">
+<div class="h-screen bg-gray-50 pt-16 w-60 shadow text-lg text-gray-600">
+  <div class="flex pl-12 flex-col pt-20 space-y-2">
 
-    <div class="border-b-2 border-pink-400 ">
-      <p>會員中心</p>
-    </div>
-
-    <div class="pt-4">
+    <div class="pl-7">
       <%= link_to '我的帳戶', edit_user_registration_path if current_user.shop.present?%>
     </div>
 
-    <div>
+    <div class="pl-7">
       <%= link_to '購買清單', orders_path if current_user.shop.present?  %>
     </div>
 
-    <div>
+    <div class="pl-7">
       <%= link_to '收藏商品', '' if current_user.shop.present? %>
     </div>
+
+  </div>
 </div>

@@ -70,10 +70,6 @@ export default class extends Controller {
             }
           })
           window.dispatchEvent(event)
-<<<<<<< HEAD
-
-=======
->>>>>>> mainone
           document.querySelector('.cart_total').textContent = resp.total_price
         },
         error: (err) => {

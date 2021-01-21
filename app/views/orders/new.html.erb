@@ -1,0 +1,19 @@
+<%= render 'carts/checkoutcart', cart: current_cart %>
+
+<h2>訂單資料</h2>
+
+<%= form_for @order do |f| %>
+  <div>
+    <%= f.label :receiver, "收件者姓名" %>
+    <%= f.text_field :receiver %>
+  </div>
+  <div>
+    <%= f.label :tel, "聯絡電話" %>
+    <%= f.text_field :tel %>
+  </div>
+  <div>
+    <%= f.label :address, "收件地址" %>
+    <%= f.text_field :address %>
+  </div>
+  <%= f.submit "付款", id: "btn" %>
+<% end %>
