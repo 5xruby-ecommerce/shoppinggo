@@ -3,8 +3,8 @@
 class Order < ApplicationRecord
   belongs_to :user
   has_many :sub_orders
-
-  before_create :number
+  has_many :shop_orders
+  before_create :order_number
 
   enum status: { pending: 0, paid: 1, cancelled: 2, deliver: 3 }
 
@@ -25,7 +25,7 @@ class Order < ApplicationRecord
   end
 
   private
-  def number
+  def order_number
     "shopA#{Time.zone.now.to_i.to_s}"
   end
 end
