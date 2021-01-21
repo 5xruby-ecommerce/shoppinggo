@@ -15,6 +15,7 @@ require("scripts")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+Notification.requestPermission().then((result) => {})
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"
 
