@@ -1,8 +1,7 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
 .btn-login {
+   @apply mt-4 w-full rounded-lg py-2 font-semibold text-white;
+}
+.btn-signup {
    @apply mt-4 w-full rounded-lg py-2 font-semibold text-white;
 }
 .input-devise {

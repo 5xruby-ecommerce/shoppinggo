@@ -1,4 +1,7 @@
 class CartsController < ApplicationController
+  # before_action :authenticate_user! ,only:[:add_item]
+  skip_before_action :verify_authenticity_token, only: :return
+  
   def add_item
     if current_user
       product = Product.find(params[:id])
@@ -14,6 +17,10 @@ class CartsController < ApplicationController
   end
 
   def update_item
+    # check_service = Ecpay::Checkcode::CreateService.new(...)
+
+    # check_service.perform
+
     if current_user
       product = Product.find(params[:id])
       quantity = JSON.parse(params.keys.filter{|i| i[/.amount/]}.first)["amount"].to_i
@@ -44,13 +51,13 @@ class CartsController < ApplicationController
     @order = Order.new
   end
 
-  def cancel
+  def empty
     session[:cartgo] = nil
     redirect_to root_path, notice: '購物車已清除'
   end
 
   def destroy
-    result_ary = session[:cartgo]["items"].filter { |item| item["item_id"] != params[:id].to_i }
+    result_ary = session[:cartgo]["items"].filter { |item| item["product_id"] != params[:id].to_i }
     session[:cartgo] = { 'items' => result_ary }
     redirect_to carts_path, notice: "已刪除訂單"
   end
@@ -59,6 +66,34 @@ class CartsController < ApplicationController
     @order = create_order
     add_mac_value(sample_params(@order))
   end
+
+  def return
+    @callback_value = {
+      'CustomField1' => params['CustomField1'],
+      'CustomField2' => params['CustomField2'],
+      'CustomField3' => params['CustomField3'],
+      'CustomField4' => params['CustomField4'],
+      'MerchantID' => params['MerchantID'],
+      'MerchantTradeNo' => params['MerchantTradeNo'],
+      'PaymentDate' => params['PaymentDate'],
+      'PaymentType' => params['PaymentType'],
+      'PaymentTypeChargeFee' => params['PaymentTypeChargeFee'],
+      'RtnCode' => params['RtnCode'],
+      'RtnMsg' => params['RtnMsg'],
+      'SimulatePaid' => params['SimulatePaid'],
+      'StoreID' => params['StoreID'],
+      'TradeAmt' => params['TradeAmt'],
+      'TradeDate' => params['TradeDate'],
+      'TradeNo' => params['TradeNo'],
+    }
+    callback_val = compute_check_mac_value(@callback_value)
+    rtn_value = params['CheckMacValue']
+    order = Order.find_by(number:params['MerchantTradeNo'])
+      if callback_val == rtn_value
+        render plain: "1|OK"
+        order.pay!
+      end
+    end
 
   def get_coupon_info
     coupon = Coupon.find(params[:id])
@@ -95,10 +130,6 @@ class CartsController < ApplicationController
     end
   end
 
-  # def initialize(params={})
-  #   @params = params
-  # end
-
   def check_mac_value
     compute_check_mac_value(@params)
   end
@@ -106,7 +137,8 @@ class CartsController < ApplicationController
   private
   def create_order
     if current_user
-      order = Order.new(user: current_user, sum: current_cart.total_price)
+      order = Order.new(user: current_user,
+                        sum: current_cart.total_price)
       products_all = Product.includes(:shop).
         where(id: current_cart.product_ids).
         reduce({}) do |rs, product|
@@ -138,7 +170,7 @@ class CartsController < ApplicationController
       'TotalAmount' => current_cart.total_price,
       'TradeDesc' => '123',
       'ItemName' => current_cart.items_name,
-      'ReturnURL' => 'http://localhost:5000/carts/checkout',
+      'ReturnURL' => 'http://localhost:5000/carts/return',
       'ClientBackURL' => 'http://localhost:5000/',
       'ChoosePayment' => 'Credit',
       'EncryptType' => '1',

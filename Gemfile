@@ -27,6 +27,7 @@ gem 'redis', '~> 4.0'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'babosa', '~> 1.0', '>= 1.0.4'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'aasm', '~> 4.11'
 gem 'omniauth', '~> 1.9', '>= 1.9.1'
@@ -37,8 +38,14 @@ gem 'figaro', '~> 1.2'
 gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'carrierwave', '~> 2.1'
 gem 'fog-aws', '~> 3.7'
+
 gem "mini_magick"
 gem 'sidekiq', '~>6.0.0'
+gem 'acts-as-taggable-on', '~> 7.0'
+
+gem 'dotenv', '~> 0.7.0'
+gem 'friendly_id', '~> 5.4.0'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
