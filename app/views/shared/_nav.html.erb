@@ -1,25 +1,35 @@
-<nav class='flex w-full items-center bg-gray-800 px-2 lg:px-10 text-white flex-wrap top-0 z-50'>
-  <div>
+<nav class='primarynav'>
+  <div class='px-1'>
+    <button class="text-gray-900 inline-flex mr-2 p-2 hover:bg-gray-900 rounded lg:hidden ml-auto hover:text-white focus:outline-none nav-toggler">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <div class='logo'>
     <%= link_to root_path do %>
-      <%= image_tag "logo.png" , class:'w-20 lg:w-32' %>
+      <%= image_tag "logoblack.png" %>
     <% end %>
   </div>
 
-  <div class='lg:px-20 flex-grow mx-12 w-1/5 sm:3/5 '>
-    <%= form_tag search_path, method: 'get' do %>
-      <div class="relative  text-black bg-white rounded-full">
-        <span class="absolute inset-y-0 right-0 flex items-center pl-4 bg-pink-400 p-2 rounded-full m-1 text-white w-10">
-          <%= button_tag(type: "submit", class: "absolute right-3 focus:outline-none") do %>
+  <div class='searchbar w-1/5 md:1/2 sm:3/5'>
+    <%= form_tag search_path, method: :get do %>
+      <div class="search">
+        <span class="btn">
+          <%= button_tag(type: "submit", class:"icon") do %>
             <i class="fas fa-search"></i>
           <% end %>
         </span>
-        <%= text_field_tag :search, params[:search], placeholder: "搜尋商品",class:'text-lg	rounded-full w-full px-4 py-2 text-black' %>
+        <%= text_field_tag :search, params[:search], placeholder: "搜尋商品", class:'inputsearch' %>
       </div>
     <% end %>
   </div>
 
-  <div>
-    <div class='inline-flex py-5 space-x-4 w-full'>
+    <%= link_to carts_path do %>
+      <div class='text-gray-900 flex items-center mr-1'><%= image_tag 'bag.png' ,class:'w-8'%>(<%= current_cart.items.count %>) / <%= current_cart.total_price %></div>
+    <% end %>
+
+    <div class='hidden top-navbar w-full md:inline-flex md:w-auto text-gray-900 navigation bg-white pl-2 md:space-x-2'>
+      <!-- <div><%= link_to '首頁', root_path %></div> -->
       <% if user_signed_in? %>
         <%=link_to '聊聊', rooms_path %>
         <div class='hover:bg-gray-900'><%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %></div>
@@ -29,13 +39,14 @@
               <i class="fas fa-shopping-cart"></i> <span class="cartCount" data-navcart-target="cartcount"><%= current_cart.items.count %></span> / <span class="cartTotalPrice" data-navcart-target="carttotalprice"><%= current_cart.total %> </span>
             </li>
           <% else %>
-            <li><i class="fas fa-shopping-cart"></i>0 / 0</li>
+            <%= image_tag current_user.image.url, class:"m-auto rounded-full h-10 w-10" if current_user.image.url.present? %>
           <% end %>
         <% end %>
+          <div class='py-4'><%= link_to '登出',  destroy_user_session_path , method: 'delete' %></div>
         <% if current_user.shop.blank? %>
-          <div><%= link_to '我要開店', new_shop_path %></div>
+          <div class='py-4'><%= link_to '我要開店', new_shop_path %></div>
         <% else %>
-          <div><%= link_to '賣家中心', shops_path %></div>
+          <div class='py-4'><%= link_to '賣家中心', shops_path %></div>
         <% end %>
         
           <%= link_to user_path(current_user) do %>
@@ -46,9 +57,12 @@
             <% end %>
           <% end %>
       <% else %>
-        <div class='hover:text-pink-300'><%= link_to '註冊', new_user_registration_path %></div>
-        <div class='hover:text-pink-300'><%= link_to '登入',  new_user_session_path  %></div>
+        <div class='py-4 pl-2'><%= link_to '註冊', new_user_registration_path %></div>
+        <div class='py-4 pl-2'><%= link_to '登入',  new_user_session_path  %></div>
       <% end %>
     </div>
-  </div>
 </nav>
+
+
+
+

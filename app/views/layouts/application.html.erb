@@ -10,7 +10,10 @@
   </head>
   <body>
     <%= render "shared/nav" %>
-    <p class="alert"><%= alert %></p>
+    <% if notice %>
+    <p class="notice"><%= notice %></p>
+    <% end %>
+        <p class="alert"><%= alert %></p>
     <%= yield %>
 
     <% if user_signed_in? %>

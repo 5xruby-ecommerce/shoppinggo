@@ -1,12 +1,12 @@
 <nav class='flex w-full items-center bg-gray-50 px-2 lg:px-10 text-black shadow flex-wrap justify-between fixed top-0'>
   <div class="flex items-center">
     <%= link_to root_path do %>
-      <%= image_tag "logo.png" , class:'w-20' %>
+      <%= image_tag "logowithoutword.png" , class:'w-20' %>
     <% end %>
   </div>
-
   <div>
     <div class='inline-flex py-5 space-x-4 w-full'>
+      <!-- <div><%= link_to '首頁', root_path %></div> -->
         <% if user_signed_in? %>
         <div class='hover:bg-gray-900'><%= link_to '登出' ,
           destroy_user_session_path ,
@@ -19,3 +19,4 @@
     </div>
   </div>
 </nav>
+    

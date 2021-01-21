@@ -1,6 +1,6 @@
-<div class='flex w-full items-center flex-col space-y-2 pt-10'>
+<div class='flex w-full items-center flex-col space-y-4 pt-10 bg-white pb-10'>
 <%# 選項列 %>
-  <div class='w-4/5 flex justify-between text-gray-500'>
+  <div class='w-4/5 flex justify-between text-gray-500 '>
     <div class=' w-3/5 input-store'>
       <select class='w-2/5 bg-transparent outline-none'>
           <option>商品名稱</option>
@@ -26,11 +26,11 @@
     </div>
   </div>
   <%# 商品顯示 %>
-  <div class='h-120 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow mt-20 ml-5 '>
-    <table class='w-full text-center border-collapse' >
+    <div class='h-120 bg-gray-50 w-11/12 rounded-sm overflow-hidden border-1 shadow ml-5 overflow-y-auto ',style='height:500px'>
+      <table class='w-full text-center border-collapse'>
       <thead class='bg-gray-100 text-gray-500'>
         <tr>
-            <td>商品圖片</td>
+            <td class='p-2'>商品圖片</td>
             <td>商品名稱</td>
             <td>商品描述</td>
             <td>商品數量</td>
@@ -58,6 +58,11 @@
           </tr>
         <% end %>
       </tbody>
-    </table>
+      </table>
+    </div>
   </div>
-  </div>
+
+
+
+
+

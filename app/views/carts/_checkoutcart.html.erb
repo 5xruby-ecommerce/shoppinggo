@@ -19,6 +19,9 @@
   background-color: grey;
   pointer-events: none
 }
+.wrap {
+  padding-top:100px;
+}
 </style>
 <div class="wrap">
   <div class="row">
@@ -37,7 +40,7 @@
       <% items.each do |item| %>
         <div class="row" data-controller="updatecart" data-updatecart-id
         ="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0">
-          <div>
+          <div class='h-36 w-36'>
             <%= link_to product_path(item.product) do %><%= image_tag item.product.image_url if item.product.image_url.present? %><% end %>
           </div>
           <div>
