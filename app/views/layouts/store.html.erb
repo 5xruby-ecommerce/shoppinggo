@@ -8,13 +8,13 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body class="flex-row overflow-scroll	h-screen	">
+  <body class="flex-row	h-screen">
 
     <%= render "shared/sidebar" %>
     <%= render "shared/storenav" %>
-
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice %>
+      <p class="notice"><%= notice %></p>
+    <% end %>
     <%= yield %>
     </div>
   </body>

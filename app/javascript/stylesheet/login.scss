@@ -1,0 +1,36 @@
+.input-devise {
+  @apply p-2 bg-white border;
+}
+.socialbtns {
+  @apply flex items-center space-x-2;
+}
+.google {
+  @apply flex items-center;
+  background: #DC4E41;
+  padding: 0 12px;
+  a {
+     font-family: 'Roboto', sans-serif;
+     @apply text-white;
+  }
+  .fab {
+     margin-right:12px;
+     font-size:18px;
+     @apply text-white;
+  }
+}
+.facebook {
+  @apply flex items-center;
+  background-color:#3b5998;
+  padding: 0 12px;
+  a {
+     font-family: 'Roboto', sans-serif;
+     @apply font-light;
+  }
+  .fab {
+     margin-right:12px;
+     font-size:18px;
+  }
+}
+.notice {
+  @apply border-2 border-red-500;
+}

@@ -1,7 +1,6 @@
-<div class='pt-36'>
 <section class="cards">
     <div class="content max-auto">
-      <% @product.each do |product|%>
+      <% @products.each do |product|%>
         <div>
           <div class="cardstyle">
             <%= link_to product_path(product) do %>
@@ -25,4 +24,3 @@
       <% end %>
     </div>
 </section>
-</div>
