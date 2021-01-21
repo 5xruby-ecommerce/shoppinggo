@@ -12,4 +12,8 @@
     <div>
       <%= link_to '購買清單', orders_path if current_user.shop.present?  %>
     </div>
+
+    <div>
+      <%= link_to '收藏商品', '' if current_user.shop.present? %>
+    </div>
 </div>

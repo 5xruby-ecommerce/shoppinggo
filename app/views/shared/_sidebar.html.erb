@@ -22,6 +22,10 @@
     </div>
 
     <div>
+      <%= link_to '訂單列表', order_list_index_path if current_user.shop.present?%>
+    </div>
+
+    <div>
       <%= link_to '賣場設定', edit_shop_path(current_user.shop) if current_user.shop.present?%>
     </div>
 </div>
