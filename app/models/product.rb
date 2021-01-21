@@ -22,7 +22,7 @@ class Product < ApplicationRecord
 
   has_many :order_items
   has_many :sub_orders, through: :order_item
-
+  has_many :shops, through: :shop_orders
   has_many :favorite_products, dependent: :delete_all
   has_many :favorite_users, through: :favorite_products, source: 'user'
 

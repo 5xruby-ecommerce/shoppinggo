@@ -3,8 +3,8 @@
 class Order < ApplicationRecord
   belongs_to :user
   has_many :sub_orders
-
-  before_create :build_trade_no
+  has_many :shop_orders
+  before_create :order_number
 
   enum status: { pending: 0, paid: 1, cancelled: 2, deliver: 3 }
 
@@ -12,7 +12,8 @@ class Order < ApplicationRecord
 
   aasm(column: :status, enum: true, no_direct_assignment: true) do
     state :pending, initial: true
-    state :paid, :cancelled
+    state :paid
+    state :cancelled
 
     event :pay do
       transitions from: :pending, to: :paid
@@ -24,7 +25,7 @@ class Order < ApplicationRecord
   end
 
   private
-  def build_trade_no
-    self.number = "shopA#{user.id.to_i}#{Time.zone.now.to_i.to_s}"
+  def order_number
+    "shopA#{Time.zone.now.to_i.to_s}"
   end
 end
