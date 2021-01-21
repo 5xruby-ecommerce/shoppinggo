@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 class Product < ApplicationRecord
+
+  acts_as_taggable_on :categories
+  has_many :order_items
+  has_many :sub_orders, through: :order_item
+  
+
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -19,6 +25,7 @@ class Product < ApplicationRecord
   has_many :shops, through: :shop_orders
   has_many :favorite_products, dependent: :delete_all
   has_many :favorite_users, through: :favorite_products, source: 'user'
+
 
   belongs_to :shop
 

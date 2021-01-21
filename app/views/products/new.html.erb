@@ -10,6 +10,11 @@
         <%= f.label :images, "更多商品圖片" %>
         <%= f.file_field :images, multiple:true, class: "form-control" %>
       </div>
+    
+      <div class="form-group p-2">
+        <%= f.label :category_list, "商品類別" %>
+        <%= f.select :category_list , options_for_select(['電玩','書本','我是廢物','你們很棒'])%><br/>
+      <div class="form-group p-2">
 
       <div class="form-group p-2">
         <%= f.label :name, "商品名稱" %>
