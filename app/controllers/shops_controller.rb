@@ -28,7 +28,6 @@ class ShopsController < ApplicationController
   def update
     @shop = current_user.shop
     if @shop.update(shop_params)
-      byebug
       redirect_to shops_path, notice: '資料更新成功'
     else
       render :edit
