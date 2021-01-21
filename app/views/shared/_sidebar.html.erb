@@ -2,6 +2,6 @@
   <div class=" bg-gray-50 flex items-center flex-col shadow pt-10 px-20">
   <div class="pt-4"><%= link_to '商品列表', shops_path if current_user.shop.present? %></div>
   <%= link_to '新增商品', new_shop_product_path(current_user.shop) if current_user.shop.present? %>
-  <%= link_to '新增Coupon', new_coupon_path if current_user.shop.present? %>
-  <%= link_to '檢視Coupon', list_coupons_path if current_user.shop.present? %>
+  <%= link_to '新增優惠卷', new_coupon_path if current_user.shop.present? %>
+  <%= link_to '檢視優惠卷', list_coupons_path if current_user.shop.present? %>
 </div>
