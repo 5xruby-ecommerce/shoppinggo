@@ -3,7 +3,7 @@
 }
 
 .chatroom {
-  @apply bg-green-300 fixed bottom-0 right-5 z-50;
+  @apply bg-green-300 fixed bottom-0 right-5 z-50 ;
 }
 
 .show {
@@ -24,5 +24,60 @@
 }
 
 .zone {
-  // @apply flex
+  height: 334px;
 }
+
+.input {
+  @apply absolute bottom-0
+}
+
+.new_message {
+  width: 100%;
+}
+
+#chatroom {
+  @apply relative
+}
+
+.message_area {
+  height: 310px;
+  overflow-y: scroll;
+}
+
+      .message {
+        display: flex;
+
+        .content {
+          padding: 5px 8px;
+          word-break: break-word;
+          border-radius: 5px;
+        }
+
+  
+      }
+
+      .other {
+        padding-right: 50%;
+
+        .content {
+          margin-left: 10px;
+          background-color: rgb(226, 226, 226);
+        }
+
+        
+      }
+
+      .me {
+        justify-content: flex-end;
+        padding-left: 50%;
+
+        .content {
+          order: -1;
+          margin-right: 10px;
+          background-color: rgb(56, 56, 136);
+          color: white;
+        }
+
+      
+      }
+      
