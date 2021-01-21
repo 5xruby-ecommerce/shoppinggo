@@ -1,6 +1,6 @@
 import consumer from "./consumer"
 
-document.addEventListener('turbolinks:load',()=>{
+document.addEventListener('ajax:success',()=>{
 
   const room = document.querySelector('.message_box')
   if(!room)return
@@ -21,20 +21,25 @@ document.addEventListener('turbolinks:load',()=>{
         const user_id = Number(document.querySelector('.message_box').dataset.user)
         const message_area = document.querySelector('.message_area')
         const form = document.forms[1]
-        console.log(form)
+
         
         if(data.message.user_id === user_id){
           message_area.innerHTML += data.my_message
         }else{
           message_area.innerHTML += data.other_message
+          if(Notification.permission === "granted"){
+          var title = '你有一則新通知'
+          var body  = data.message.content
+          var options = { body: body}
+          new Notification(title, options)  
+          }
         }
   
         form.reset()
   
         message_area.scrollTop = message_area.scrollHeight
-  
+        
       }
     });
-
 })
 

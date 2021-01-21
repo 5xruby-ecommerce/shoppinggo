@@ -1,11 +1,11 @@
 class MessagesController < ApplicationController
-  before_action :message_params , only: [:create]
+  before_action :authenticate_user!
 
   def create
     room = Room.find(params[:room_id])
     message = current_user.messages.new(message_params)
     message.room = room
-
+    message.save
     if message.save
       MessageBroadcastJob.perform_later(message)
     end

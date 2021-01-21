@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :store_user_location!, if: :storable_location?
+  before_action :set_chatrooms 
+
   # The callback which stores the current location must be added before you authenticate the user
   # as authenticate_user! (or whatever your resource is) will halt the filter chain and redirect
   # before the location can be stored.
@@ -7,7 +9,17 @@ class ApplicationController < ActionController::Base
   include ShopsHelper
   include ProductsHelper
 
+
+
+
   private
+
+    def set_chatrooms
+      if current_user.present?
+        @rooms = Room.participating(current_user)
+      end
+    end
+
     # Its important that the location is NOT stored if:
     # - The request method is not GET (non idempotent)
     # - The request is handled by a Devise controller such as Devise::SessionsController as that could cause an 
