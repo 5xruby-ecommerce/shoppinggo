@@ -52,6 +52,18 @@ class ProductsController < ApplicationController
     end
   end
 
+  def favorite
+    product = Product.find(params[:id])
+
+    if current_user.favorite?(product)
+      current_user.my_favorites.destroy(product)
+      render json: { status: 'removed' }
+    else
+      current_user.my_favorites << product
+      render json: { status: 'added' }
+    end
+  end
+
   private
 
   def find_shop

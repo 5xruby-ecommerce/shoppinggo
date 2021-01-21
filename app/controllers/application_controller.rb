@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   # as authenticate_user! (or whatever your resource is) will halt the filter chain and redirect
   # before the location can be stored.
   include CartsHelper
+  include ShopsHelper
+  include ProductsHelper
 
 
 

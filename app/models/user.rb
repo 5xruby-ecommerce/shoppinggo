@@ -9,7 +9,13 @@ class User < ApplicationRecord
 
   has_one :shop
   has_many :messages
+  
+  has_many :favorite_products
+  has_many :my_favorites, through: :favorite_products, source: 'product'
+
   mount_uploader :image, ImageUploader
+  has_many :user_coupons
+  has_many :orders
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
@@ -78,6 +84,10 @@ class User < ApplicationRecord
       return true if password == "123456" 
     end
     super
+  end
+
+  def favorite?(product)
+    my_favorites.include?(product)
   end
 
 end
