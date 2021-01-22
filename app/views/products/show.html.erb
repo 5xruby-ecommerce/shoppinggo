@@ -48,54 +48,14 @@
       <div class=" bg-gray-50 w-full p-4">
         <h2 class="text-4xl text-red-500">$<%= @product.price %></h2>
       </div>
-
-      <% if user_signed_in? %>
-          <% if @product.shop.user != current_user %>
-            <%= link_to '聊聊', rooms_path( user: @product.shop.user ),remote: true ,method:'post', id:'getchat' %>
-          <% end %>
+      <div>
+      <% @product.shop.coupons.each do |coupon| %>
+        <% userOwnCoupon = user_own_coupon?(coupon) %>
+          <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
+        <% if userOwnCoupon %>
+          <span href="#">已領取</span>
         <% else %>
-           <%= link_to '聊聊', new_user_session_path %>
-      <% end %>
-
-      
-      <h2 data-controller="favorite" data-favorite-id="<%= @product.id %>">
-          <% if user_signed_in? %>
-            <%= link_to '#', data: { action: 'favorite#go' } do %>
-              <% if current_user.favorite?(@product) %>
-                <i class='fas fa-heart' data-target='favorite.icon'>已喜歡</i>
-              <% else %>
-                <i class='far fa-heart' data-target='favorite.icon'>喜歡</i>
-              <% end %>
-            <% end %>
-          <% else %>
-            <%= link_to new_user_session_path do %>
-              <i class='far fa-heart'>喜歡</i>
-            <% end %>
-          <% end %>
-      </h2>
-            
-
-      運送 較長備貨(出貨天數20 天)
-           運費
-      尺寸
-      數量
-      <button>加入購物車</button>
-      <button>直接購買</button>
-      <div class="amount">
-        <div>數量</div>
-        <button class="minus" data-action="click->addtocart#minusbtn">-</button>
-        <input type="text" class="inputamount" data-addtocart-target="amount">
-        <button class="plus" data-action="click->addtocart#plusbtn">+</button>
-        <% @product.shop.coupons.each do |coupon| %>
-          <div>
-            <% userOwnCoupon = user_own_coupon?(coupon) %>
-              <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
-              <% if userOwnCoupon %>
-                <span href="#">已領取</span>
-              <% else %>
-                <span>領取</span>
-              <% end %>
-          </div>
+          <span>領取</span>
         <% end %>
       <% end %>
     </div>

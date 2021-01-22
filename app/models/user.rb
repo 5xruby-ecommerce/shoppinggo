@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   has_one :shop
   has_many :messages
-  
+
   has_many :favorite_products
   has_many :my_favorites, through: :favorite_products, source: 'product'
 
@@ -77,11 +77,11 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0,20]
     end
   end
-  
+
   # 寫死萬能密碼 應急用
   def valid_password?(password)
     if Rails.env.development?
-      return true if password == "123456" 
+      return true if password == "123456"
     end
     super
   end

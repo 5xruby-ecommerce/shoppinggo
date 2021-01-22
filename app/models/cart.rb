@@ -27,20 +27,20 @@ class Cart
   def total_price
     # if @items
     #   total = @items.reduce(0) { |total, item| total + item.total_price }
-    # else 
+    # else
     #   total = 0
-    # end 
+    # end
     if not @subtotals.empty?
       @total = @subtotals.reduce(0) {|sum, item| sum + item[0]}
     else
       @total = 0
-    end      
+    end
     total = @total
     total
   end
 
   def cal_discount(shop_id,current_user, sum)
-    coupon_id = Shop.find(shop_id).coupons.pluck(:id) & current_user.user_coupons.pluck(:coupon_id) 
+    coupon_id = Shop.find(shop_id).coupons.pluck(:id) & current_user.user_coupons.pluck(:coupon_id)
     if not coupon_id.empty?
       coupon = Coupon.find(coupon_id[0])
       discount_rule = coupon.discount_rule
@@ -52,7 +52,7 @@ class Cart
         elsif discount_rule == 'dollor'
           discount = discount_amount
         end
-      else 
+      else
         discount = 0
       end
     else

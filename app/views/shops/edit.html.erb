@@ -1,24 +1,21 @@
-<div class='flex w-full items-center flex-col pt-20 space-y-2'>
-  <div class='h-5/6 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow'>
+<div class='flex flex-grow items-center flex-col space-y-4  pt-36'>
+  <div class='w-3/5  h-4/5 border shadow rounded-sm p-5 bg-gray-100'>
+      <%= form_for @shop do |f| %>
 
-  <table class="w-full text-center border-collapse">
-    <thead class="bg-gray-100 text-gray-500">
-        <tr>
-          <th>賣場名稱</th>
-          <th>聯絡電話</th>
-          <th>設定</th>
-        <tr>
-      </thead>
+        <div class= 'p-2'>
+          <%= f.label :name, '賣場名稱' %>
+          <%= f.text_field :name %>
+        </div>
 
-      <tbody>
-        <tr class='border-b-2 border-fuchsia-600 h-20'>
-          <%= form_for @shop do |f| %>
-            <td><%= f.text_field :name %></td>
-            <td><%= f.text_field :tel %></td>
-            <td><%= f.submit "資訊更新", class:'primary-button text-xs' %></td>
-          <% end %>
-        </tr>
-      </tbody>
-    </table>
+        <div class= 'p-2'>
+          <%= f.label :tel, '聯絡電話' %>
+          <%= f.text_field :tel %>
+        </div>
+
+        <div class= 'p-2'>
+          <%= f.submit '資訊更新', class:'primary-button text-xs' %>
+        </div>
+
+      <% end %>
   </div>
 </div>

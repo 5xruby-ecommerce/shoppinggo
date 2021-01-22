@@ -23,35 +23,20 @@
       </div>
     <% end %>
   </div>
-
     <%= link_to carts_path do %>
       <div class='text-gray-900 flex items-center mr-1'><%= image_tag 'bag.png' ,class:'w-8'%>(<%= current_cart.items.count %>) / <%= current_cart.total_price %></div>
     <% end %>
-
     <div class='hidden top-navbar w-full md:inline-flex md:w-auto text-gray-900 navigation bg-white pl-2 md:space-x-2'>
-      <!-- <div><%= link_to '首頁', root_path %></div> -->
       <% if user_signed_in? %>
-        <%=link_to '聊聊', rooms_path %>
-        <div class='hover:bg-gray-900'><%= link_to '登出' ,  destroy_user_session_path , method: 'delete' %></div>
-        <%= link_to carts_path do %>
-          <% if current_user %>
-            <li data-controller="navcart" data-action="plusbtn@window->navcart#update changequantity@window->navcart#update minusbtn@window->navcart#update usecoupon@window->navcart#update unusecoupon@window->navcart#update">
-              <i class="fas fa-shopping-cart"></i> <span class="cartCount" data-navcart-target="cartcount"><%= current_cart.items.count %></span> / <span class="cartTotalPrice" data-navcart-target="carttotalprice"><%= current_cart.total %> </span>
-            </li>
-          <% else %>
-            <%= image_tag current_user.image.url, class:"m-auto rounded-full h-10 w-10" if current_user.image.url.present? %>
-          <% end %>
-        <% end %>
           <div class='py-4'><%= link_to '登出',  destroy_user_session_path , method: 'delete' %></div>
         <% if current_user.shop.blank? %>
           <div class='py-4'><%= link_to '我要開店', new_shop_path %></div>
         <% else %>
           <div class='py-4'><%= link_to '賣家中心', shops_path %></div>
         <% end %>
-        
           <%= link_to user_path(current_user) do %>
             <% if current_user.image.url.blank? %>
-              <i class="fas fa-user-circle"></i>
+              <i class="fas fa-user-circle pt-4"></i>
             <% else %>
               <%= image_tag current_user.image.url, class:"m-auto rounded-full h-10 w-10" if current_user.image.url.present? %>
             <% end %>
@@ -62,7 +47,3 @@
       <% end %>
     </div>
 </nav>
-
-
-
-

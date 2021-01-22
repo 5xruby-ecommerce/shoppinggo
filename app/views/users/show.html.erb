@@ -10,8 +10,11 @@
   </head>
   <body class="flex-row overflow-scroll	h-screen	">
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+    <% end %>
+
     <%= yield %>
     </div>
   </body>

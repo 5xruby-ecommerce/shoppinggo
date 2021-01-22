@@ -1,4 +1,4 @@
-<div class='flex w-full items-center flex-col space-y-4 pt-10 bg-white pb-10'>
+<div class='flex flex-grow items-center flex-col space-y-4 pb-10 pt-36'>
 <%# 選項列 %>
   <div class='w-4/5 flex justify-between text-gray-500 '>
     <div class=' w-3/5 input-store'>
@@ -16,8 +16,8 @@
       <span>類別</span>
       <input type="text" class='input-store'>
     </div>
-  </div>
-  <div class='w-4/5 flex text-gray-500'>
+    </div>
+    <div class='w-4/5 flex text-gray-500'>
     <div class='w-3/5 flex items-center text-gray-500'>
       <span>商品數量</span><input type="number" class='flex-grow input-store'>&#8722;<input type="number" class='flex-grow input-store'>
     </div>
@@ -26,7 +26,7 @@
     </div>
   </div>
   <%# 商品顯示 %>
-    <div class='h-120 bg-gray-50 w-11/12 rounded-sm overflow-hidden border-1 shadow ml-5 overflow-y-auto ',style='height:500px'>
+  <div class='h-120 bg-gray-50 w-11/12 rounded-sm overflow-hidden border-1 shadow ml-5 overflow-y-auto ',style='height:500px'>
       <table class='w-full text-center border-collapse'>
       <thead class='bg-gray-100 text-gray-500'>
         <tr>
@@ -35,7 +35,6 @@
             <td>商品描述</td>
             <td>商品數量</td>
             <td>商品價格</td>
-            <td>商品狀態</td>
             <td colspan='2'>商品設定</td>
         <tr>
       </thead>
@@ -51,18 +50,12 @@
               <td class='w-1/6'><%= product.name %></td>
               <td class='w-1/6'><%= product.content %></td>
               <td class='w-1/6'><%= product.quantity %></td>
-              <td class='w-1/12'><%= product.price %></td>
-              <td class='w-1/12'><%= product.status == 0 ? '上架' : '未上架'%></td>
+              <td class='w-1/6'><%= product.price %></td>
               <td class='w-1/12'><%= link_to "編輯", edit_product_path(product) ,class:'primary-button text-xs' %></td>
               <td class='w-1/12'><%= link_to "刪除", product_path(product), method: "delete", data: {confirm: "確定刪除嗎？"} ,class:'primary-button text-xs' %></td>
           </tr>
         <% end %>
       </tbody>
       </table>
-    </div>
   </div>
-
-
-
-
-
+</div>

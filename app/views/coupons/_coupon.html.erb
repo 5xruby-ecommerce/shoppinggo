@@ -1,55 +1,61 @@
-<div class='w-full flex justify-center text-gray-500 pt-20'>
+<div class='flex flex-grow items-center flex-col space-y-4  pb-10 pt-36'>
   <div class='w-3/5  h-4/5 border shadow rounded-sm p-5 bg-gray-100'>
 
-<%= form_with(model: coupon) do |form| %>
+  <%= form_with(model: coupon) do |form| %>
 
-  <div class="form-group p-2">
-    <%= form.label :title, "優惠卷名稱" %>
-    <%= form.text_field :title , class:'w-full p-2 outline-none'%>  
-  </div>
-
-  <div class="form-group p-2">
-    <%= form.label :discount_rules, "優惠方式" %>
-    <select name="coupon[discount_rule]" class="form-control p-2">
-      <%= options_for_select(Coupon.discount_rules.keys, Coupon.discount_rules.keys[2]) %>
-    </select>  
-  </div>
-
-  <div class="form-group p-2">
-    <%= form.label :discount_amount, "優惠價格" %>
-    <%= form.text_field :discount_amount %>  
-  </div>
-
-  <div class="form-group p-2">
-    <%= form.label :min_consumption, "最低消費" %>
-    <%= form.text_field :min_consumption %>  
-  </div>
-
-  <div>
-    <%= form.label :discount_end, "優惠開始" %>
-    <input type="datetime-local" name="coupon[discount_start]" class="datetimepicker_start" value=<%= coupon.discount_start.nil? ? '' : coupon.discount_start.strftime("%Y/%m/%d")%> >
-    <div>
-      <div class="input-group-text absolute top-2 right-1"><i class="fPa fa-calendar"></i></div>
+    <div class="form-group p-2">
+      <%= form.label :title, "優惠卷名稱" %>
+      <%= form.text_field :title , class:'w-full p-2 outline-none'%>
     </div>
-  </div>
-  <div>
-    <%= form.label :discount_end, "優惠結束" %>
-    <input type="datetime-local" name="coupon[discount_end]" class="datetimepicker_end" value=<%= coupon.discount_end.nil? ? '' : coupon.discount_end.strftime("%Y/%m/%d")%> >
-    <div>
-      <div class="input-group-text absolute top-2 right-1"><i class="fa fa-calendar"></i></div>
+
+    <div class="form-group p-2">
+      <%= form.label :discount_rules, "優惠方式" %>
+      <select name="coupon[discount_rule]" class="form-control p-2">
+        <%= options_for_select(Coupon.discount_rules.keys, Coupon.discount_rules.keys[2]) %>
+      </select>
     </div>
-  </div>
 
-  <div class="form-group p-2">
-    <%= form.label :amount, "優惠卷發行數量" %>
-    <%= form.text_field :amount %>  
-  </div>
+    <div class="form-group p-2">
+      <%= form.label :discount_amount, "優惠價格" %>
+      <%= form.text_field :discount_amount %>
+    </div>
 
-  <div class="actions p-2">
-    <%= form.submit "新增優惠卷"%>
-  </div>
-  
-<% end %>
+    <div class="form-group p-2">
+      <%= form.label :min_consumption, "最低消費" %>
+      <%= form.text_field :min_consumption %>
+    </div>
 
-</div>
+    <div class="form-group p-2 flex items-center justify-between">
+      <%= form.label :discount_start, "優惠開始" %>
+      <div class="input-group date relative" id="discount_start" data-target-input="nearest">
+        <input type="text" class="form-control datetimepicker-input p-2" data-target="#discount_start" name="coupon[discount_start]" value=<%= coupon.discount_start.nil? ? '' : coupon.discount_start.strftime("%Y/%m/%d") %>/>
+        <div class="input-group-append absolute top-2 right-1" data-target="#discount_start" data-toggle="datetimepicker">
+          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= form.label :discount_end, "優惠結束" %>
+      <div class="input-group date relative" id="discount_end" data-target-input="nearest">
+        <input type="text" class="form-control datetimepicker-input p-2" data-target="#discount_end" name="coupon[discount_end]" value=<%= coupon.discount_end.nil? ? '' : coupon.discount_end.strftime("%Y/%m/%d")  %>/>
+          <div class="input-group-append" data-target="#discount_end" data-toggle="datetimepicker">
+          <div class="input-group-text absolute top-2 right-1">
+          <i class="fa fa-calendar"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group p-2">
+      <%= form.label :amount, "優惠卷發行數量" %>
+      <%= form.text_field :amount %>
+    </div>
+
+    <div class="actions p-2">
+      <%= form.submit "新增優惠卷"%>
+    </div>
+
+  <% end %>
+
+  </div>
 </div>
