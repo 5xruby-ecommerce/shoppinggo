@@ -60,6 +60,14 @@ ActiveRecord::Schema.define(version: 2021_01_20_092521) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "notices", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_notices_on_user_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.string "category"
     t.integer "quantity"
@@ -204,6 +212,7 @@ ActiveRecord::Schema.define(version: 2021_01_20_092521) do
   add_foreign_key "favorite_products", "users"
   add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "notices", "users"
   add_foreign_key "order_items", "sub_orders"
   add_foreign_key "orders", "users"
   add_foreign_key "shops", "users"
