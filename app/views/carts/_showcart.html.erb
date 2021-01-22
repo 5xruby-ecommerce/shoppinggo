@@ -24,18 +24,10 @@
 }
 </style>
 <div class="wrap flex justify-center flex-col">
-  <div class="row space-x-2">
-    <div>商品照片</div>
-    <div>商品名稱</div>
-    <div>商店名稱</div>
-    <div>數量</div>
-    <div>單價</div>
-    <div>小計</div>
-    <div>處理</div>
-  </div>
-  <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
+
+<% items = (cart.items.sort_by {|item| item.product.shop_id})%>
   <% temp = items.group_by { |item| item.product.shop_id.itself} %>
-  <% temp.values.each do |items|%>
+    <% temp.values.each do |items|%>
     <div data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>">
       <% items.each do |item| %>
         <div class="row flex items-center" data-controller="updatecart" data-updatecart-id
@@ -44,7 +36,7 @@
             <%= link_to product_path(item.product) do %><%= image_tag item.product.image_url if item.product.image_url.present? %><% end %>
           </div>
           <div class="flex flex-col">
-          <!-- 折價卷 -->
+          <!-- 商品店名 -->
           <div class='flex flex-row p-2'>
             <div class='bg-red-200'>
               <%= item.product.name %>
@@ -112,3 +104,7 @@
     </div>
   </div>
 </div>
+
+
+
+

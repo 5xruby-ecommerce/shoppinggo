@@ -5,3 +5,32 @@
 
 <%= link_to '清空購物車', empty_carts_path, method: "delete" %>
 <%= link_to '結帳', new_order_path if not current_cart.empty? %>
+
+
+
+<section class='bg-red-200 w-full'>
+<% items = (current_cart.items.sort_by {|item| item.product.shop_id})%>
+  <% temp = items.group_by { |item| item.product.shop_id.itself} %>
+    <% temp.values.each do |items|%>
+  <div class='flex flex-wrap w-full max-w-screen-xl bg-gray-500 m-auto pl-20 '>
+    <div class='w-full md:w-3/5 bg-red-500 h-96'>
+      <div class='flex w-full h-36'>
+        <div class='w-1/4 bg-red-200'>picture</div>
+        <div class='w-3/4 bg-yellow-100'>product</div>
+      </div>
+    </div>
+    <div class='w-full md:w-2/5 bg-red-900 h-96'></div>
+    
+  </div>
+</section>
+
+
+<% items = (current_cart.items.sort_by {|item| item.product.shop_id})%>
+  <% temp = items.group_by { |item| item.product.shop_id.itself} %>
+    <% temp.values.each do |items|%>
+        <div data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>">
+      <% items.each do |item| %>
+            <%= link_to product_path(item.product) do %><%= image_tag item.product.image_url if item.product.image_url.present? %><% end %>
+      <% end %>
+          <%= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
+  <% end %>
