@@ -5,9 +5,11 @@
     <div class='md:w-2/5 pb-10 pt-8 pb-16'>
       <div class='mb-4' style='width:100%;padding-top:100%;position:relative'><%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
       <div class="flex flex-wrap -mx-2">
-        <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
-        <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
-        <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
+        <% @product.images.each do |image| %>
+          <div class="w-1/3 px-2">
+            <%= image_tag(image.url, class:"px-2") %>
+          </div>
+        <% end %>
       </div>
       <div class="flex pt-4 text-base justify-center items-center">
         <div class='w-3/5 border-r-2 border-gray-200 icons text-center pr-4'>
@@ -22,9 +24,9 @@
             <% if user_signed_in? %>
               <%= link_to '#', data: { action: 'favorite#go' } do %>
                 <% if current_user.favorite?(@product) %>
-                  <i class='fas fa-heart' data-target='favorite.icon'></i>
+                  <i class='fas fa-heart' data-target='favorite.icon'><span id='fav'>已喜歡</span></i>
                 <% else %>
-                  <i class='far fa-heart' data-target='favorite.icon'></i>
+                  <i class='far fa-heart' data-target='favorite.icon'><span id='fav'>喜歡</span></i>
                 <% end %>
               <% end %>
             <% else %>

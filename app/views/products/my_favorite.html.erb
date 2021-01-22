@@ -28,13 +28,13 @@
               <td class='w-1/6'><%= my_favorite.quantity %></td>
               <td class='w-1/6'><%= my_favorite.price %></td>
               <td class='w-1/6'>
-                <h2 data-controller="favorite" data-favorite-id="<%= @my_favorite %>">
+                <h2 data-controller="favorite" data-favorite-id="<%= my_favorite.id %>">
                   <% if user_signed_in? %>
-                    <%= link_to '#', data: { action: 'favorite#go' } do %>
-                      <% if current_user.favorite?(@my_favorite) %>
-                        <i class='fas fa-heart' data-target='favorite.icon'>已喜歡</i>
+                    <%= link_to '#', data: { action: 'favorite#remove_fav' } do %>
+                      <% if current_user.favorite?(my_favorite) %>
+                        <i class='fas fa-heart' data-target='favorite.icon'><span id='fav'>已喜歡</span></i>
                       <% else %>
-                        <i class='far fa-heart' data-target='favorite.icon'>喜歡</i>
+                        <i class='far fa-heart' data-target='favorite.icon'><span id='fav'>喜歡</span></i>
                       <% end %>
                     <% end %>
                   <% else %>
