@@ -1,19 +1,22 @@
 <%= render 'carts/checkoutcart', cart: current_cart %>
 
-<h2>訂單資料</h2>
-
-<%= form_for @order do |f| %>
-  <div>
-    <%= f.label :receiver, "收件者姓名" %>
-    <%= f.text_field :receiver %>
+<div class='flex flex-grow items-center flex-col space-y-4  pt-36'>
+  <div class='w-4/5  h-4/5 border shadow rounded-sm p-5 bg-gray-100'>
+  <h2 class= 'p-2'>寄送資訊</h2>
+  <%= form_for @order do |f| %>
+    <div class= 'p-2'>
+      <%= f.label :receiver, "收件者姓名" %>
+      <%= f.text_field :receiver %>
+    </div>
+    <div class= 'p-2'>
+      <%= f.label :tel, "聯絡電話" %>
+      <%= f.text_field :tel %>
+    </div>
+    <div class= 'p-2'>
+      <%= f.label :address, "收件地址" %>
+      <%= f.text_field :address %>
+    </div>
+    <%= f.submit "付款", id: "btn", class:'primary-button text-xs' %>
+  <% end %>
   </div>
-  <div>
-    <%= f.label :tel, "聯絡電話" %>
-    <%= f.text_field :tel %>
-  </div>
-  <div>
-    <%= f.label :address, "收件地址" %>
-    <%= f.text_field :address %>
-  </div>
-  <%= f.submit "付款", id: "btn" %>
-<% end %>
+</div>

@@ -6,6 +6,11 @@ class OrdersController < ApplicationController
     render layout: "member"
   end
 
+  def show
+    @orders = current_user.orders.find(:id)
+    render layout: "member"
+  end
+
   def new
     @order = Order.new
     add_mac_value(sample_params(@order))
@@ -80,7 +85,7 @@ class OrdersController < ApplicationController
       'TradeDesc' => '123',
       'ItemName' => current_cart.items_name,
       'ReturnURL' => 'http://localhost:5000//orders/return',
-      'ClientBackURL' => 'http://localhost:5000/',
+      'ClientBackURL' => 'http://localhost:5000/orders',
       'ChoosePayment' => 'Credit',
       'EncryptType' => '1',
     }
