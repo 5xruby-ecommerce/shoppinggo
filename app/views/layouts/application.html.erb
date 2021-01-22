@@ -10,7 +10,10 @@
   </head>
   <body>
     <%= render "shared/nav" %>
-    <p class="alert"><%= alert %></p>
+    <% if notice %>
+      <p class="notice"><%= notice %></p>
+    <% end %>
+      <p class="alert"><%= alert %></p>
     <%= yield %>
 
     <% if user_signed_in? %>
@@ -26,9 +29,9 @@
         </div>
       </div>
 
-      <div class='zone hidden flex'>  
+      <div class='zone hidden flex'>
         <div class='w-4/5 h-full' id='chatroom'>
-          <p class='text-center'>請開始你的聊天</p>
+          <p class='text-center'>開始聊天</p>
         </div>
 
         <div class='w-1/5 h-full'>

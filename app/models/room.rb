@@ -20,7 +20,7 @@ class Room < ApplicationRecord
   def self.get(sender_id,receiver_id)
     room = Room.between(sender_id,receiver_id).first
     return room if room.present?
-    
+
     create(sender_id: sender_id , receiver_id: receiver_id)
   end
 end

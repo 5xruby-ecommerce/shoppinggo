@@ -1,119 +1,133 @@
-<style>
-  .taken {
-    background-color: grey;
-  }
-  .coupon {
-    display: inline-block;
-    width: 25vh;
-    text-align: center;
-  }
-
-  .occupy {
-    background-color: grey;
-  }
-</style>
-
 <div data-controller="addtocart" data-addtocart-id="<%= @product.id %>" data-addtocart-number-value=1 >
-  <section class='flex justify-center pt-10'>
-    <div class='flex w-full flex-wrap max-w-screen-xl px-8 shadow bg-white'>
-      <div class='md:w-2/5 pb-10 bg-gray-600'>
-        <div class="mb-4 bg-red-200" style='width:100%;padding-top:100%;position:relative'><%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
-        <div class="flex flex-wrap -mx-2">
-        <% @product.images.each do |image| %>
-          <div class="w-1/3 px-2">
-            <%= image_tag(image.url, class:"px-2") %>
-          </div>
-          <% end %>
+<section class='flex justify-center pt-36 lg:px-10'>
+  <div class='flex w-full flex-wrap max-w-screen-xl px-8 shadow bg-white'>
+    <!-- 商品圖片 -->
+    <div class='md:w-2/5 pb-10 pt-8 pb-16'>
+      <div class='mb-4' style='width:100%;padding-top:100%;position:relative'><%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
+      <div class="flex flex-wrap -mx-2">
+        <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
+        <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
+        <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
+      </div>
+      <div class="flex pt-4 text-base justify-center items-center">
+        <div class='w-3/5 border-r-2 border-gray-200 icons text-center pr-4'>
+          <div class='hidden md:contents vertiacle'>分享:</div>
+          <span><i class="fab fa-facebook-messenger"></i></span>
+          <span><i class="fab fa-facebook"></i></span>
+          <span><i class="fab fa-pinterest"></i></span>
+          <span><%= image_tag 'twitter.svg' %></span>
+        </div>
+        <div class='w-2/5 text-center'>
+          <span data-controller="favorite" data-favorite-id="<%= @product.id %>">
+            <% if user_signed_in? %>
+              <%= link_to '#', data: { action: 'favorite#go' } do %>
+                <% if current_user.favorite?(@product) %>
+                  <i class='fas fa-heart' data-target='favorite.icon'></i>
+                <% else %>
+                  <i class='far fa-heart' data-target='favorite.icon'></i>
+                <% end %>
+              <% end %>
+            <% else %>
+              <%= link_to new_user_session_path do %>
+                <i class='far fa-heart'></i>
+              <% end %>
+            <% end %>
+        </span>
         </div>
       </div>
-    
-      <div class='w-full md:w-3/5 px-8 pt-4'>
-        <h2 class="text-4xl mb-2 font-semibold"><%= @product.name %></h2>
-
-      <div class="w-full flex">
-        <div><a href="#">5.0</a><span>&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</span></div>
-        <div><a href="#">0</a><span>評價</span></div>
-        <div><a href="#">0</a><span>已出售</span></div>
-      </div>
-      <div class=" bg-gray-50 w-full p-2">
-        <h2 class="text-4xl text-red-400">$<%= @product.price %></h2>
-      </div>
-
-      <% if user_signed_in? %>
-          <% if @product.shop.user != current_user %>
-            <%= link_to '聊聊', rooms_path( user: @product.shop.user ),remote: true ,method:'post', id:'getchat' %>
-          <% end %>
-        <% else %>
-           <%= link_to '聊聊', new_user_session_path %>
-      <% end %>
-
-      
-      <h2 data-controller="favorite" data-favorite-id="<%= @product.id %>">
-          <% if user_signed_in? %>
-            <%= link_to '#', data: { action: 'favorite#go' } do %>
-              <% if current_user.favorite?(@product) %>
-                <i class='fas fa-heart' data-target='favorite.icon'>已喜歡</i>
-              <% else %>
-                <i class='far fa-heart' data-target='favorite.icon'>喜歡</i>
-              <% end %>
-            <% end %>
-          <% else %>
-            <%= link_to new_user_session_path do %>
-              <i class='far fa-heart'>喜歡</i>
-            <% end %>
-          <% end %>
-      </h2>
-            
-
-      運送 較長備貨(出貨天數20 天)
-           運費
-      尺寸
-      數量
-      <button>加入購物車</button>
-      <button>直接購買</button>
-      <div class="amount">
-        <div>數量</div>
-        <button class="minus" data-action="click->addtocart#minusbtn">-</button>
-        <input type="text" class="inputamount" data-addtocart-target="amount">
-        <button class="plus" data-action="click->addtocart#plusbtn">+</button>
-        <% @product.shop.coupons.each do |coupon| %>
-          <div>
-            <% userOwnCoupon = user_own_coupon?(coupon) %>
-              <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
-              <% if userOwnCoupon %>
-                <span href="#">已領取</span>
-              <% else %>
-                <span>領取</span>
-              <% end %>
-          </div>
-        <% end %>
-      </div>
-      <button data-action="click->addtocart#add_item" class="inline-block py-4 px-8 leading-none text-white bg-indigo-600 hover:bg-indigo-700 font-semibold rounded">Buy Now!</button>
-      </div>        
     </div>
-  </section>
+    <!-- 右側商品品名數量尺寸等 -->
+    <div class='md:w-3/5 lg:pl-12 md:pt-8 flex flex-col justify-between'>
+      <div class="text-4xl mb-4 font-semibold"><%= @product.name %></div>
+      <div class="w-full flex h-10 items-center text-base my-2">
+        <div class="border-r border-gray-400 pr-4 text-red-500"><a href="#">5.0</a><span>&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</span></div>
+        <div class="border-r border-gray-400 px-4"><a href="#">0</a><span>評價</span></div>
+        <div class="px-4"><a href="#">0</a><span>已出售</span></div>
+      </div>
+      <!-- 商品名稱 -->
+      <div class=" bg-gray-50 w-full p-4">
+        <h2 class="text-4xl text-red-500">$<%= @product.price %></h2>
+      </div>
+      <div>
+      <% @product.shop.coupons.each do |coupon| %>
+        <% userOwnCoupon = user_own_coupon?(coupon) %>
+          <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
+        <% if userOwnCoupon %>
+          <span href="#">已領取</span>
+        <% else %>
+          <span>領取</span>
+        <% end %>
+      <% end %>
+    </div>
+      <div class="flex py-4">
+          <span class="text-gray-400 text-base pl-4 w-32">運送</span>
+          <ul class="space-y-2">
+            <li><i class="far fa-calendar-minus pr-2"></i>較長備貨(出貨天數20 天)</li>
+            <li class="flex justify-between">
+              <i class="fas fa-shipping-fast"><span class="font-normal">運費</span></i>
+              <span>$0~80<i class="fas fa-chevron-down pl-2"></i></span>
+            </li>
+          </ul>
+      </div>
+      <div class="flex py-4">
+          <span class="text-gray-400 text-base pl-4 w-32">顏色</span>
+          <div class="flex space-x-2">
+            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">紅</a></div>
+            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">紅</a></div>
+            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">紅</a></div>
+          </div>
+      </div>
+        
+      <div class="flex py-4">
+          <span class="text-gray-400 text-base pl-4 w-32">尺寸</span>
+          <div class="flex space-x-2">
+            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">S</a></div>
+            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">M</a></div>
+            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">L</a></div>
+          </div>
+      </div>
+   
+      <div class="amount flex items-center py-4">
+        <span class="text-gray-400 text-base pl-4 w-32">數量</span>
+        <div class="flex border border-gray-300 rounded-sm px-2 h-8">
+          <button class="minus border-r border-gray-300 pr-2 focus:outline-none" data-action="click->addtocart#minusbtn">&#x2212;</button>
+          <input type="text" class="inputamount w-12 text-center" data-addtocart-target="amount">
+          <button class="plus border-l border-gray-300 pl-2 focus:outline-none" data-action="click->addtocart#plusbtn">&#x2b;</button>
+        </div>
+      </div>
+      <div class="py-4 pl-4 space-x-2 ">
+        <button data-action="click->addtocart#add_item" class="border border-red-300 rounded-sm md:w-48 w-32 py-3 bg-red-100 bg-opacity-80 text-red-500 focus:outline-none"><i class="fas fa-cart-plus pr-2"></i>加入購物車</button>
+        <button data-action="click->addtocart#add_item" class="md:w-48 w-32 py-3 bg-red-500 text-white rounded-sm focus:outline-none">直接購買</button>
+      </div>
+
+      <div class="pt-4 text-gray-500 pb-8 border-t w-full text-center border-gray-200">
+        <a href="#"><i class="fas fa-dog"></i><span class="text-black pr-4">shoppinggo承諾</span>保障你的交易安全：我們只會在買家確認收到貨款，才會撥款給賣家！</a>
+      </div>
+    </div>
+  </div>  
+</section>
 </div>
 <!-- 商品規格 -->
-<section class='flex flex-wrap justify-center'>
+<section class='flex flex-wrap justify-center lg:px-10'>
   <div class=' bg-white w-full max-w-screen-xl pt-4 px-8 shadow mt-4'>
     <div class=" bg-gray-50 w-full p-2">
       <h2 class="text-lg">商品規格</h2>
     </div>
     <div class="py-8 px-2 space-y-2">
       <div class="flex items-center">
-        <span class="text-gray-400 text-base w-28">材質</span>
+        <span class="text-gray-400 text-base w-32">材質</span>
         <span>品牌</span>
       </div>
       <div class="flex items-center">
-        <span class="text-gray-400 text-base w-28">品牌</span>
+        <span class="text-gray-400 text-base w-32">品牌</span>
         <span>品牌</span>
       </div>
       <div class="flex items-center">
-        <span class="text-gray-400 text-base w-28">商品數量</span>
+        <span class="text-gray-400 text-base w-32">商品數量</span>
         <span>品牌helloworld</span>
       </div>
       <div class="flex items-center">
-        <span class="text-gray-400 text-base w-28">出貨地</span>
+        <span class="text-gray-400 text-base w-32">出貨地</span>
         <span>品牌</span>
       </div>
     </div>
@@ -126,24 +140,54 @@
   </div>
 </section>
 <!-- 商品評價 -->
-<section class='flex flex-wrap justify-center mt-4 pb-14 h-96'>
+<section class='flex flex-wrap justify-center mt-4 pb-14 h-96 lg:px-10'>
   <div class=' bg-white w-full max-w-screen-xl pt-4 px-8 shadow'>
     <h2 class="text-lg pb-4">商品評價</h2>
-    <div class="px-8 bg-pink-100 bg-opacity-30 border-pink-50 border rounded-sm w-full h-28 flex items-center justify-around ">
-        <div class="w-20">
-          <div class="text-2xl text-center  text-red-400"> 5/5 </div>
-          <div class="text-xl text-red-400">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+    <div class="px-4 bg-red-100  border-red-100 border rounded-sm w-full h-28 flex items-center justify-around bg-opacity-30	">
+        <div class="text-center">
+          <div class="text-3xl text-red-500"> 5/5 </div>
+          <div class="text-2xl text-red-500 font-black">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
         </div>
-        <div class="w-5/6 flex justify-between">
-          <a href="#" class="border px-6 py-2  border-grey-200 rounded bg-gray-50 bg-opacity-60">全部</a>
-          <a href="#" class="border px-6 py-2  border-grey-200 rounded  bg-gray-50 bg-opacity-60 ">5星<span>(0)</span></a>
-          <a href="#" class="border px-6 py-2  border-grey-200 rounded  bg-gray-50 bg-opacity-60">4星<span>(0)</span></a>
-          <a href="#" class="border px-6 py-2  border-grey-200 rounded  bg-gray-50 bg-opacity-60">3星<span>(0)</span></a>
-          <a href="#" class="border px-6 py-2  border-grey-200 rounded  bg-gray-50 bg-opacity-60">2星<span>(0)</span></a>
-          <a href="#" class="border px-6 py-2  border-grey-200 rounded  bg-gray-50 bg-opacity-60">1星<span>(0)</span></a>
-          <a href="#" class="border px-2 py-2  border-grey-200 rounded  bg-gray-50 bg-opacity-60">附上評論<span>(0)</span></a>
-          <a href="#" class="border px-2 py-2  border-grey-200 rounded  bg-gray-50 bg-opacity-60">附上照片/影片<span>(0)</span></a>
+        <div class="w-5/6 flex justify-between flex-wrap">
+          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">全部</a>
+          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">5星<span>(0)</span></a>
+          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">4星<span>(0)</span></a>
+          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">3星<span>(0)</span></a>
+          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">2星<span>(0)</span></a>
+          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">1星<span>(0)</span></a>
+          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">附上評論<span>(0)</span></a>
+          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">附上照片/影片<span>(0)</span></a>
         </div>
     </div>
   </div>
-</section>
+</section> 
+
+
+<h2 data-controller="favorite" data-favorite-id="<%= @product.id %>">
+  <% if user_signed_in? %>
+    <%= link_to '#', data: { action: 'favorite#go' } do %>
+      <% if current_user.favorite?(@product) %>
+        <i class='fas fa-heart' data-target='favorite.icon'>已喜歡</i>
+      <% else %>
+        <i class='far fa-heart' data-target='favorite.icon'>喜歡</i>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= link_to new_user_session_path do %>
+      <i class='far fa-heart'>喜歡</i>
+    <% end %>
+  <% end %>
+</h2>
+
+
+<% @product.shop.coupons.each do |coupon| %>
+<div>
+  <% userOwnCoupon = user_own_coupon?(coupon) %>
+    <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
+    <% if userOwnCoupon %>
+      <span href="#">已領取</span>
+    <% else %>
+      <span>領取</span>
+  <% end %>
+</div>
+<% end %>

@@ -1,4 +1,4 @@
-<div class = "message_box px-4" data-room= "<%= @room.id %>" data-user="<%= current_user.id%>">
+<div class = "message_box px-4" data-room= "<%= @room.id %>" data-user="<%= current_user.id %>">
   <div><%= @room.with(current_user).name %></div>
   <div class="container">
         <div class="message_area">

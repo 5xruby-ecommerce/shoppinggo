@@ -18,13 +18,13 @@ require("scripts")
 Notification.requestPermission().then((result) => {})
 import "controllers"
 import "@fortawesome/fontawesome-free/css/all.css"
-
-
 import 'stylesheet'
 import 'styles'
 
+
 require("flatpickr")
 import("flatpickr/dist/flatpickr.min.css")
+
 
 import "tempusdominus-bootstrap-4"
 import "tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css"
@@ -34,5 +34,4 @@ window.$ = $
 
 import 'swiper/swiper-bundle.css';
 // window.Swiper = require('Swiper');
-
 window.Swiper = Swiper

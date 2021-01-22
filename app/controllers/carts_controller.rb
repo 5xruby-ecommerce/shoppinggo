@@ -25,8 +25,8 @@ class CartsController < ApplicationController
       current_cart.cal_cart_total
       shoptotal = current_cart.subtotals.filter {|total, shopid| shopid == product.shop_id}[0][0]
       session[:cartgo] = current_cart.serialize
-      render json:{ status: 'ok', 
-                    count: current_cart.items.count, 
+      render json:{ status: 'ok',
+                    count: current_cart.items.count,
                     total_price: current_cart.total_price,
                     change: quantity,
                     shoptotal: shoptotal,

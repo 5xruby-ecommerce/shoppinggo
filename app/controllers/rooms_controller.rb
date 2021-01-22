@@ -8,7 +8,6 @@ class RoomsController < ApplicationController
     @room = room
     @message = Message.new
     @messages = @room.messages
-    
   end
 
   def show
