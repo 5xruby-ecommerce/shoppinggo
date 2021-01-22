@@ -6,14 +6,15 @@
       <% if @product.image_url.present? %>
         <div class='mb-4' style='width:100%;padding-top:100%;position:relative'><%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
         <div class="flex flex-wrap -mx-2">
-          <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
-          <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
-          <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
+          <% @product.images.each do |image| %>
+            <div class="w-1/3 px-2">
+              <%= image_tag(image.url, class:"px-2") %>
+            </div>
+          <% end %>
         </div>
       <% else %>
         <div class="picture dark"><%= image_tag 'bag.png' %></div>
       <% end %>
-
       <div class="flex pt-4 text-base justify-center items-center">
         <div class='w-3/5 border-r-2 border-gray-200 icons text-center pr-4'>
           <div class='hidden md:contents vertiacle'>分享:</div>
@@ -27,9 +28,9 @@
             <% if user_signed_in? %>
               <%= link_to '#', data: { action: 'favorite#go' } do %>
                 <% if current_user.favorite?(@product) %>
-                  <i class='fas fa-heart' data-target='favorite.icon'></i>
+                  <i class='fas fa-heart' data-target='favorite.icon'><span id='fav'>已喜歡</span></i>
                 <% else %>
-                  <i class='far fa-heart' data-target='favorite.icon'></i>
+                  <i class='far fa-heart' data-target='favorite.icon'><span id='fav'>喜歡</span></i>
                 <% end %>
               <% end %>
             <% else %>
@@ -165,34 +166,4 @@
         </div>
     </div>
   </div>
-</section> 
-
-
-<h2 data-controller="favorite" data-favorite-id="<%= @product.id %>">
-  <% if user_signed_in? %>
-    <%= link_to '#', data: { action: 'favorite#go' } do %>
-      <% if current_user.favorite?(@product) %>
-        <i class='fas fa-heart' data-target='favorite.icon'>已喜歡</i>
-      <% else %>
-        <i class='far fa-heart' data-target='favorite.icon'>喜歡</i>
-      <% end %>
-    <% end %>
-  <% else %>
-    <%= link_to new_user_session_path do %>
-      <i class='far fa-heart'>喜歡</i>
-    <% end %>
-  <% end %>
-</h2>
-
-
-<% @product.shop.coupons.each do |coupon| %>
-<div>
-  <% userOwnCoupon = user_own_coupon?(coupon) %>
-    <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
-    <% if userOwnCoupon %>
-      <span href="#">已領取</span>
-    <% else %>
-      <span>領取</span>
-  <% end %>
-</div>
-<% end %>
+</section>

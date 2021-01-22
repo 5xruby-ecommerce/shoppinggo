@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   root 'pages#home'
   get :search, to: 'products#search'
+  get :my_favorite, to: 'products#my_favorite'
 
   resources :orders do
     collection do

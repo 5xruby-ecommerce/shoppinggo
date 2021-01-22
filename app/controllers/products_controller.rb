@@ -76,6 +76,11 @@ class ProductsController < ApplicationController
     end
   end
 
+  def my_favorite
+    @my_favorites = current_user.my_favorites
+    render layout: 'member'
+  end
+
   private
 
   def find_shop
