@@ -1,0 +1,52 @@
+<section class="flex flex-grow items-center flex-col space-y-4 pb-10 pt-36">
+  <div class='h-5/6 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow'>
+
+    <table class='w-full text-center border-collapse'>
+      <thead class='bg-gray-100 text-gray-500'>
+        <tr>
+          <td class='p-2'>商品圖片</td>
+          <td>商品名稱</td>
+          <td>商品描述</td>
+          <td>商品數量</td>
+          <td>商品價格</td>
+          <td colspan='2'>商品設定</td>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @my_favorites.each do |my_favorite| %>
+          <tr class='border-b-2 border-fuchsia-600 h-24'>
+              <td class='flex justify-center items-center w-full h-24'>
+                <%= link_to product_path(my_favorite) do %>
+                  <% if my_favorite.image_url.present? %>
+                    <div class='w-20 h-20'><%= image_tag my_favorite.image_url, style:'width:100%;height:100%;object-fit:cover' %></div>
+                  <% end %>
+                <% end %>
+              </td>
+              <td class='w-1/6'><%= my_favorite.name %></td>
+              <td class='w-1/6'><%= my_favorite.content %></td>
+              <td class='w-1/6'><%= my_favorite.quantity %></td>
+              <td class='w-1/6'><%= my_favorite.price %></td>
+              <td class='w-1/6'>
+                <h2 data-controller="favorite" data-favorite-id="<%= @my_favorite %>">
+                  <% if user_signed_in? %>
+                    <%= link_to '#', data: { action: 'favorite#go' } do %>
+                      <% if current_user.favorite?(@my_favorite) %>
+                        <i class='fas fa-heart' data-target='favorite.icon'>已喜歡</i>
+                      <% else %>
+                        <i class='far fa-heart' data-target='favorite.icon'>喜歡</i>
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <%= link_to new_user_session_path do %>
+                      <i class='far fa-heart'>喜歡</i>
+                    <% end %>
+                  <% end %>
+                </h2>
+              </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
