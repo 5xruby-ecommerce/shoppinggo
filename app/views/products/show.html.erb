@@ -3,12 +3,17 @@
   <div class='flex w-full flex-wrap max-w-screen-xl px-8 shadow bg-white'>
     <!-- 商品圖片 -->
     <div class='md:w-2/5 pb-10 pt-8 pb-16'>
-      <div class='mb-4' style='width:100%;padding-top:100%;position:relative'><%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
-      <div class="flex flex-wrap -mx-2">
-        <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
-        <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
-        <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
-      </div>
+      <% if @product.image_url.present? %>
+        <div class='mb-4' style='width:100%;padding-top:100%;position:relative'><%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
+        <div class="flex flex-wrap -mx-2">
+          <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
+          <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
+          <div class="w-1/3 px-2"><%= image_tag @product.image_url %></div>
+        </div>
+      <% else %>
+        <div class="picture dark"><%= image_tag 'bag.png' %></div>
+      <% end %>
+
       <div class="flex pt-4 text-base justify-center items-center">
         <div class='w-3/5 border-r-2 border-gray-200 icons text-center pr-4'>
           <div class='hidden md:contents vertiacle'>分享:</div>

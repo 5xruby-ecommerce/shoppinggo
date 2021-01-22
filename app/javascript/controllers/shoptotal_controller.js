@@ -61,10 +61,10 @@ export default class extends Controller {
   }
 
   usecoupon(e) {
-    const itemTotalPrice= e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price');    
+    const itemTotalPrice = e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price');    
     const shopID = this.data.get('id') // the shop ID of the select coupon 
     const couponID = e.currentTarget.getAttribute('data-couponid'); // the coupon ID of the select coupon
-    const itemsTotalPrice = document.querySelectorAll(`div[data-controller="updatecart"]>div[data-shopid="${shopID}"]`); // select all product's total price of the shop
+    const itemsTotalPrice = e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price'); // select all product's total price of the shop
     const coupons = (e.currentTarget.parentNode.parentNode.querySelectorAll('span')); // select all coupons of the shop
     const clickedbtn = e.currentTarget; // select the clicked coupon
 
@@ -139,7 +139,6 @@ export default class extends Controller {
             } else {
               console.log('未達使用Coupon條件')
             }
-            console.log(itemTotalPrice.length)
           } else {
             console.log('你已經使用過該優惠卷')
           }

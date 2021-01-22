@@ -1,33 +1,38 @@
 <h1>編輯商品</h1>
+<div class='flex flex-grow items-center flex-col space-y-4  pt-36'>
+  <div class='w-3/5  h-4/5 border shadow rounded-sm p-5 bg-gray-100'>
 
-<%= form_for @product, url: {action: "update"} do |f| %>
-  <%= f.label :image, "商品首圖" %>
-  <%= f.file_field :image, id: :product_image, class: "form-control" %><br/>
-  <%= f.label :images, "更多商品圖片" %>
-  <%= f.file_field :images, multiple:true, :class => "form-control" %><br/>
-  <%= f.label :name, "商品名稱" %>
-  <%= f.text_field :name %><br/>
-  <%= f.label :content, "商品描述" %>
-  <%= f.text_field :content %><br/>
-  <%= f.label :quantity, "商品數量" %>
-  <%= f.text_field :quantity %><br/>
-  <%= f.label :price, "商品價格" %>
-  <%= f.text_field :price %><br/>
-  <div>
-    <%= f.label :schedule_end, "商品上架時間" %>
-    <input type="datetime-local" name="product[schedule_start]" class="datetimepicker_start" value=<%= @product.schedule_start.nil? ? '' : @product.schedule_start.strftime("%Y/%m/%d")%> >
-    <div>
-      <div class="input-group-text absolute top-2 right-1"><i class="fPa fa-calendar"></i></div>
-    </div>
+    <%= form_for @product, url: {action: "update"} do |f| %>
+      <%= f.label :image, "商品首圖" %>
+      <%= f.file_field :image, id: :product_image, class: "form-control" %><br/>
+      <%= f.label :images, "更多商品圖片" %>
+      <%= f.file_field :images, multiple:true, :class => "form-control" %><br/>
+      <%= f.label :name, "商品名稱" %>
+      <%= f.text_field :name %><br/>
+      <%= f.label :content, "商品描述" %>
+      <%= f.text_field :content %><br/>
+      <%= f.label :quantity, "商品數量" %>
+      <%= f.text_field :quantity %><br/>
+      <%= f.label :price, "商品價格" %>
+      <%= f.text_field :price %><br/>
+      <div>
+        <%= f.label :schedule_end, "商品上架時間" %>
+        <input type="datetime-local" name="product[schedule_start]" class="datetimepicker_start" value=<%= @product.schedule_start.nil? ? '' : @product.schedule_start.strftime("%Y/%m/%d")%> >
+        <div>
+          <div class="input-group-text absolute top-2 right-1"><i class="fPa fa-calendar"></i></div>
+        </div>
+      </div>
+      <div>
+        <%= f.label :schedule_end, "商品下架時間" %>
+        <input type="datetime-local" name="product[schedule_end]" class="datetimepicker_end" value=<%= @product.schedule_end.nil? ? '' : @product.schedule_end.strftime("%Y/%m/%d")%> >
+        <div>
+          <div class="input-group-text absolute top-2 right-1"><i class="fa fa-calendar"></i></div>
+        </div>
+      </div>
+      <%= f.submit "更新商品" %>
+    <% end %>
   </div>
-  <div>
-    <%= f.label :schedule_end, "商品下架時間" %>
-    <input type="datetime-local" name="product[schedule_end]" class="datetimepicker_end" value=<%= @product.schedule_end.nil? ? '' : @product.schedule_end.strftime("%Y/%m/%d")%> >
-    <div>
-      <div class="input-group-text absolute top-2 right-1"><i class="fa fa-calendar"></i></div>
-    </div>
-  </div>
-  <%= f.submit "更新商品" %>
-<% end %>
+</div>
+
 
 <%= link_to '回上頁', shops_path %>

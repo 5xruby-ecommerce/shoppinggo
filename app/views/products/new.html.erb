@@ -37,7 +37,7 @@
         <%= f.text_field :price %>
       </div>
 
-      <div>
+      <div class="p-2">
         <%= f.label :schedule_end, "商品上架時間" %>
         <input type="datetime-local" name="product[schedule_start]" class="datetimepicker_start" value=
         <%= @product.schedule_start.nil? ? '' : @product.schedule_start.strftime("%Y/%m/%d")%> >
@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div>
+      <div class="p-2">
         <%= f.label :schedule_end, "商品下架時間" %>
         <input type="datetime-local" name="product[schedule_end]" class="datetimepicker_end" value=<%= @product.schedule_end.nil? ? '' : @product.schedule_end.strftime("%Y/%m/%d")%> >
         <div>

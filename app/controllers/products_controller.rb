@@ -26,6 +26,11 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @product.shop = current_user.shop
+
+    if @product.schedule_start.nil?
+      @product.schedule_start = Time.now
+    end 
+
     if @product.schedule_start > Time.now 
       @product.status = 1
     end
