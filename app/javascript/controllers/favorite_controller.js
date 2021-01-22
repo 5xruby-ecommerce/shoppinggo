@@ -21,7 +21,6 @@ export default class extends Controller {
           this.iconTarget.classList.remove("fas")
           this.iconTarget.classList.add("far")
           document.querySelector('#fav').textContent = '喜歡'
-          item.remove()
         }
       },
       error: function(err) {
@@ -29,7 +28,6 @@ export default class extends Controller {
       }
     })
   }
-
 
   remove_fav(e) {
     const item = e.currentTarget.parentNode.parentNode.parentNode

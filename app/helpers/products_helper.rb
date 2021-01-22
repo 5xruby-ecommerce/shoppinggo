@@ -1,5 +1,8 @@
 module ProductsHelper
   def user_own_coupon?(coupon)
+    if current_user.blank?
+      return false
+    end
     if current_user.user_coupons.where(coupon_id: coupon).empty?
       return false
     else 
