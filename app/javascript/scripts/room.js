@@ -15,7 +15,11 @@ document.addEventListener('turbolinks:load',()=>{
 function clickHandler(){
     document.querySelector('.zone').classList.toggle('hidden')
     document.querySelector('.chatroom').classList.toggle('show')
+    document.querySelector('.chatbtn').classList.toggle('roomtitle')
     document.querySelector('.fa-caret-square-down').classList.toggle('none')
     document.querySelector('.cbtn').classList.toggle('absolute')
     document.querySelector('.cbtn').classList.toggle('mini')
   }
+
+
+

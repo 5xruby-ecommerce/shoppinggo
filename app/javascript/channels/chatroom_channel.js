@@ -20,7 +20,6 @@ document.addEventListener('ajax:success',()=>{
         console.log('received!!')
         const user_id = Number(document.querySelector('.message_box').dataset.user)
         const message_area = document.querySelector('.message_area')
-        const form = document.forms[2]
 
         
         if(data.message.user_id === user_id){
@@ -34,8 +33,9 @@ document.addEventListener('ajax:success',()=>{
           new Notification(title, options)  
           }
         }
-  
-        form.reset()
+        
+        document.querySelector('.ctext').value = ''
+
   
         message_area.scrollTop = message_area.scrollHeight
         
