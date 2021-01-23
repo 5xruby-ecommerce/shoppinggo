@@ -1,8 +1,8 @@
 <div class = "message_box px-4" data-room= "<%= @room.id %>" data-user="<%= current_user.id %>">
-  <div class='px-2 py-1 text-xl'>
+  <div class='chatwith'>
     <%= @room.with(current_user).name %>
   </div>
-  <div class="container">
+  <div class="chatcontainer">
         <div class="message_area">
           <%= render @messages %>
         </div>
