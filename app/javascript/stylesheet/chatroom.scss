@@ -6,6 +6,10 @@
   @apply bg-gray-50 text-red-500 fixed bottom-0 right-5 z-50 rounded border;
 }
 
+.message_box {
+  height: 100%
+}
+
 .show {
   width: 510px;
   height:390px
@@ -28,24 +32,37 @@
 }
 
 .zone {
-  height: 334px;
+  height: 330px;
+}
+
+.input::before {
+  content:'';
+  display: block;
+  @apply border-t-2 ;
+  width: 404.391px;
 }
 
 .input {
-  @apply absolute bottom-0 left-0 w-full border-t-2 ;
+  @apply justify-end align-middle h-1/6 relative right-4;
+  width: 404.391px;
+  .ctext{
+    @apply w-5/6 px-4;
+  }
+  .csubmit{
+    @apply w-1/6;
+  }
 }
 
 .new_message {
   width: 100%;
 }
 
-#chatroom {
-  @apply relative
+.container {
+  @apply flex flex-col h-full ;
 }
-
 .message_area {
-  height: 310px;
-  overflow-y: scroll;
+  @apply h-5/6;
+  overflow-y: scroll ;
 }
 
       .message {
