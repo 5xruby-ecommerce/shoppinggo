@@ -1,36 +1,75 @@
 <h1>購物車</h1>
-<div class='flex justify-center flex-col items-center'>
+<!-- <ul class='flex justify-center flex-col items-center'> -->
 <%= render 'showcart', cart: current_cart %>
-<%= link_to '繼續購買', root_path %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <%= link_to '繼續購買', root_path %>
 
 <%= link_to '清空購物車', empty_carts_path, method: "delete" %>
-<%= link_to '結帳', new_order_path if not current_cart.empty? %>
+<%= link_to '結帳', new_order_path if not current_cart.empty? %> -->
 
 
 
-<section class='bg-red-200 w-full'>
-<% items = (current_cart.items.sort_by {|item| item.product.shop_id})%>
-  <% temp = items.group_by { |item| item.product.shop_id.itself} %>
-    <% temp.values.each do |items|%>
-  <div class='flex flex-wrap w-full max-w-screen-xl bg-gray-500 m-auto pl-20 '>
-    <div class='w-full md:w-3/5 bg-red-500 h-96'>
-      <div class='flex w-full h-36'>
-        <div class='w-1/4 bg-red-200'>picture</div>
-        <div class='w-3/4 bg-yellow-100'>product</div>
-      </div>
-    </div>
-    <div class='w-full md:w-2/5 bg-red-900 h-96'></div>
-    
-  </div>
-</section>
-
-
-<% items = (current_cart.items.sort_by {|item| item.product.shop_id})%>
-  <% temp = items.group_by { |item| item.product.shop_id.itself} %>
-    <% temp.values.each do |items|%>
-        <div data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>">
-      <% items.each do |item| %>
-            <%= link_to product_path(item.product) do %><%= image_tag item.product.image_url if item.product.image_url.present? %><% end %>
+<!-- <section class='bg-red-200 w-full'>
+  <div class='flex flex-wrap w-full max-w-screen-xl bg-gray-500 m-auto px-20'>
+    <% items = (current_cart.items.sort_by {|item| item.product.shop_id})%>
+      <% temp = items.group_by { |item| item.product.shop_id.itself} %>
+      <% temp.values.each do |items|%>
+        <div class='w-full md:w-3/5 bg-red-500' data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>">
+          <% items.each do |item| %>
+            <li class='flex w-full h-36' data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0">
+              <div class='w-1/4 bg-red-200 p-6'>
+                <%= link_to product_path(item.product) do %>
+                  <%= image_tag item.product.image_url if item.product.image_url.present? %>
+                <% end %>
+              </div>
+              <div class='w-3/4 bg-yellow-100'>
+                <h3><%= item.product.name %></h3>
+                <div class="amount flex items-center py-4">
+                  <div class="flex border border-gray-300 rounded-sm px-2 h-8">
+                    <button class="minu border-r border-gray-300 pr-2 focus:outline-none" data-action="click->updatecart#minusbtn">&#x2212;</button>
+                    <input type="number" class="input_amount inputamount w-12 text-center" data-updatecart-target="amount" data-action="input->updatecart#changequantity">
+                    <button class="plus border-l border-gray-300 pl-2 focus:outline-none" data-action="click->updatecart#plusbtn">&#x2b;</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
-          <%= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
-  <% end %>
+    <div class='w-full md:w-2/5 bg-red-900 h-96'>
+    </div>
+    
+
+  </div>
+</section> -->
+
