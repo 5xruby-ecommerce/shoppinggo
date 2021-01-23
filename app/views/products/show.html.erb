@@ -61,6 +61,15 @@
         <% end %>
       <% end %>
     </div>
+    <div>
+       <% if user_signed_in? %>
+          <% if @product.shop.user != current_user %>
+            <%= link_to '聊聊', rooms_path( user: @product.shop.user ),remote: true ,method:'post', id:'getchat' %>
+          <% end %>
+        <% else %>
+           <%= link_to '聊聊', new_user_session_path %>
+      <% end %>
+    </div>
       <div class="flex py-4">
           <span class="text-gray-400 text-base pl-4 w-32">運送</span>
           <ul class="space-y-2">

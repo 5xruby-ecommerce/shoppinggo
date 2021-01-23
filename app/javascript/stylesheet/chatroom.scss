@@ -11,6 +11,10 @@
   height:390px
 }
 
+.roomtitle {
+  @apply border-b-2;
+}
+
 .cbtn {
   cursor: pointer
 }
@@ -28,7 +32,7 @@
 }
 
 .input {
-  @apply absolute bottom-0
+  @apply absolute bottom-0 left-0 w-full border-t-2 ;
 }
 
 .new_message {
