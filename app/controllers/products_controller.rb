@@ -12,8 +12,11 @@ class ProductsController < ApplicationController
 
   def search
     if params[:search]
-      @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%") 
-      @product = Product.tagged_with(params[:search],wild: true, any: true)
+      if Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%").present?
+        @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%") 
+      else 
+        @product = Product.tagged_with(params[:search], wild: true)
+      end
     else
       @product = Product.all
     end
@@ -27,7 +30,6 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @product.shop = current_user.shop
-    @product.set_subtag(product_params)
     if @product.schedule_start > Time.now 
       @product.status = 1
     end
@@ -77,6 +79,8 @@ class ProductsController < ApplicationController
     @my_favorites = current_user.my_favorites
     render layout: 'member'
   end
+
+  
 
   private
 
