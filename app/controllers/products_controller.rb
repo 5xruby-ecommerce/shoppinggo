@@ -12,7 +12,11 @@ class ProductsController < ApplicationController
 
   def search
     if params[:search]
-      @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
+      if Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%").present?
+        @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%") 
+      else 
+        @product = Product.tagged_with(params[:search], wild: true)
+      end
     else
       @product = Product.all
     end
@@ -76,6 +80,8 @@ class ProductsController < ApplicationController
     render layout: 'member'
   end
 
+  
+
   private
 
   def find_shop
@@ -96,6 +102,7 @@ class ProductsController < ApplicationController
       :schedule_start,
       :schedule_end,
       :category_list,
+      :sub_list,
       {images:[]})
   end
 end
