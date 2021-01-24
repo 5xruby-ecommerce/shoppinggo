@@ -1,4 +1,16 @@
-ActiveRecord::Schema.define(version: 2021_01_20_092521) do
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 2021_01_24_161415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +68,7 @@ ActiveRecord::Schema.define(version: 2021_01_20_092521) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "product_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
     t.index ["sub_order_id"], name: "index_order_items_on_sub_order_id"
   end
 
@@ -79,13 +92,13 @@ ActiveRecord::Schema.define(version: 2021_01_20_092521) do
     t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "shop_id"
     t.string "image"
     t.string "images"
-    t.bigint "shop_id"
+    t.string "slug"
     t.datetime "schedule_start"
     t.datetime "schedule_end"
     t.integer "status", default: 0
-    t.string "slug"
     t.index ["shop_id"], name: "index_products_on_shop_id"
     t.index ["slug"], name: "index_products_on_slug", unique: true
   end
@@ -101,10 +114,12 @@ ActiveRecord::Schema.define(version: 2021_01_20_092521) do
   end
 
   create_table "shop_orders", force: :cascade do |t|
-    t.integer "shop_id"
-    t.integer "order_id"
+    t.bigint "shop_id", null: false
+    t.bigint "order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_shop_orders_on_order_id"
+    t.index ["shop_id"], name: "index_shop_orders_on_shop_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -126,7 +141,6 @@ ActiveRecord::Schema.define(version: 2021_01_20_092521) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["order_id"], name: "index_sub_orders_on_order_id"
   end
-
 
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
@@ -153,6 +167,7 @@ ActiveRecord::Schema.define(version: 2021_01_20_092521) do
     t.datetime "updated_at"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
 
   create_table "user_coupons", force: :cascade do |t|
     t.integer "coupon_status", default: 0
@@ -162,7 +177,6 @@ ActiveRecord::Schema.define(version: 2021_01_20_092521) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["coupon_id"], name: "index_user_coupons_on_coupon_id"
     t.index ["user_id"], name: "index_user_coupons_on_user_id"
-
   end
 
   create_table "users", force: :cascade do |t|
@@ -195,12 +209,11 @@ ActiveRecord::Schema.define(version: 2021_01_20_092521) do
   add_foreign_key "messages", "users"
   add_foreign_key "order_items", "sub_orders"
   add_foreign_key "orders", "users"
+  add_foreign_key "shop_orders", "orders"
+  add_foreign_key "shop_orders", "shops"
   add_foreign_key "shops", "users"
   add_foreign_key "sub_orders", "orders"
-
   add_foreign_key "taggings", "tags"
-
   add_foreign_key "user_coupons", "coupons"
   add_foreign_key "user_coupons", "users"
-
 end
