@@ -12,7 +12,8 @@ class ProductsController < ApplicationController
 
   def search
     if params[:search]
-      @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%")
+      @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%") 
+      @product = Product.tagged_with(params[:search],wild: true, any: true)
     else
       @product = Product.all
     end
