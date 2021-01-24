@@ -1,5 +1,6 @@
 class CouponsController < ApplicationController
-
+  before_action :find_coupon, only: [:edit, :update, :destroy]
+  
   def index
   end
 
@@ -18,25 +19,27 @@ class CouponsController < ApplicationController
         format.html {
           redirect_to shops_path, notice: 'Coupon was successfully created'
         }
-        format.json { render :show, status: :create, location: @coupon}
+        # format.json { render :show, status: :create, location: @coupon}
       else
         format.html { render :new }
-        format.json { render json: @coupon.errors, status: :unprocessable_entity}
+        # format.json { render json: @coupon.errors, status: :unprocessable_entity}
       end
     end
   end
 
+  def edit
+  end
+
   def update
-    @coupon = Coupon.find(params[:id])
     respond_to do |format|
       if @coupon.update(coupon_params)
         format.html {
-          redirect_to shops_path, notice: 'Coupon was successfully created'
+          redirect_to list_coupons_path
         }
-        format.json { render :show, status: :create, location: @coupon}
+        # format.json { render :show, status: :create, location: @coupon}
       else
         format.html { render :new }
-        format.json { render json: @coupon.errors, status: :unprocessable_entity}
+        # format.json { render json: @coupon.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -46,15 +49,10 @@ class CouponsController < ApplicationController
     render layout: "store"
   end
 
-  def edit
-    @coupon = Coupon.find(params[:id])
-  end
-
   def show
   end
 
   def destroy
-    @coupon = Coupon.find(params[:id])
     @coupon.destroy
     respond_to do |format|
       format.html {redirect_to list_coupons_path, notice: 'Coupon was successfully destroyed'}
@@ -63,8 +61,11 @@ class CouponsController < ApplicationController
   end
 
   private
+    def find_coupon
+      @coupon = current_user.shop.coupons.find(params[:id])
+    end
+
     def coupon_params
       params.require(:coupon).permit(:title, :discount_rule, :discount_amount, :min_consumption, :discount_start, :discount_end, :amount)
     end
-
 end

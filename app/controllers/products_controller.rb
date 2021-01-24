@@ -41,7 +41,7 @@ class ProductsController < ApplicationController
       end
       redirect_to shops_path
     else
-      render :new
+      render :new, layout: "store"
     end
   end
 

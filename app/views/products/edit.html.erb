@@ -37,7 +37,7 @@
       <div class="p-2">
         <!-- <%= f.label :schedule_end, "商品下架時間" %> -->
         <label for="schedule_end">商品下架時間</label>
-        <input type="text" id="schedule_end" name="product[schedule_end]" class="datetimepicker_end_edit" value="<%= @product.schedule_end.nil? ? '' : @product.schedule_end.strftime("%Y-%m-%d %H:%M a")%>"/>
+        <input type="text" id="schedule_end" name="product[schedule_end]" class="datetimepicker_end_edit" value="<%= @product.schedule_end.nil? ? '' : @product.schedule_end.strftime("%Y-%m-%d %H:%M")%>"/>
         <div>
           <div class="input-group-text absolute top-2 right-1"><i class="fa fa-calendar"></i></div>
         </div>

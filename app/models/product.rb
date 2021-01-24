@@ -15,6 +15,7 @@ class Product < ApplicationRecord
 
   validates :name, presence: true
   validates :price, presence: true
+  validates :quantity, presence: true
 
   mount_uploader :image, ImageUploader
   mount_uploaders :images, ImageUploader
