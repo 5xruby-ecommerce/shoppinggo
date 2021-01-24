@@ -1,4 +1,7 @@
 document.addEventListener('turbolinks:load',()=>{
+  
+  const log_in = document.querySelector('.login')
+  if(!log_in) return
   const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/
   document.querySelector('.email').addEventListener('focusout',checkemail)
   document.querySelector('.password').addEventListener('focusout',check)
@@ -35,7 +38,6 @@ document.addEventListener('turbolinks:load',()=>{
   function confirm (e){
     const pw_confirm = e.target.value
     const pw = document.querySelector('.password').value
-    console.log(pw_confirm)
     if(pw_confirm !== ""){
       if(pw_confirm !== pw){
         document.querySelector('.login_notice').innerText="* 密碼不一致"
