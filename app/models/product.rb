@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 class Product < ApplicationRecord
-
+  include SubTag
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  acts_as_taggable_on :categories
+  acts_as_taggable_on :categories,:subs
   has_many :order_items
   has_many :sub_orders, through: :order_item
   has_many :shops, through: :shop_orders

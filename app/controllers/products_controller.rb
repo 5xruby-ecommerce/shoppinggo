@@ -27,6 +27,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @product.shop = current_user.shop
+    @product.set_subtag(product_params)
     if @product.schedule_start > Time.now 
       @product.status = 1
     end
@@ -97,6 +98,7 @@ class ProductsController < ApplicationController
       :schedule_start,
       :schedule_end,
       :category_list,
+      :sub_list,
       {images:[]})
   end
 end
