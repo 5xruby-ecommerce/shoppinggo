@@ -48,7 +48,7 @@
       <div class=" bg-gray-50 w-full p-4">
         <h2 class="text-4xl text-red-500">$<%= @product.price %></h2>
       </div>
-      <div>
+      <div class="pl-4 flex space-x-2 items-center" >
       <% @product.shop.coupons.each do |coupon| %>
         <% userOwnCoupon = user_own_coupon?(coupon) %>
           <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
@@ -160,31 +160,3 @@
 </section> 
 
 
-<h2 data-controller="favorite" data-favorite-id="<%= @product.id %>">
-  <% if user_signed_in? %>
-    <%= link_to '#', data: { action: 'favorite#go' } do %>
-      <% if current_user.favorite?(@product) %>
-        <i class='fas fa-heart' data-target='favorite.icon'>已喜歡</i>
-      <% else %>
-        <i class='far fa-heart' data-target='favorite.icon'>喜歡</i>
-      <% end %>
-    <% end %>
-  <% else %>
-    <%= link_to new_user_session_path do %>
-      <i class='far fa-heart'>喜歡</i>
-    <% end %>
-  <% end %>
-</h2>
-
-
-<% @product.shop.coupons.each do |coupon| %>
-<div>
-  <% userOwnCoupon = user_own_coupon?(coupon) %>
-    <a class="coupon <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
-    <% if userOwnCoupon %>
-      <span href="#">已領取</span>
-    <% else %>
-      <span>領取</span>
-  <% end %>
-</div>
-<% end %>
