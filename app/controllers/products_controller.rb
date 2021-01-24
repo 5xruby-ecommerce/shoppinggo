@@ -89,6 +89,7 @@ class ProductsController < ApplicationController
 
   def find_product
     @product = current_user.shop.products.find(params['id'])
+    # @product = current_user.shop.products.find(product_params)
   end
 
   def product_params

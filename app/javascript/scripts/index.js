@@ -1,4 +1,5 @@
-import "./datetimepicker.js"
+import "./datetimepicker_new.js"
+import "./datetimepicker_edit.js"
 import "./select2.js"
 // import './shopitem.js';
 import './cart.js'
