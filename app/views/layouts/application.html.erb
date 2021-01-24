@@ -15,32 +15,34 @@
     <% end %>
       <p class="alert"><%= alert %></p>
     <%= yield %>
+          <% if params[:action] != "edit" && params[:controller] != "registrations" %>
+              <% if user_signed_in? %>
+              <div class='chatroom'>
+                <div class='chatbtn'>
+                  <div>
+                    <i class="fas fa-comments"></i>
+                    <h1 class='inline-block'>聊聊</h1>
+                  </div>
 
-    <% if user_signed_in? %>
-      <div class='chatroom'>
-      <div class='chatbtn'>
-        <div>
-          <i class="fas fa-comments"></i>
-          <h1 class='inline-block'>聊聊</h1>
-        </div>
+                  <div class='cbtn absolute mini'>
+                    <i class="fas fa-caret-square-down none"></i>
+                  </div>
+                </div>
 
-        <div class='btn absolute mini'>
-          <i class="fas fa-caret-square-down none"></i>
-        </div>
-      </div>
+                <div class='zone hidden flex'>
+                  <div class='w-4/5 h-full border-r-2' id='chatroom'>
+                    <p class='text-center'>開始聊天</p>
+                  </div>
 
-      <div class='zone hidden flex'>
-        <div class='w-4/5 h-full' id='chatroom'>
-          <p class='text-center'>開始聊天</p>
-        </div>
+                  <div class='w-1/5 h-full flex flex-col items-center'>
+                    <%= render @rooms %>
+                  </div>
+                </div>
 
-        <div class='w-1/5 h-full'>
-          <%= render @rooms %>
-        </div>
-      </div>
+              </div>
+              <% end %>
+              <% end %>
 
-    </div>
-    <% end %>
 
   </body>
 </html>

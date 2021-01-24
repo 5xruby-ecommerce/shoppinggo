@@ -3,7 +3,7 @@
 }
 
 .chatroom {
-  @apply bg-green-300 fixed bottom-0 right-5 z-50 ;
+  @apply bg-gray-50 text-red-500 fixed bottom-0 right-5 z-50 rounded border;
 }
 
 .show {
@@ -11,7 +11,11 @@
   height:390px
 }
 
-.btn {
+.roomtitle {
+  @apply border-b-2;
+}
+
+.cbtn {
   cursor: pointer
 }
 
@@ -28,7 +32,7 @@
 }
 
 .input {
-  @apply absolute bottom-0
+  @apply absolute bottom-0 left-0 w-full border-t-2 ;
 }
 
 .new_message {
@@ -46,6 +50,7 @@
 
       .message {
         display: flex;
+        margin-bottom: 5px ;
 
         .content {
           padding: 5px 8px;

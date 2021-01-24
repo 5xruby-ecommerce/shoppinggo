@@ -1,0 +1,16 @@
+<div class = "message_box px-4" data-room= "<%= @room.id %>" data-user="<%= current_user.id %>">
+  <div class='p-2 text-xl'>
+    <%= @room.with(current_user).name %>
+  </div>
+  <div class="container">
+        <div class="message_area">
+          <%= render @messages %>
+        </div>
+        <div class="input">
+          <%= form_for @message ,remote: true, html:{class:'w-full'} ,url: room_messages_path(@room) do |form|%>
+            <%= form.text_field :content ,class:'w-3/5' %>
+            <%= form.submit '發送', class:'w-1/5' %>
+          <% end %>
+        </div>
+  </div>
+</div>
