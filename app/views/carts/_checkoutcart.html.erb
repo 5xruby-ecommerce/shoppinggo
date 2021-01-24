@@ -29,10 +29,10 @@
   <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
   <% temp = items.group_by { |item| item.product.shop_id.itself} %>
   <% temp.values.each do |items|%>
-    <div class="flex-1">
+    <div class="md:w-3/5 w-full">
       <div data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>" class="flex flex-col">
       <!-- 店家名稱 -->
-        <div class="py-2 border-b border-gray-00 text-gray-800"><i class="fas fa-store mr-2"></i><%= items[0].product.shop.name %></div>
+        <div class="py-2 border-b border-gray-800 text-gray-800"><i class="fas fa-store mr-2"></i><%= items[0].product.shop.name %></div>
         <% items.each do |item| %>
         <div class="flex py-2 border-b border-gray-900" data-controller="updatecart" data-updatecart-id
         ="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0">
@@ -43,7 +43,7 @@
               <% end %>
             <% end %>
           </div>
-          <div class="flex flex-col justify-between w-96 pl-4 py-2">
+          <div class="flex flex-col justify-between w-full pl-4 py-2">
           <!-- 商品名稱 -->
           <div class="flex justify-between">
             <div class='text-xl'>
@@ -87,26 +87,25 @@
    </div>
 
     <!-- 右邊 -->
-  <div class="flex-1 flex-col space-y-4 ml-5 h-56 mt-10 flex w-full ">
-    <h2>訂單資料</h2>
-
-<%= form_for @order do |f| %>
-  <div>
-    <%= f.label :receiver, "收件者姓名" %>
-    <%= f.text_field :receiver %>
+  <div class="flex-1 flex-col space-y-4 ml-5 h-56 pt-2 flex w-full relative">
+    <h2 class="text-xl">訂單資料</h2>
+  <div class='bg-white h-full px-4 py-2'>
+  <%= form_for @order do |f| %>
+    <div class="flex flex-col py-2">
+      <%= f.label :receiver, "收件者姓名" %>
+      <%= f.text_field :receiver, class:'border-b border-gray-200' %>
+    </div>
+    <div class="flex flex-col py-2">
+      <%= f.label :tel, "聯絡電話" %>
+      <%= f.text_field :tel, class:'border-b border-gray-200' %>
+    </div>
+    <div class="flex flex-col py-2">
+      <%= f.label :address, "收件地址" %>
+      <%= f.text_field :address, class:'border-b border-gray-200' %>
+    </div>
   </div>
-  <div>
-    <%= f.label :tel, "聯絡電話" %>
-    <%= f.text_field :tel %>
-  </div>
-  <div>
-    <%= f.label :address, "收件地址" %>
-    <%= f.text_field :address %>
-  </div>
-  
-  <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm"><%= f.submit "付款", id: "btn" ,style:"background-color:transparent"%></button>
-<% end %>
-   
+    <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm focus:outline-none absolute right-0 -bottom-20"><%= f.submit "付款", id: "btn" ,style:"background-color:transparent"%></button>
+  <% end %>
   </div>
   </div>
 </div>
