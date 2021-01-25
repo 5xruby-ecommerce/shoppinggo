@@ -20,7 +20,6 @@ class ProductsController < ApplicationController
 
   def new
     @product = current_user.shop.products.new
-    render layout: "store"
   end
 
   def create
