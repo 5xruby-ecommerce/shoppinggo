@@ -1,10 +1,11 @@
 <div class='flex flex-grow items-center flex-col space-y-4 pb-10 pt-36'>
-  <div class='h-5/6 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow'>
+  <div class='h-5/6 bg-gray-50 w-10/12 rounded-sm overflow-auto border-1 shadow'>
 
     <table class="w-full text-center border-collapse">
       <thead class="bg-gray-100 text-gray-500">
         <tr>
           <th>訂單編號</th>
+          <th></th>
           <th>購買日期</th>
           <th>訂單金額</th>
           <th>訂單狀態</th>
@@ -15,11 +16,12 @@
       <tbody>
         <% @orders.each do |order| %>
           <tr class='border-b-2 border-fuchsia-600 h-20'>
-            <td class='w-1/5'><%= link_to order.number, order_path(order) %></td>
-            <td class='w-1/5'><%= order.created_at.strftime('%Y-%m-%d') %></td>
-            <td class='w-1/5'><%= 'NT '+ order.sum.to_s %></td>
-            <td class='w-1/5'><%= t("order_status.#{order.status}") %></td>
-            <td class='w-1/5'><%= link_to '聊聊', root_path, class:'primary-button text-xs' %></td>
+            <td class='w-1/6'><%= order.number %></td>
+            <td class='w-1/6'><%= link_to '訂單詳情', order_path(order), class:'primary-button text-xs'  %></td>
+            <td class='w-1/6'><%= order.created_at.strftime('%Y-%m-%d') %></td>
+            <td class='w-1/6'><%= 'NT '+ order.sum.to_s %></td>
+            <td class='w-1/6'><%= t("order_status.#{order.status}") %></td>
+            <td class='w-1/6'><%= link_to '聊聊', root_path, class:'primary-button text-xs' %></td>
           </tr>
         <% end %>
       </tbody>

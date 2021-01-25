@@ -1,13 +1,22 @@
-<h1>開店資料</h1>
+<div class='flex flex-grow items-center flex-col space-y-4  pt-36'>
+  <div class='w-3/5  h-4/5 border shadow rounded-sm p-5 bg-gray-100'>
+    <h1 class="p-2">開店資料</h1>
 
-<%= form_for @shop do |f| %>
-  <div>
-    <%= f.label :name, "店名" %>
-    <%= f.text_field :name %>
+    <%= form_for @shop do |f| %>
+
+      <div class="p-2">
+        <%= f.label :name, "店名" %>
+        <%= f.text_field :name %>
+      </div>
+
+      <div class="p-2">
+        <%= f.label :tel, "電話" %>
+        <%= f.text_field :tel %>
+      </div>
+
+      <div class="form-group p-2">
+        <%= f.submit "創立店家", class:'primary-button text-xs' %>
+      </div>
+    <% end %>
   </div>
-  <div>
-    <%= f.label :tel, "電話" %>
-    <%= f.text_field :tel %>
-  </div>
-  <%= f.submit "創立店家" %>
-<% end %>
+</div>

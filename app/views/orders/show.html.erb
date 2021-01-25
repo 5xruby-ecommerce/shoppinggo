@@ -1,27 +1,25 @@
 <div class='flex flex-grow items-center flex-col space-y-4 pb-10 pt-36'>
-  <div class='h-5/6 bg-gray-50 w-10/12 rounded-sm overflow-hidden border-1 shadow'>
+  <div class='h-5/6 bg-gray-50 w-10/12 rounded-sm overflow-auto border-1 shadow'>
 
     <table class="w-full text-center border-collapse">
       <thead class="bg-gray-100 text-gray-500">
         <tr>
-          <th>商品圖片</th>
-          <th>商品描述</th>
-          <th>商品單價</th>
+          <th></th>
+          <th>商品詳情</th>
+          <th></th>
           <th>總金額</th>
           <th></th>
         <tr>
       </thead>
 
       <tbody>
-        <% @orders.each do |order| %>
-          <tr class='border-b-2 border-fuchsia-600 h-20'>
-            <td class='w-1/5'><%= order %></td>
-            <td class='w-1/5'><%=  %></td>
-            <td class='w-1/5'><%= 'NT '+ order.sum.to_s %></td>
-            <td class='w-1/5'><%= t("order_status.#{order.status}") %></td>
-            <td class='w-1/5'><%= link_to '聊聊', root_path, class:'primary-button text-xs' %></td>
-          </tr>
-        <% end %>
+        <tr class='border-b-2 border-fuchsia-600 h-20'>
+          <td class='w-1/5'><%=  %></td>
+          <td class='w-1/5'><%=  %></td>
+          <td class='w-1/5'></td>
+          <%# <td class='w-1/5'><%= 'NT '+ order.sum.to_s %></td> %>
+          <td class='w-1/5'><%= link_to '回上頁', orders_path, class:'primary-button text-xs' %></td>
+        </tr>
       </tbody>
     </table>
 

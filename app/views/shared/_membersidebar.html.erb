@@ -2,15 +2,15 @@
   <div class="flex pl-12 flex-col pt-20 space-y-2">
 
     <div class="pl-7">
-      <%= link_to '我的帳戶', edit_user_registration_path if current_user.shop.present?%>
+      <%= link_to '我的帳戶', edit_user_registration_path if current_user%>
     </div>
 
     <div class="pl-7">
-      <%= link_to '購買清單', orders_path if current_user.shop.present?  %>
+      <%= link_to '購買清單', orders_path if current_user%>
     </div>
 
     <div class="pl-7">
-      <%= link_to '收藏商品', '' if current_user.shop.present? %>
+      <%= link_to '收藏商品', '' if current_user %>
     </div>
 
   </div>
