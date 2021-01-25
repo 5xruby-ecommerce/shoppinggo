@@ -50,7 +50,11 @@ class CartsController < ApplicationController
 
   def destroy
     result_ary = session[:cartgo]["items"].filter { |item| item["product_id"] != params[:id].to_i }
-    session[:cartgo] = { 'items' => result_ary }
+    session[:cartgo] = { "items" => result_ary }
+    # session[:cartgo][:items] = result_ary 
+    # current_cart.shop_totalprice(product.shop_id)
+    # current_cart.cal_cart_total
+    # session[:cartgo] = current_cart.serialize
     redirect_to carts_path, notice: "已刪除訂單"
   end
 

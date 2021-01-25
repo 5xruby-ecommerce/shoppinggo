@@ -1,3 +1,8 @@
 // Place all the styles related to the Carts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+input[class="input_amount"]::-webkit-inner-spin-button,
+input[class="input_amount"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

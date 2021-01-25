@@ -25,11 +25,6 @@ class Cart
   end
 
   def total_price
-    # if @items
-    #   total = @items.reduce(0) { |total, item| total + item.total_price }
-    # else
-    #   total = 0
-    # end
     if not @subtotals.empty?
       @total = @subtotals.reduce(0) {|sum, item| sum + item[0]}
     else

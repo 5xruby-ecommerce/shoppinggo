@@ -53,7 +53,18 @@ class ProductsController < ApplicationController
   end
 
   def update
+
+    if @product.schedule_start.nil?
+      @product.schedule_start = Time.now
+    end 
+
+    if @product.schedule_start > Time.now 
+      @product.status = 1
+    end
     if @product.update(product_params)
+      if @product.schedule_start > Time.now 
+        ScheduleWorker.perform_at(@product.schedule_start, @product.id)
+      end
       redirect_to shops_path
     else
       render :edit
