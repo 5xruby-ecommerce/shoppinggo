@@ -1,3 +1,4 @@
-<div>
-  <%= link_to room.with(current_user).name , room_path(room) , remote: true %>
+<div class='room-<%= room.id %>'>
+  <%= link_to room.with(current_user).name , room_path(room) , remote: true, class:'block' %>
+  <%= link_to '刪除對話' , room_path(room), method:'DELETE', remote: true %>
 </div>
