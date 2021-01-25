@@ -7,7 +7,8 @@
       }
      }
   .cardstyle {
-     @apply rounded-sm p-0.5 bg-white shadow-sm;
+     @apply rounded-sm p-0.5 bg-white shadow-sm relative;
+    
      .picture {
         width:100%;
         padding-top:100%;
@@ -26,10 +27,27 @@
         opacity: 0.3;
      }
      .item {
-        @apply flex h-20 md:h-28 content-between flex-wrap;
+        @apply flex h-16 md:h-20 content-between flex-wrap;
      }
      .item>div {
         @apply flex justify-between w-full;
      }
   }
+}
+.cardstyle:hover .cardhover:after {
+   visibility: visible;
+}
+.cardhover {
+   @apply border border-red-500;
+   &:after {
+      content: '找相似';
+      position: absolute;
+      left: -1px;
+      // transform: translateX(-50%);
+      padding: 8px 0;
+      width: 101%;
+      text-align: center;
+      @apply bg-red-500 text-white  rounded-b-sm;
+      z-index: 10;
+   }
 }

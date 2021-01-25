@@ -10,7 +10,7 @@
     </div>
 
     <div class="pl-7">
-      <%= link_to '收藏商品', '' if current_user %>
+      <%= link_to '收藏商品', my_favorite_path if current_user.shop.present? %>
     </div>
 
   </div>

@@ -3,7 +3,11 @@
 }
 
 .chatroom {
-  @apply bg-green-300 fixed bottom-0 right-5 z-50 ;
+  @apply bg-gray-50 text-red-500 fixed bottom-0 right-5 z-50 rounded border;
+}
+
+.message_box {
+  @apply h-full;
 }
 
 .show {
@@ -11,7 +15,22 @@
   height:390px
 }
 
-.btn {
+.chatwith {
+  @apply px-2 py-1 text-xl box-border mb-1;
+}
+
+.chatwith::after {
+  content: '';
+  display: block;
+  @apply border-b-2 relative right-6;
+  width: 404.391px;
+}
+
+.roomtitle {
+  @apply border-b-2;
+}
+
+.cbtn {
   cursor: pointer
 }
 
@@ -24,60 +43,74 @@
 }
 
 .zone {
-  height: 334px;
+  height: 330px;
+}
+
+.input::before {
+  content:'';
+  display: block;
+  @apply border-t-2 ;
+  width: 404.391px;
 }
 
 .input {
-  @apply absolute bottom-0
+  @apply justify-end  h-1/6 relative right-4 top-4;
+  width: 404.391px;
+  .ctext{
+    @apply w-5/6 px-4;
+  }
+  .csubmit{
+    @apply w-1/6;
+  }
 }
 
 .new_message {
   width: 100%;
 }
 
-#chatroom {
-  @apply relative
+.chatcontainer {
+  @apply flex flex-col h-full relative;
 }
-
 .message_area {
-  height: 310px;
-  overflow-y: scroll;
+  @apply h-4/6 box-border;
+  overflow-y: scroll ;
 }
 
-      .message {
-        display: flex;
+.message {
+  display: flex;
+  margin-bottom: 5px ;
 
-        .content {
-          padding: 5px 8px;
-          word-break: break-word;
-          border-radius: 5px;
-        }
+  .content {
+    padding: 5px 8px;
+    word-break: break-word;
+    border-radius: 5px;
+  }
+
+
+}
+
+.other {
+  padding-right: 50%;
+
+  .content {
+    margin-left: 10px;
+    background-color: rgb(226, 226, 226);
+  }
 
   
-      }
+}
 
-      .other {
-        padding-right: 50%;
+.me {
+  justify-content: flex-end;
+  padding-left: 50%;
 
-        .content {
-          margin-left: 10px;
-          background-color: rgb(226, 226, 226);
-        }
+  .content {
+    order: -1;
+    margin-right: 10px;
+    background-color: rgb(56, 56, 136);
+    color: white;
+  }
 
-        
-      }
 
-      .me {
-        justify-content: flex-end;
-        padding-left: 50%;
-
-        .content {
-          order: -1;
-          margin-right: 10px;
-          background-color: rgb(56, 56, 136);
-          color: white;
-        }
-
-      
-      }
+}
       
