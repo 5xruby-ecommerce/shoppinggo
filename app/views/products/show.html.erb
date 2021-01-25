@@ -29,15 +29,10 @@
                   <i class='far fa-heart' data-target='favorite.icon'><span id='fav'>喜歡</span></i>
                 <% end %>
               <% end %>
-            <% else %>
-              <%= link_to new_user_session_path do %>
-                <i class='far fa-heart'></i>
-              <% end %>
-            <% end %>
-        </span>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
     <!-- 右側商品品名數量尺寸等 -->
     <div class='md:w-3/5 md:pl-12 md:pt-8 flex flex-col justify-between'>
       <div class="text-4xl mb-4 font-semibold"><%= @product.name %></div>
@@ -112,8 +107,7 @@
         <a href="#"><i class="fas fa-dog"></i><span class="text-black pr-4">shoppinggo承諾</span>保障你的交易安全：我們只會在買家確認收到貨款，才會撥款給賣家！</a>
       </div>
     </div>
-  </div>  
-</section>
+  </section>
 </div>
 <!-- 商品規格 -->
 <section class='flex flex-wrap justify-center lg:px-10'>

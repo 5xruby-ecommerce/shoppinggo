@@ -56,12 +56,12 @@
         </td>
       </tr>
       <tr>
-        <td colspan="8"> 
+        <td colspan="8">
           <% Coupon.where(shop_id: item.product.shop_id).pluck(:title, :id).each do |title, coupon_id| %>
               <a data-action="click->updatecart#getcoupon" data-couponid="<%= coupon_id %>" class=" <%= UserCoupon.where(coupon_id: coupon_id, user_id: current_user) ? 'occupy' : '' %>">
                 <%= title %>
-              </a>     
-              <span data-couponid="<%= coupon_id %>" data-itemid="<%= item.product.id %>" data-action="click->updatecart#usecoupon">使用</span>       
+              </a>
+              <span data-couponid="<%= coupon_id %>" data-itemid="<%= item.product.id %>" data-action="click->updatecart#usecoupon">使用</span>
           <% end %>
         </td>
       </tr>

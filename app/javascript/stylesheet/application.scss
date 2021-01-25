@@ -4,23 +4,28 @@
 @import "tailwindcss/utilities";
 
 body {
-   @apply bg-gray-50;
+    @apply bg-gray-50;
+  }
+
+.btn-signup {
+  @apply mt-4 w-full rounded-lg py-2 font-semibold text-white;
 }
+
 input {
-   @apply outline-none focus:outline-none;
+  @apply outline-none focus:outline-none;
 }
 .btn {
-   height: 40px;
-   @apply mt-4 w-full rounded-lg py-2 font-semibold text-white shadow-sm focus:outline-none;
+  height: 40px;
+  @apply mt-4 w-full rounded-lg py-2 font-semibold text-white shadow-sm focus:outline-none;
 }
 .btn-signup {
    @apply mt-4 w-full rounded-lg py-2 font-semibold text-white;
 }
 .primary-button {
-   @apply bg-gray-800 p-2 text-white rounded-sm;
+  @apply bg-gray-800 p-2 text-white rounded-sm;
 }
 .input-store {
-   @apply bg-transparent  border rounded-lg p-1;
+  @apply bg-transparent  border rounded-lg p-1;
 }
 .field_with_errors {
    border: 0px;
