@@ -94,12 +94,12 @@ class Cart
 
     user_use_shop_coupon = !(@coupons.filter {|usercouponid, shopid| shopid == shop_id}.empty?)    
     if user_use_shop_coupon
-      usercouponid, shopid = @coupons.filter {|usercouponid, shopid| shopid == shop_id}
+      usercouponid, shopid = @coupons.filter {|usercouponid, shopid| shopid == shop_id}[0]
       couponid = UserCoupon.find_by(id: usercouponid).coupon_id
       coupon = Coupon.find_by(id: couponid)
       discount_amount = coupon.discount_amount
       discount_rule = coupon.discount_rule
-      if discount_rule == 'dollar'
+      if discount_rule == 'dollor'
         shoptotal -= discount_amount
       elsif discount_rule == 'percent'
         shoptotal = (shoptotal * (1 - 0.01 * discount_amount.to_i)).floor()
