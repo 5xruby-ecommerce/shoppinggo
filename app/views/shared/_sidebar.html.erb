@@ -2,7 +2,7 @@
   <div class="flex pl-12 flex-col pt-20 space-y-2">
 
     <div>
-      <i class="fas fa-store mr-2"></i>
+      <i class="fas fa-store"></i>
       <%= link_to '商品列表', shops_path if current_user.shop.present? %>
     </div>
 
@@ -11,7 +11,7 @@
     </div>
 
     <div>
-      <i class="fas fa-ticket-alt mr-2"></i>
+      <i class="fas fa-ticket-alt"></i>
       <%= link_to '檢視優惠卷', list_coupons_path if current_user.shop.present? %>
     </div>
 
