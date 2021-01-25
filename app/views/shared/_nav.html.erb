@@ -19,7 +19,11 @@
             <i class="fas fa-search"></i>
           <% end %>
         </span>
-        <%= text_field_tag :search, params[:search], placeholder: "搜尋商品", class:'inputsearch' %>
+        <% if ['電玩','書本','衣服','服務,票卷','寵物','家電影音','居家生活','模型','美食','其他'].include?(params[:search]) %>
+          <%= text_field_tag :search,'',placeholder: "搜尋商品", class:'inputsearch' %>
+        <% else %>
+          <%= text_field_tag :search, params[:search], placeholder: "搜尋商品", class:'inputsearch' %>
+        <% end %>
       </div>
     <% end %>
   </div>
