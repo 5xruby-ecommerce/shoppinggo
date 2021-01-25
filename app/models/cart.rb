@@ -74,6 +74,20 @@ class Cart
     end
   end
 
+  def destroy(product)
+    @items = @items.filter { |item| item.product_id != product}
+    shop_id = Product.find(product).shop_id
+    shop_items = @items.filter{ |item| item.shop_id == shop_id }
+    
+    if shop_items.empty?
+      @subtotals = @subtotals.filter {|origin_shoptotal, shopid| shopid != shop_id}
+    else
+      shoptotal = shop_items.reduce(0) { |shoptotal, item| shoptotal + item.total_price }
+      @subtotals = @subtotals.map { |origin_shoptotal, shopid| shopid == shop_id ? [shoptotal, shop_id] : [origin_shoptotal, shopid] }
+    end
+    
+  end
+
   def shop_totalprice(shop_id)
     shop_items = @items.filter { |item| item.shop_id == shop_id }
     shoptotal = shop_items.reduce(0) { |shoptotal, item| shoptotal + item.total_price }
