@@ -8,8 +8,8 @@ class OrdersController < ApplicationController
 
   def show
     order = current_user.orders.find(params[:id])
-    sub_order = order.sub_orders
-    @products = sub_order.products
+    @products = Product.joins(:sub_orders).where(sub_orders: {order: order})
+
     render layout: "member"
   end
 
@@ -23,8 +23,8 @@ class OrdersController < ApplicationController
     add_mac_value(sample_params(@order))
     if current_user
       @order = Order.new({user: current_user,
-      sum: current_cart.total_price,
-      number: @order.send(:order_number),
+                          sum: current_cart.total_price,
+                          number: @order.send(:order_number),
       }.merge(order_params))
 
       products_all = Product.includes(:shop).
@@ -41,6 +41,7 @@ class OrdersController < ApplicationController
         discount = current_cart.cal_discount(shop_id,current_user, sum)
         sum = sum - discount
         sub_order = @order.sub_orders.new(sum: sum)
+        @order.shop_orders.new(order_id:@order.id, shop_id: shop_id)
 
         products.each do |id, product|
           sub_order.order_items.new(product_id: id)
@@ -92,8 +93,8 @@ class OrdersController < ApplicationController
       'TotalAmount' => current_cart.total_price,
       'TradeDesc' => '123',
       'ItemName' => current_cart.items_name,
-      'ReturnURL' => 'http://localhost:5000//orders/return',
-      'ClientBackURL' => 'http://localhost:5000/orders',
+      'ReturnURL' => 'https://shoppinggo.site/orders/return',
+      'ClientBackURL' => 'https://shoppinggo.site/orders',
       'ChoosePayment' => 'Credit',
       'EncryptType' => '1',
     }
