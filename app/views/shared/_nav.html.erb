@@ -28,7 +28,9 @@
     <% end %>
   </div>
     <%= link_to carts_path do %>
-      <div class='text-gray-900 flex items-center mr-1'><%= image_tag 'bag.png' ,class:'w-8'%>(<%= current_cart.items.count %>) / <%= current_cart.total_price %></div>
+      <% if current_user %>   
+        <div class='text-gray-900 flex items-center mr-1' data-controller="navcart" data-action="plusbtn@window->navcart#update changequantity@window->navcart#update minusbtn@window->navcart#update usecoupon@window->navcart#update unusecoupon@window->navcart#update"><%= image_tag 'bag.png' ,class:'w-8'%> <span class="cartCount" data-navcart-target="cartcount"><%= current_cart.items.count %></span> / <span class="cartTotalPrice" data-navcart-target="carttotalprice"><%= current_cart.total_price %></span></div>
+      <% end %>
     <% end %>
     <div class='hidden top-navbar w-full md:inline-flex md:w-auto text-gray-900 navigation bg-white pl-2 md:space-x-2'>
       <% if user_signed_in? %>

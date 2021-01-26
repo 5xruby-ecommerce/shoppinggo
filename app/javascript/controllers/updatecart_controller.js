@@ -122,7 +122,7 @@ export default class extends Controller {
       url: `/carts/destroy/${id}`,
       type: 'delete',
       success: (resp) => {
-        console.log(resp,'success', id)
+        console.log('success', id)
       },
       error: (err) => {
         console.log(err);
