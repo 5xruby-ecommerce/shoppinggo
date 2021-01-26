@@ -86,32 +86,16 @@
     <% end %>
 
     <!-- 右邊 -->
-    <div class="flex-1 flex-col space-y-4 ml-5 mt-10 flex w-full relative">
+    <div class="flex-1 flex-col space-y-4 ml-5 mt-10 flex w-full relative h-32">
       <% if current_cart.present?%>
-      <div>
-        總金額 : 
-        <span data-shoptotal-target="shoptotal" data-shopid="<%= items.first.product.shop_id %>">
-        <%= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
-        <% end %>
-        </span>
-      </div>
       <div>
         總價:
         <span class="cart_total"><%= cart.cal_cart_total %></span>
       </div>
-   </div>
+    </div>
 
-  <!-- 右邊 -->
-  <div class="flex-1 flex-col space-y-4 ml-5 mt-10 flex w-full relative h-32">
-    <% if current_cart.present?%>
-    <div>
-      總金額 : 
-      <span data-shoptotal-target="shoptotal" data-shopid="<%= items.first.product.shop_id %>">
-      <%= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
-      <% end %>
-      </span>
-      <!-- <%= link_to '清空購物車', empty_carts_path, method: "delete" %> -->
-      <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none"><%= link_to '結帳', new_order_path if not current_cart.empty? %></button>
+    <!-- <%= link_to '清空購物車', empty_carts_path, method: "delete" %> -->
+    <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none"><%= link_to '結帳', new_order_path if not current_cart.empty? %></button>
     </div>
   </div>
 </div>
