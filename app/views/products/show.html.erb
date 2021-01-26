@@ -3,7 +3,15 @@
   <div class='flex w-full flex-wrap max-w-screen-xl px-8 shadow bg-white'>
     <!-- 商品圖片 -->
     <div class='md:w-2/5 pb-10 pt-8 pb-16'>
-      <div class='mb-4' style='width:100%;padding-top:100%;position:relative'><%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
+      <% if @product.image_url.present? %>
+        <div class='mb-4' style='width:100%;padding-top:100%;position:relative'>
+          <%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%>
+        </div>
+      <% else %>
+        <div class='mb-4' style='width:100%;padding-top:100%;position:relative'>
+          <%= image_tag 'bag.png' ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%>
+        </div>
+      <% end %>
       <div class="flex flex-wrap -mx-2">
         <% @product.images.each do |image| %>
           <div class="w-1/3 px-2">
@@ -63,15 +71,9 @@
     </div>
     <div>
       <% if user_signed_in? %>
-        <% if @product.shop.user.id != current_user.id %>
-          <button class='w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2'>
-            <%= link_to '聊聊', rooms_path(with: @product.shop.user.id),method: 'POST', id:'getchat',remote: true, class:'w-full h-full block'%>
-          </button>
-        <% end %>
+          <%= link_to '聊聊', rooms_path(with: @product.shop.user.id),method: 'POST', id:'getchat',remote: true, class:'w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2 block' if @product.shop.user.id != current_user.id %>
       <% else %>
-          <button class='w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2'>
-            <%= link_to '聊天', new_user_session_path, class:'w-full h-full block' %>
-          </button>
+        <%= link_to '聊天', new_user_session_path, class:'w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2 block' %>
       <% end %>
     </div>
       <div class="flex py-4">
