@@ -20,6 +20,7 @@ class ProductsController < ApplicationController
     else
       @product = Product.all
     end
+    @product = @product.where(status: 0)
   end
 
   def new

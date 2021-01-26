@@ -51,14 +51,14 @@
             <% Coupon.where(shop_id: items[0].product.shop_id).pluck(:title, :id).each do |title, coupon_id| %>
               <div class="flex py-2 items-center space-x-2">
                 <span class='coupon' data-action="click->shoptotal#getcoupon" data-couponid="<%= coupon_id %>" class="<%= user_own_coupon?(coupon_id) ? 'occupy' : '' %>">
-                  <% information = Coupon.where(id: coupon_id).pluck(:min_consumption, :discount_rule, :amount) %>
+                  <% information = Coupon.where(id: coupon_id).pluck(:min_consumption, :discount_rule, :discount_amount) %>
                   <% min= information[0][0] %>
                   <% rule= information[0][1] %>
-                  <% amount= information[0][2] %>
+                  <% discount= information[0][2] %>
                   <% if rule == 'dollor'%>
-                    <%= "滿#{min}折#{amount}元" %>
+                    <%= "滿#{min}折#{discount}元" %>
                   <% elsif rule == 'percent' %>
-                    <%= "滿#{min}折#{amount}%" %>
+                    <%= "滿#{min}折#{discount}%" %>
                   <% end %>
                 </span>
                 <% if user_use_coupon?(coupon_id) %>
@@ -85,24 +85,22 @@
       </div>
     <% end %>
 
-  <!-- 右邊 -->
-  <div class="flex-1 flex-col space-y-4 ml-5 mt-10 flex w-full relative">
-    <% if current_cart.present?%>
-    <div>
-      總金額 : 
-      <span data-shoptotal-target="shoptotal" data-shopid="<%= items.first.product.shop_id %>">
-      <%= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
-      <% end %>
-      </span>
+    <!-- 右邊 -->
+    <div class="flex-1 flex-col space-y-4 ml-5 mt-10 flex w-full relative">
+      <% if current_cart.present?%>
+      <div>
+        總金額 : 
+        <span data-shoptotal-target="shoptotal" data-shopid="<%= items.first.product.shop_id %>">
+        <%= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
+        <% end %>
+        </span>
+      </div>
+      <div>
+        總價:
+        <span class="cart_total"><%= cart.cal_cart_total %></span>
+      </div>
+      <!-- <%= link_to '清空購物車', empty_carts_path, method: "delete" %> -->
+      <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none"><%= link_to '結帳', new_order_path if not current_cart.empty? %></button>
     </div>
-    <div>
-      總價:
-      <span class="cart_total"><%= cart.cal_cart_total %></span>
-    </div>
-    <!-- <%= link_to '清空購物車', empty_carts_path, method: "delete" %> -->
-    <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none"><%= link_to '結帳', new_order_path if not current_cart.empty? %></button>
-  </div>
-  <% end %>
   </div>
 </div>
-
