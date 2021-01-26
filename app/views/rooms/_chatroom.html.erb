@@ -1,6 +1,6 @@
 <div class = "message_box px-4" data-room= "<%= @room.id %>" data-user="<%= current_user.id %>">
   <div class='chatwith'>
-    <%= @room.with(current_user).name %>
+    <%= @room.with(current_user).shop.name %>
   </div>
   <div class="chatcontainer">
         <div class="message_area">
