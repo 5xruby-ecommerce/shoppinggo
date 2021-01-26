@@ -1,6 +1,5 @@
 <div class='room-<%= room.id %>'>
-  <% if %>
-  <% room.with(current_user).shop.present? %>
+  <% if room.with(current_user).shop.present? %>
     <%= link_to room.with(current_user).shop.name , room_path(room) , remote: true, class:'block' %>
   <% else %>
     <%= link_to room.with(current_user).email , room_path(room) , remote: true, class:'block' %>
