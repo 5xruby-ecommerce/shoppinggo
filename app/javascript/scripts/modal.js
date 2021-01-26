@@ -1,6 +1,8 @@
 document.addEventListener('turbolinks:load', function(){
-  document.querySelector('.X').addEventListener('click',()=>{
-    console.log('hell')
-    document.querySelector('.modal').remove()
-  })
+  if (document.querySelector('.X')) {
+    document.querySelector('.X').addEventListener('click',()=>{
+      console.log('hell')
+      document.querySelector('.modal').remove()
+    })  
+  }
 })

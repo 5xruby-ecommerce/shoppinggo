@@ -4,7 +4,7 @@ document.addEventListener('turbolinks:load', () => {
   const name = document.querySelector('#product_name');
   const price = document.querySelector('#product_price');
   const quantity = document.querySelector('#product_quantity');
-  const formbtn = document.querySelector('[type=submit]');
+  const formbtn = document.querySelector('[type=submit] .product');
   const inputform = document.querySelector('.new_product');
   const editform = document.querySelector('.edit_product');
   const form = inputform || editform;
