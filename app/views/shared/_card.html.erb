@@ -20,6 +20,11 @@
             </div>
           </div>
         <% end %>
+          <div class='relative'>
+            <%= form_tag search_path, method: :get do %> 
+              <% submit_tag product.name, name: :search, class:'block relative w-full z-50 opacity-0' %>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>

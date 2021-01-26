@@ -1,32 +1,4 @@
-<style>
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  .row {
-    display: flex;
-
-  }
-
-  .coupon {
-    border: 1px solid ;
-    padding: 5px;
-    display: flex;
-  }
-
-.occupy {
-  background-color: grey;
-  pointer-events: none
-}
-.wrap {
-  padding-top: 100px;
-}
-</style>
-<div class="wrap flex justify-center w-screen overflow-auto">
-  <div class="w-9/12 flex flex-wrap">
-  <div class="pb-2 border-b border-gray-900 mt-5" style="flex:100%">&#x2190;<%= link_to '繼續購買', root_path ,class:'pl-2' %></div>
-  <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
+<% items = (cart.items.sort_by {|item| item.product.shop_id})%>
   <% temp = items.group_by { |item| item.product.shop_id.itself} %>
   <% temp.values.each do |items|%>
     <div class="md:w-3/5 w-full">

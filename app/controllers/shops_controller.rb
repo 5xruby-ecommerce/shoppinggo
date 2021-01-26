@@ -15,9 +15,9 @@ class ShopsController < ApplicationController
   def create
     @shop = current_user.build_shop(shop_params)
     if @shop.save
-      redirect_to shops_path, notice: '註冊成功'
+      redirect_to shops_path
     else
-      render :new, notice: '註冊失敗'
+      render :new
     end
   end
 

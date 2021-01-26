@@ -99,7 +99,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
-    dotenv (0.7.0)
+    dotenv (2.7.6)
     erubi (1.10.0)
     excon (0.78.1)
     factory_bot (6.1.0)
@@ -382,7 +382,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   carrierwave (~> 2.1)
   devise (~> 4.7, >= 4.7.3)
-  dotenv (~> 0.7.0)
+  dotenv (~> 2.7.6)
   factory_bot_rails (~> 6.1)
   faker (~> 2.15, >= 2.15.1)
   figaro (~> 1.2)
