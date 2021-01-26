@@ -3,4 +3,8 @@ document.addEventListener('turbolinks:load', function(){
     console.log('hell')
     document.querySelector('.modal').remove()
   })
+  var timer = setInterval(down,1000)
+  function down (){
+    document.querySelector('.text').innerText=`倒數+time`
+  }
 })

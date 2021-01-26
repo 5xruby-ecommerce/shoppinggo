@@ -13,7 +13,6 @@
     <% if notice %>
       <p class="notice"><%= notice %></p>
     <% end %>
-      <p class="alert"><%= alert %></p>
     <%= yield %>
     <% if params[:action] != "edit" && params[:controller] != "registrations" %>
       <% if user_signed_in? %>
