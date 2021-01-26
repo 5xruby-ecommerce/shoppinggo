@@ -47,9 +47,11 @@ export default class extends Controller {
               })            
             } else {
               console.log('該優惠卷已經被領取完')
+              alert('該優惠卷已經被領取完')
             }
           } else {
             console.log('你已經擁有此優惠卷')
+            alert('你已經擁有此優惠卷')
           }
         },
         error: (err) => {
@@ -61,13 +63,14 @@ export default class extends Controller {
   }
 
   usecoupon(e) {
-    const itemTotalPrice= e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price');    
+    // const itemTotalPrice = e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price');    
     const shopID = this.data.get('id') // the shop ID of the select coupon 
     const couponID = e.currentTarget.getAttribute('data-couponid'); // the coupon ID of the select coupon
-    const itemsTotalPrice = document.querySelectorAll(`div[data-controller="updatecart"]>div[data-shopid="${shopID}"]`); // select all product's total price of the shop
+    // const itemsTotalPrice = e.currentTarget.parentNode.parentNode.parentNode.nextElementSibling.querySelectorAll('span'); // select all product's total price of the shop
+    // console.log(itemsTotalPrice)
+    const shoptotal = e.currentTarget.parentNode.parentNode.nextElementSibling.querySelector('span').textContent
     const coupons = (e.currentTarget.parentNode.parentNode.querySelectorAll('span')); // select all coupons of the shop
     const clickedbtn = e.currentTarget; // select the clicked coupon
-
     magicRails.ajax({
       url: `/carts/get_coupon_info/${couponID}`,
       type: 'get',
@@ -87,10 +90,11 @@ export default class extends Controller {
           if (status == 'unused') {
 
             // calculate the total price of the shop
-            let cartShopTotalprice = 0;
-            itemsTotalPrice.forEach((e) =>{
-              cartShopTotalprice += Number(e.innerHTML)
-            })
+            // let cartShopTotalprice = 0;
+            // itemsTotalPrice.forEach((e) =>{
+            //   cartShopTotalprice += Number(e.innerHTML)
+            // })
+            let cartShopTotalprice = shoptotal
 
             // First check whether it satisfy the rule of the coupon
             if (counterCatch < amount && cartShopTotalprice > minConsumption) {
@@ -138,13 +142,15 @@ export default class extends Controller {
               clickedbtn.textContent = '使用中'
             } else {
               console.log('未達使用Coupon條件')
+              alert('未達使用Coupon條件')
             }
-            console.log(itemTotalPrice.length)
           } else {
             console.log('你已經使用過該優惠卷')
+            alert('你已經使用過該優惠卷')
           }
         } else if (status == "used") {
           console.log('你還未領取該優惠卷')
+          alert('你還未領取該優惠卷')
         }
       },
       error: (err) => {
@@ -154,12 +160,13 @@ export default class extends Controller {
   }
 
   unusecoupon(e) {
-
     const coupon = e.currentTarget.parentNode.querySelector('div')
     if (coupon.textContent.trim() == "使用中") {
 
       const shopID = coupon.getAttribute('data-shopid')
-      const itemTotalPrice= e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price');   // select all product's total price of the shop        
+      // const itemTotalPrice= e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price');   // select all product's total price of the shop        
+      const shoptotal = e.currentTarget.parentNode.parentNode.nextElementSibling.querySelector('span').textContent
+      console.log(shoptotal)
       const couponID = coupon.getAttribute('data-couponid')
       magicRails.ajax({
         url: `/carts/get_coupon_info/${couponID}`,
@@ -175,15 +182,17 @@ export default class extends Controller {
           const occupy = resp['occupy']
           const status = resp['status'][0]
           const usercoupon_id = resp['usercoupon_id'][0]
+          console.log(resp)
           if (occupy == true) {
             if (status === 'used') {
                 // query all products of the shop
               const cartShopProductsNumber = document.querySelectorAll(`div[data-updatecart-target="totalprice"]`); 
                 // calculate the total price of the shop
-              let cartShopTotalprice = 0;
-              itemTotalPrice.forEach((e) =>{
-                cartShopTotalprice += Number(e.innerHTML)
-              })
+              let cartShopTotalprice = shoptotal
+              // let cartShopTotalprice = 0;
+              // itemTotalPrice.forEach((e) =>{
+              //   cartShopTotalprice += Number(e.innerHTML)
+              // })
 
                 // First check whether it satisfy the rule of the coupon
               if (counterCatch < amount && cartShopTotalprice > minConsumption) {
@@ -231,9 +240,11 @@ export default class extends Controller {
               }
             } else {
               console.log('你尚未使用此優惠卷')
+              alert('你尚未使用此優惠卷')
             }
           } else {
             console.log('你尚未擁有此優惠卷')
+            alert('你尚未擁有此優惠卷')
           }
         },
         error: (err) => {

@@ -1,27 +1,61 @@
+<h1>編輯商品</h1>
 <div class='flex flex-grow items-center flex-col space-y-4  pt-36'>
   <div class='w-3/5  h-4/5 border shadow rounded-sm p-5 bg-gray-100'>
-
     <%= form_for @product, url: {action: "update"} do |f| %>
       <div class="p-2">
         <%= f.label :image, "商品首圖" %>
-        <%= f.file_field :image, id: :product_image, class: "form-control " %>
+        <%= f.file_field :image, id: :product_image, class: "form-control" %><br/>
       </div>
-
       <div class="p-2">
         <%= f.label :images, "更多商品圖片" %>
-        <%= f.file_field :images, multiple:true, class: "form-control" %>
+        <%= f.file_field :images, multiple:true, :class => "form-control" %><br/>
       </div>
-
       <div class="p-2">
         <%= f.label :category_list, "商品類別" %>
         <%= f.select :category_list, options_for_select(['電玩','書本','衣服','服務,票卷','寵物','家電影音','居家生活','模型','美食','其他']),prompt: '選一個' %><br/>
         <%= f.select :category_list , options_for_select(['電玩','書本','衣服','其他'])%><br/>
       <div class="p-2">
-
       <div class="p-2">
         <%= f.label :name, "商品名稱" %>
         <%= f.text_field :name %>
+        <div class="error"></div>
       </div>
+      <div class="p-2">
+        <%= f.label :content, "商品描述" %>
+        <%= f.text_field :content %>
+      </div>
+      <div class="p-2">
+        <%= f.label :quantity, "商品數量" %>
+        <%= f.text_field :quantity%>
+        <div class="error"></div>
+      </div>
+      <div class="p-2">
+        <%= f.label :price, "商品價格" %>
+        <%= f.text_field :price %>
+        <div class="error"></div>
+      </div>
+      <div class="p-2">
+        <!-- <%= f.label :schedule_end, "商品上架時間" %> -->
+        <label for="schedule_start">商品上架時間</label>
+        <input type="text" id="sechedule_start" name="product[schedule_start]" class="datetimepicker_start_edit" value="<%= @product.schedule_start.nil? ? '' : @product.schedule_start.strftime("%Y-%m-%d %H:%M")%>"/>
+        <div>
+          <div class="input-group-text absolute top-2 right-1"><i class="fPa fa-calendar"></i></div>
+        </div>
+      </div>
+      <div class="p-2">
+        <!-- <%= f.label :schedule_end, "商品下架時間" %> -->
+        <label for="schedule_end">商品下架時間</label>
+        <input type="text" id="schedule_end" name="product[schedule_end]" class="datetimepicker_end_edit" value="<%= @product.schedule_end.nil? ? '' : @product.schedule_end.strftime("%Y-%m-%d %H:%M")%>"/>
+        <div>
+          <div class="input-group-text absolute top-2 right-1"><i class="fa fa-calendar"></i></div>
+        </div>
+      </div>
+      <div class="form-group p-2">
+        <%= f.submit "更新商品", class:'primary-button text-xs' %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
       <div class="p-2">
         <%= f.label :content, "商品描述" %>

@@ -24,26 +24,8 @@
             <%= form_tag search_path, method: :get do %> 
               <% submit_tag product.name, name: :search, class:'block relative w-full z-50 opacity-0' %>
             <% end %>
-            <div class='absolute top-0 botton-0 w-full z-0 text-center'>
-              找相似 
-            </div>
           </div>
-        
         </div>
       <% end %>
     </div>
 </section>
-<script>
-document.addEventListener('turbolinks:load',()=>{
-  document.querySelectorAll('.cardstyle').forEach( e =>{
-   e.addEventListener('mouseover',()=>{
-     e.classList.add('cardhover')
-   })
-   e.addEventListener('mouseout',()=>{
-     e.classList.remove('cardhover')
-   })
-  })
-
-})
-
-</script>

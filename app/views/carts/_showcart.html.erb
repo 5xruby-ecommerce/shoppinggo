@@ -1,75 +1,89 @@
 <div class="wrap flex justify-center w-screen overflow-auto">
   <div class="w-9/12 flex flex-wrap h-full">
-  <div class="pb-2 border-b border-gray-900" style="flex:100%">&#x2190;<%= link_to '繼續購買', root_path ,class:'pl-2' %></div>
-  <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
-  <% temp = items.group_by { |item| item.product.shop_id.itself} %>
-  <% temp.values.each do |items|%>
-    <div class="md:w-3/5 w-full">
-      <div data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>" class="flex flex-col">
-      <!-- 店家名稱 -->
-        <div class="py-2 border-b border-gray-800 text-gray-800"><i class="fas fa-store mr-2"></i><%= items[0].product.shop.name %></div>
-        <% items.each do |item| %>
-        <div class="flex py-2 border-b border-gray-900" data-controller="updatecart" data-updatecart-id
-        ="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0">
-          <div>
-            <%= link_to product_path(item.product) do %>
-              <% if item.product.image_url.present? %>
-              <div class='w-24 h-24'><%= image_tag item.product.image_url ,style:'width:100%;height:100%;object-fit:cover' %></div>
-              <% end %>
+    <div class="pb-2 border-b border-gray-900" style="flex:100%">&#x2190;<%= link_to '繼續購買', root_path ,class:'pl-2' %></div>
+    <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
+    <% temp = items.group_by { |item| item.product.shop_id.itself} %>
+    <% temp.values.each do |items|%>
+      <div class="md:w-3/5 w-full">
+        <div data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>" class="flex flex-col">
+          <!-- 店家名稱 -->
+          <div class="py-2 border-b border-gray-800 text-gray-800"><i class="fas fa-store mr-2"></i><%= items[0].product.shop.name %></div>
+          <% items.each do |item| %>
+            <div class="flex py-2 border-b border-gray-900" data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0">
+              <div>
+                <%= link_to product_path(item.product) do %>
+                  <% if item.product.image_url.present? %>
+                  <div class='w-24 h-24'><%= image_tag item.product.image_url ,style:'width:100%;height:100%;object-fit:cover' %></div>
+                  <% end %>
+                <% end %>
+              </div>
+              <div class="flex flex-col justify-between w-full pl-4 py-2">
+                <!-- 商品名稱 -->
+                <div class="flex justify-between">
+                  <div class='text-xl'>
+                    <%= item.product.name %>
+                  </div>
+                  <div>
+                    <a href="#" data-action="click->updatecart#destroy">&#x292C;</a>
+                  </div>
+                </div>
+                <div class="flex flex-row items-end justify-between h-full pr-5">
+                  <!-- 數量 -->
+                  <div class="amount flex border border-gray-300 rounded-sm px-2 h-8 w-24">
+                    <button class="minus border-r border-gray-300 pr-2 focus:outline-none" data-action="click->updatecart#minusbtn">-</button>
+                    <input type="number" class="input_amount w-12 text-center" data-updatecart-target="amount" data-action="input->updatecart#changequantity">
+                    <button class="plus border-l border-gray-300 pl-2 focus:outline-none" data-action="click->updatecart#plusbtn">+</button>  
+                  </div>
+                  <!-- 價錢 -->
+                  <div data-updatecart-target="price" class="self-start">
+                    $<%= item.product.price %>
+                  </div>
+                </div>
+                <!-- 商品小計hidden -->
+                <div class="item_total_price hidden" data-updatecart-target="totalprice" data-shopid="<%= item.product.shop_id %>">
+                  <%= item.total_price %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <!-- coupon -->
+          <div class="flex space-x-4">
+            <% Coupon.where(shop_id: items[0].product.shop_id).pluck(:title, :id).each do |title, coupon_id| %>
+              <div class="flex py-2 items-center space-x-2">
+                <span class='coupon' data-action="click->shoptotal#getcoupon" data-couponid="<%= coupon_id %>" class="<%= user_own_coupon?(coupon_id) ? 'occupy' : '' %>">
+                  <% information = Coupon.where(id: coupon_id).pluck(:min_consumption, :discount_rule, :amount) %>
+                  <% min= information[0][0] %>
+                  <% rule= information[0][1] %>
+                  <% amount= information[0][2] %>
+                  <% if rule == 'dollor'%>
+                    <%= "滿#{min}折#{amount}元" %>
+                  <% elsif rule == 'percent' %>
+                    <%= "滿#{min}折#{amount}%" %>
+                  <% end %>
+                </span>
+                <% if user_use_coupon?(coupon_id) %>
+                  <div data-couponid="<%= coupon_id %>" data-shopid="<%= items[0].product.shop_id %>" data-action="click->shoptotal#usecoupon" class="occupy">
+                    使用中
+                  </div>
+                <% else %>
+                  <div data-couponid="<%= coupon_id %>" data-shopid="<%= items[0].product.shop_id %>" data-action="click->shoptotal#usecoupon">
+                    未使用
+                  </div>
+                <% end %>
+                <a data-action="click->shoptotal#unusecoupon" class="self-start -mt-1">&#x292C;</a>
+              </div>
             <% end %>
           </div>
-          <div class="flex flex-col justify-between w-full pl-4 py-2">
-          <!-- 商品名稱 -->
-          <div class="flex justify-between">
-            <div class='text-xl'>
-              <%= item.product.name %>
-            </div>
-            <div>
-              <a href="#" data-action="click->updatecart#destroy">&#x292C;</a>
-            </div>
+          <div>
+            總金額 : 
+            <span data-shoptotal-target="shoptotal" data-shopid="<%= items.first.product.shop_id %>">
+            <%= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
+            </span>
           </div>
-          <div class="flex flex-row items-end justify-between h-full pr-5">
-            <!-- 數量 -->
-            <div class="amount flex border border-gray-300 rounded-sm px-2 h-8 w-24">
-              <button class="minu border-r border-gray-300 pr-2 focus:outline-none" data-action="click->updatecart#minusbtn">-</button>
-              <input type="number" class="input_amount w-12 text-center" data-updatecart-target="amount" data-action="input->updatecart#changequantity">
-              <button class="plus border-l border-gray-300 pl-2 focus:outline-none" data-action="click->updatecart#plusbtn">+</button>  
-            </div>
-            <!-- 價錢 -->
-            <div data-updatecart-target="price" class="self-start">
-              $<%= item.product.price %>
-            </div>
-          </div>
-          <!-- 商品小計hidden -->
-          <div class="item_total_price hidden" data-updatecart-target="totalprice" data-shopid="<%= item.product.shop_id %>">
-            <%= item.total_price %>
-          </div>
-        </div>
+        </div>      
+      <!-- <div class="mt-2">小計:</div> -->
       </div>
-      <% end %>
-      </div>
-       <!-- coupon -->
-      <div class="flex space-x-4">
-       <% Coupon.where(shop_id: items[0].product.shop_id).pluck(:title, :id).each do |title, coupon_id| %>
-         <div class="flex py-2 items-center space-x-2">
-           <span class='coupon' data-action="click->shoptotal#getcoupon" data-couponid="<%= coupon_id %>" class="<%= user_own_coupon?(coupon_id) ? 'occupy' : '' %>">
-             <%= title %>
-           </span>
-           <% if user_use_coupon?(coupon_id) %>
-             <div data-couponid="<%= coupon_id %>" data-shopid="<%= items[0].product.shop_id %>" data-action="click->shoptotal#usecoupon" class="occupy">
-             使用中
-             </div>
-           <% else %>
-             <div data-couponid="<%= coupon_id %>" data-shopid="<%= items[0].product.shop_id %>" data-action="click->shoptotal#usecoupon">
-             未使用
-             </div>
-           <% end %>
-           <a data-action="click->shoptotal#unusecoupon" class="self-start -mt-1">&#x292C;</a>
-         </div>
-       <% end %>
-      </div>
-    <div class="mt-2">小計:</div>
-   </div>
+    <% end %>
 
   <!-- 右邊 -->
   <div class="flex-1 flex-col space-y-4 ml-5 mt-10 flex w-full relative">
@@ -83,7 +97,7 @@
     </div>
     <div>
       總價:
-      <span class="cart_total"><%= cart.total %></span>
+      <span class="cart_total"><%= cart.cal_cart_total %></span>
     </div>
     <!-- <%= link_to '清空購物車', empty_carts_path, method: "delete" %> -->
     <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none"><%= link_to '結帳', new_order_path if not current_cart.empty? %></button>

@@ -57,3 +57,29 @@
         </span>
       </div>
    </div>
+
+    <!-- 右邊 -->
+  <div class="flex-1 flex-col space-y-4 ml-5 h-56 pt-2 flex w-full relative">
+    <h2 class="text-xl">訂單資料</h2>
+    <div class='bg-white h-full px-4 py-2'>
+    <%= form_for @order do |f| %>
+      <div class="flex flex-col py-2">
+        <%= f.label :receiver, "收件者姓名" %>
+        <%= f.text_field :receiver, class:'border-b border-gray-200' %>
+      </div>
+      <div class="flex flex-col py-2">
+        <%= f.label :tel, "聯絡電話" %>
+        <%= f.text_field :tel, class:'border-b border-gray-200' %>
+      </div>
+      <div class="flex flex-col py-2">
+        <%= f.label :address, "收件地址" %>
+        <%= f.text_field :address, class:'border-b border-gray-200' %>
+      </div>
+      <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm focus:outline-none absolute right-0 -bottom-20">
+        <%= f.submit "付款", id: "btn" ,style:"background-color:transparent"%>
+      </button>
+    <% end %>
+    </div>
+  </div>
+  </div>
+</div>
