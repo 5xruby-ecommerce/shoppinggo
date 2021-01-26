@@ -3,7 +3,11 @@
   <div class='flex w-full flex-wrap max-w-screen-xl px-8 shadow bg-white'>
     <!-- 商品圖片 -->
     <div class='md:w-2/5 pb-10 pt-8 pb-16'>
+      <% if @product.image_url.present? %>
       <div class='mb-4' style='width:100%;padding-top:100%;position:relative'><%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
+      <% else %>
+      <div class='mb-4' style='width:100%;padding-top:100%;position:relative'><%= image_tag 'bag.png' ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%></div>
+      <% end %>
       <div class="flex flex-wrap -mx-2">
         <% @product.images.each do |image| %>
           <div class="w-1/3 px-2">
@@ -16,6 +20,7 @@
           <div class='hidden md:contents vertiacle'>分享:</div>
           <span><i class="fab fa-facebook-messenger"></i></span>
           <span><i class="fab fa-facebook"></i></span>
+          <span><i class="fab text-red-600"></i></span>
           <span><i class="fab fa-pinterest"></i></span>
           <span><%= image_tag 'twitter.svg' %></span>
         </div>
