@@ -1,69 +1,101 @@
-<div class='flex flex-grow items-center flex-col space-y-4  pt-36'>
-  <div class='w-3/5  h-4/5 border shadow rounded-sm p-5 bg-gray-100'>
+<div class='bg-red-300 shadow sm:rounded-lg my-20 m-auto mt-24'>
+  <div class='border-t border-gray-200'>
 
-    <%= form_for @product, url: {action: "create"} do |f| %>
-      <div class="p-2">
-        <%= f.label :image, "商品首圖" %>
-        <%= f.file_field :image, id: :product_image, class: "form-control " %>
-      </div>
+    <%= form_for @product, url: {action: 'create'} do |f| %>
 
-      <div class="p-2">
-        <%= f.label :images, "更多商品圖片" %>
-        <%= f.file_field :images, multiple:true, class: "form-control" %>
-      </div>
-
-      <div class="p-2">
-        <%= f.label :category_list, "商品類別" %>
-        <%= f.select :category_list, options_for_select(['電玩','書本','衣服','服務,票卷','寵物','家電影音','居家生活','模型','美食','其他']),prompt: '選一個' %><br/>
-      <div class="p-2">
-
-      <div class="p-2">
-        <%= f.label :name, "商品名稱" %>
-        <%= f.text_field :name %>
-        <div class="error"></div>
-      </div>
-
-      <div class="p-2">
-        <%= f.label :content, "商品描述" %>
-        <%= f.text_field :content %>
-      </div>
-
-      <div class="p-2">
-        <%= f.label :quantity, "商品數量" %>
-        <%= f.text_field :quantity %>
-        <div class="error"></div>
-      </div>
-
-      <div class="p-2">
-        <%= f.label :price, "商品價格" %>
-        <%= f.text_field :price %>
-        <div class="error"></div>
-      </div>
-
-      <div class="p-2">
-        <%= f.label :schedule_end, "商品上架時間" %>
-        <input type="text" name="product[schedule_start]" class="datetimepicker_start" value=
-        <%= @product.schedule_start.nil? ? '' : @product.schedule_start.strftime("%Y/%m/%d")%> >
-        <div>
-          <div class="input-group-text absolute top-2 right-1">
-            <i class="fPa fa-calendar"></i>
-          </div>
+      <div class='bg-white py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+        <div class='block text-sm font-medium text-gray-700'>
+          <%= f.label :image, '商品首圖' %>
+        </div>
+        <div class='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+          <%= f.file_field :image, id: :product_image, class: 'form-control' %>
         </div>
       </div>
 
-      <div class="p-2">
-        <%= f.label :schedule_end, "商品下架時間" %>
-        <input type="text" name="product[schedule_end]" class="datetimepicker_end" value=<%= @product.schedule_end.nil? ? '' : @product.schedule_end.strftime("%Y/%m/%d")%> >
-        <div>
-          <div class="input-group-text absolute top-2 right-1">
-            <i class="fa fa-calendar"></i>
-          </div>
+      <div class='bg-white py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+        <div class='block text-sm font-medium text-gray-700'>
+          <%= f.label :images, '更多商品圖片' %>
+        </div>
+        <div class='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+        <%= f.file_field :images, multiple:true, class: 'form-control' %>
         </div>
       </div>
 
-      <div class="form-group p-2">
-        <%= f.submit "建立商品", class:'primary-button text-xs product' %>
+      <div class='bg-white py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+        <div class='block text-sm font-medium text-gray-700'>
+          <%= f.label :category_list, '商品類別' %>
+        </div>
+        <div class='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+        <%= f.select :category_list, options_for_select(['電玩','書本','衣服','服務,票卷','寵物','家電影音','居家生活','模型','美食','其他']),prompt: '選擇分類' %>
+        </div>
       </div>
+
+      <div class='bg-white py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+        <div class='block text-sm font-medium text-gray-700'>
+          <%= f.label :name, '商品名稱' %>
+        </div>
+        <div class='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+          <%= f.text_field :name , class: 'border-b border-text-200' %>
+          <div class='error'></div>
+        </div>
+      </div>
+
+      <div class='bg-white py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+        <div class='block text-sm font-medium text-gray-700'>
+          <%= f.label :name, '商品描述' %>
+        </div>
+        <div class='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+          <%= f.text_field :content, class: 'border-b border-text-200' %>
+          <div class='error'></div>
+        </div>
+      </div>
+
+      <div class='bg-white py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+        <div class='block text-sm font-medium text-gray-700'>
+          <%= f.label :quantity, '商品數量' %>
+        </div>
+        <div class='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+          <%= f.text_field :quantity, class: 'border-b border-text-200' %>
+          <div class='error'></div>
+        </div>
+      </div>
+
+      <div class='bg-white py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+        <div class='block text-sm font-medium text-gray-700'>
+          <%= f.label :name, '商品價格' %>
+        </div>
+        <div class='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+          <%= f.text_field :price, class: 'border-b border-text-200' %>
+          <div class='error'></div>
+        </div>
+      </div>
+
+      <div class='bg-white py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+        <div class='block text-sm font-medium text-gray-700'>
+          <%= f.label :schedule_end, '商品上架時間' %>
+        </div>
+        <div class='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+          <input type='text' name='product[schedule_start]' class='datetimepicker_start border-b border-text-200' value=
+          <%= @product.schedule_start.nil? ? '' : @product.schedule_start.strftime('%Y/%m/%d')%> >
+          <i class='fa fa-calendar'></i>
+        </div>
+      </div>
+
+      <div class='bg-white py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+        <div class='block text-sm font-medium text-gray-700'>
+          <%= f.label :schedule_end, '商品下架時間'%>
+        </div>
+        <div class='mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
+          <input type='text' name='product[schedule_end]' class='datetimepicker_end border-b border-text-200' value=<%= @product.schedule_end.nil? ? '' : @product.schedule_end.strftime('%Y/%m/%d')%> >
+          <i class='fa fa-calendar'></i>
+        </div>
+      </div>
+
+      <div class='px-4 py-3 bg-gray-50 text-right sm:px-6'>
+        <%= f.submit '建立商品', class:'text-white text-sm p-2 rounded bg-gray-500 hover:bg-gray-900 product' %>
+      </div>
+
     <% end %>
+    </div>
   </div>
 </div>
