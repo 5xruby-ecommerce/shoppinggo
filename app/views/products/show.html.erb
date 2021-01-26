@@ -62,12 +62,16 @@
       <% end %>
     </div>
     <div>
-       <% if user_signed_in? %>
-          <% if @product.shop.user != current_user %>
-            <%= link_to '聊聊', rooms_path( user: @product.shop.user ),remote: true ,method:'post', id:'getchat' %>
-          <% end %>
-        <% else %>
-           <%= link_to '聊聊', new_user_session_path %>
+      <% if user_signed_in? %>
+        <% if @product.shop.user.id != current_user.id %>
+          <button class='w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2'>
+            <%= link_to '聊聊', rooms_path(with: @product.shop.user.id),method: 'POST', id:'getchat',remote: true, class:'w-full h-full block'%>
+          </button>
+        <% end %>
+      <% else %>
+          <button class='w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2'>
+            <%= link_to '聊天', new_user_session_path, class:'w-full h-full block' %>
+          </button>
       <% end %>
     </div>
       <div class="flex py-4">
