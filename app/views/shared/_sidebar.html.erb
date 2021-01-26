@@ -12,11 +12,11 @@
 
     <div>
       <i class="fas fa-ticket-alt"></i>
-      <%= link_to '檢視優惠卷', list_coupons_path if current_user.shop.present? %>
+      <%= link_to '檢視優惠券', list_coupons_path if current_user.shop.present? %>
     </div>
 
     <div class="pl-7">
-      <%= link_to '新增優惠卷', new_coupon_path if current_user.shop.present? %>
+      <%= link_to '新增優惠券', new_coupon_path if current_user.shop.present? %>
     </div>
 
     <div class='pl-7'>
