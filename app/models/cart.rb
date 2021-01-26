@@ -25,11 +25,6 @@ class Cart
   end
 
   def total_price
-    # if @items
-    #   total = @items.reduce(0) { |total, item| total + item.total_price }
-    # else
-    #   total = 0
-    # end
     if not @subtotals.empty?
       @total = @subtotals.reduce(0) {|sum, item| sum + item[0]}
     else
@@ -79,18 +74,32 @@ class Cart
     end
   end
 
+  def destroy(product)
+    @items = @items.filter { |item| item.product_id != product}
+    shop_id = Product.find(product).shop_id
+    shop_items = @items.filter{ |item| item.shop_id == shop_id }
+    
+    if shop_items.empty?
+      @subtotals = @subtotals.filter {|origin_shoptotal, shopid| shopid != shop_id}
+    else
+      shoptotal = shop_items.reduce(0) { |shoptotal, item| shoptotal + item.total_price }
+      @subtotals = @subtotals.map { |origin_shoptotal, shopid| shopid == shop_id ? [shoptotal, shop_id] : [origin_shoptotal, shopid] }
+    end
+    
+  end
+
   def shop_totalprice(shop_id)
     shop_items = @items.filter { |item| item.shop_id == shop_id }
     shoptotal = shop_items.reduce(0) { |shoptotal, item| shoptotal + item.total_price }
 
     user_use_shop_coupon = !(@coupons.filter {|usercouponid, shopid| shopid == shop_id}.empty?)    
     if user_use_shop_coupon
-      usercouponid, shopid = @coupons.filter {|usercouponid, shopid| shopid == shop_id}
+      usercouponid, shopid = @coupons.filter {|usercouponid, shopid| shopid == shop_id}[0]
       couponid = UserCoupon.find_by(id: usercouponid).coupon_id
       coupon = Coupon.find_by(id: couponid)
       discount_amount = coupon.discount_amount
       discount_rule = coupon.discount_rule
-      if discount_rule == 'dollar'
+      if discount_rule == 'dollor'
         shoptotal -= discount_amount
       elsif discount_rule == 'percent'
         shoptotal = (shoptotal * (1 - 0.01 * discount_amount.to_i)).floor()

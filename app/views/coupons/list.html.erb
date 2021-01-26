@@ -23,8 +23,8 @@
           <td><%= coupon.discount_rule %></td>
           <td><%= coupon.discount_amount %></td>
           <td><%= coupon.min_consumption %></td>
-          <td><%= coupon.discount_start.strftime('%Y/%m/%d') %></td>
-          <td><%= coupon.discount_end.strftime('%Y/%m/%d') %></td>
+          <td><%= coupon.discount_start ? coupon.discount_start.strftime('%Y/%m/%d') : ""%></td>
+          <td><%= coupon.discount_end ? coupon.discount_end.strftime('%Y/%m/%d') : ""%></td>
           <td><%= coupon.amount %></td>
           <td><%= coupon.counter_catch %></td>
           <td><%= link_to '編輯', edit_coupon_path(coupon) %></td>

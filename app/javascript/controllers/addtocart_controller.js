@@ -8,7 +8,6 @@ export default class extends Controller {
                   }
  
   connect() {
-    console.log('add item')
     this.numberValueChanged()
   }
 
@@ -43,7 +42,6 @@ export default class extends Controller {
       data: JSON.stringify(amount),
       // data: new URLSearchParams(amount).toString(),
       success: (resp) => {
-        console.log(resp, this.amountTarget.value);
       },
       error: (err) => {
         console.log(err);
@@ -58,10 +56,11 @@ export default class extends Controller {
       const coupon = e.target
       const couponID = coupon.getAttribute('data-couponid')
       const key = { coupon_key: couponID }
+      console.log(coupon)
   
       // first check whether the user own the coupon by check database
       magicRails.ajax({
-        url: `carts/get_coupon_info/${couponID}`,
+        url: `/carts/get_coupon_info/${couponID}`,
         type: 'get',
         success: (resp) => {
   
@@ -80,6 +79,8 @@ export default class extends Controller {
                 success: (resp) => {
                   if (!coupon.classList.contains('occupy')) {
                     console.log('get it')
+                    console.log(coupon.nextElementSibling)
+                    coupon.nextElementSibling.textContent = '已領取'
                     coupon.classList.add('occupy')
                   } else {
                     console.log('already get it')

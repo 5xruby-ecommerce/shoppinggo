@@ -2,6 +2,6 @@
 
 class PagesController < ApplicationController
   def home
-    @products = Product.all
+    @products = Product.where(status: 0)
   end
 end

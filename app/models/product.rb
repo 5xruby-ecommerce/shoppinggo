@@ -13,12 +13,11 @@ class Product < ApplicationRecord
 
   validates :name, presence: true
   validates :price, presence: true
+  validates :quantity, presence: true
 
   mount_uploader :image, ImageUploader
   mount_uploaders :images, ImageUploader
   serialize :images
-
-  default_scope{ where(status: 0) }
 
   def normalize_friendly_id(input)
     input.to_s.to_slug.normalize(transliterations: :russian).to_s

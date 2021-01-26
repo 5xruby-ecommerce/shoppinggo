@@ -1,5 +1,5 @@
-let roomlist = document.querySelector('.roomlist')
+var chatroomlist = document.querySelector('.roomlist')
 
-document.querySelector('#chatroom').innerHTML = '<%=j render 'rooms/chatroom' %>'
+document.querySelector('#chatroom').innerHTML = " <%=j render 'rooms/chatroom' %>"
 
-roomlist.innerHTML = "<%= j render @rooms %>" + roomlist.innerHTML 
+chatroomlist.innerHTML = "<%= j render @rooms %>" 

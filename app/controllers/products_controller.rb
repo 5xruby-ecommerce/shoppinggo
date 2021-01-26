@@ -20,6 +20,7 @@ class ProductsController < ApplicationController
     else
       @product = Product.all
     end
+    @product = @product.where(status: 0)
   end
 
   def new
@@ -29,7 +30,12 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @product.shop = current_user.shop
-    if @product.schedule_start > Time.now
+
+    if @product.schedule_start.nil?
+      @product.schedule_start = Time.now
+    end 
+
+    if @product.schedule_start > Time.now 
       @product.status = 1
     end
 
@@ -39,7 +45,7 @@ class ProductsController < ApplicationController
       end
       redirect_to shops_path
     else
-      render :new
+      render :new, layout: "store"
     end
   end
 
@@ -47,7 +53,18 @@ class ProductsController < ApplicationController
   end
 
   def update
+
+    if @product.schedule_start.nil?
+      @product.schedule_start = Time.now
+    end 
+
+    if @product.schedule_start > Time.now 
+      @product.status = 1
+    end
     if @product.update(product_params)
+      if @product.schedule_start > Time.now 
+        ScheduleWorker.perform_at(@product.schedule_start, @product.id)
+      end
       redirect_to shops_path
     else
       render :edit
@@ -89,6 +106,7 @@ class ProductsController < ApplicationController
 
   def find_product
     @product = current_user.shop.products.find(params['id'])
+    # @product = current_user.shop.products.find(product_params)
   end
 
   def product_params
