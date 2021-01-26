@@ -3,13 +3,13 @@
     <div class="pb-2 border-b border-gray-900" style="flex:100%">&#x2190;<%= link_to '繼續購買', root_path ,class:'pl-2' %></div>
     <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
     <% temp = items.group_by { |item| item.product.shop_id.itself} %>
+    <div class="md:w-3/5 w-full">
     <% temp.values.each do |items|%>
-      <div class="md:w-3/5 w-full">
-        <div data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>" class="flex flex-col">
+        <div data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>" class="flex flex-col w-full">
           <!-- 店家名稱 -->
           <div class="py-2 border-b border-gray-800 text-gray-800"><i class="fas fa-store mr-2"></i><%= items[0].product.shop.name %></div>
           <% items.each do |item| %>
-            <div class="flex py-2 border-b border-gray-900" data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0">
+            <div class="flex py-2 border-b border-gray-900 w-full" data-controller="updatecart" data-updatecart-id="<%= item.product.id %>" data-updatecart-number-value="<%= item.quantity %>" data-updatecart-totalprice-value="0">
               <div>
                 <%= link_to product_path(item.product) do %>
                   <% if item.product.image_url.present? %>
@@ -82,18 +82,14 @@
           </div>
         </div>      
       <!-- <div class="mt-2">小計:</div> -->
-      </div>
     <% end %>
-
+  </div>
     <!-- 右邊 -->
-    <div class="flex-1 flex-col space-y-4 ml-5 mt-10 flex w-full relative h-32">
+    <div class="md:flex-1 w-full flex-col space-y-4 ml-5 flex h-32 relative top-0">
       <% if current_cart.present?%>
-      <div>
         總價:
         <span class="cart_total"><%= cart.cal_cart_total %></span>
-      </div>
-    </div>
-
+      <% end %>
     <!-- <%= link_to '清空購物車', empty_carts_path, method: "delete" %> -->
     <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none"><%= link_to '結帳', new_order_path if not current_cart.empty? %></button>
     </div>
