@@ -9,4 +9,6 @@ import './room.js'
 import './search.js'
 import './nav.js'
 import './login.js'
+import './modal.js'
+import './similar.js'
 

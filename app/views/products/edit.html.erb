@@ -11,6 +11,11 @@
         <%= f.file_field :images, multiple:true, :class => "form-control" %><br/>
       </div>
       <div class="p-2">
+        <%= f.label :category_list, "商品類別" %>
+        <%= f.select :category_list, options_for_select(['電玩','書本','衣服','服務,票卷','寵物','家電影音','居家生活','模型','美食','其他']),prompt: '選一個' %><br/>
+        <%= f.select :category_list , options_for_select(['電玩','書本','衣服','其他'])%><br/>
+      </div>
+      <div class="p-2">
         <%= f.label :name, "商品名稱" %>
         <%= f.text_field :name %>
         <div class="error"></div>
@@ -52,5 +57,45 @@
   </div>
 </div>
 
+      <div class="p-2">
+        <%= f.label :content, "商品描述" %>
+        <%= f.text_field :content %>
+      </div>
 
-<%= link_to '回上頁', shops_path %>
+      <div class="p-2">
+        <%= f.label :quantity, "商品數量" %>
+        <%= f.text_field :quantity %>
+      </div>
+
+      <div class="p-2">
+        <%= f.label :price, "商品價格" %>
+        <%= f.text_field :price %>
+      </div>
+
+      <div>
+        <%= f.label :schedule_end, "商品上架時間" %>
+        <input type="datetime-local" name="product[schedule_start]" class="datetimepicker_start" value=
+        <%= @product.schedule_start.nil? ? '' : @product.schedule_start.strftime("%Y/%m/%d")%> >
+        <div>
+          <div class="input-group-text absolute top-2 right-1">
+            <i class="fPa fa-calendar"></i>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <%= f.label :schedule_end, "商品下架時間" %>
+        <input type="datetime-local" name="product[schedule_end]" class="datetimepicker_end" value=<%= @product.schedule_end.nil? ? '' : @product.schedule_end.strftime("%Y/%m/%d")%> >
+        <div>
+          <div class="input-group-text absolute top-2 right-1">
+            <i class="fa fa-calendar"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group p-2">
+        <%= f.submit "建立商品", class:'primary-button text-xs' %>
+      </div>
+    <% end %>
+  </div>
+</div>

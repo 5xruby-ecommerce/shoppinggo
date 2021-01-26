@@ -19,6 +19,10 @@
   @apply px-2 py-1 text-xl box-border mb-1;
 }
 
+.roomlist {
+  @apply w-1/5 h-full flex flex-col items-center;
+}
+
 .chatwith::after {
   content: '';
   display: block;

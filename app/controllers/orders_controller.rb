@@ -6,6 +6,13 @@ class OrdersController < ApplicationController
     render layout: "member"
   end
 
+  def show
+    order = current_user.orders.find(params[:id])
+    sub_order = order.sub_orders
+    @products = sub_order.products
+    render layout: "member"
+  end
+
   def new
     @order = Order.new
     add_mac_value(sample_params(@order))
@@ -16,26 +23,32 @@ class OrdersController < ApplicationController
     add_mac_value(sample_params(@order))
     if current_user
       @order = Order.new({user: current_user,
-                          sum: current_cart.total_price,
-                          number: @order.send(:order_number),
-                        }.merge(order_params))
+      sum: current_cart.total_price,
+      number: @order.send(:order_number),
+      }.merge(order_params))
+
       products_all = Product.includes(:shop).
-        where(id: current_cart.product_ids).
-        reduce({}) do |rs, product|
-          rs[product.shop_id] ||= {}
-          rs[product.shop_id][product.id] = product
-          rs
-        end
+      where(id: current_cart.product_ids).
+      reduce({}) do |rs, product|
+        rs[product.shop_id] ||= {}
+        rs[product.shop_id][product.id] = product
+        rs
+      end
 
       products_all.each do |(shop_id, products)|
         items = current_cart.items.filter { |item| item.product_id.in?(products.keys) }
         sum = items.sum(&:total_price)
         discount = current_cart.cal_discount(shop_id,current_user, sum)
         sum = sum - discount
+        sub_order = @order.sub_orders.new(sum: sum)
+
+        products.each do |id, product|
+          sub_order.order_items.new(product_id: id)
+        end
       end
-      @order.save!
-      session[:cartgo] = nil
-      @order
+        @order.save
+        session[:cartgo] = nil
+        @order
     else
       render :new, notice: '訂單未成立'
     end
@@ -80,7 +93,7 @@ class OrdersController < ApplicationController
       'TradeDesc' => '123',
       'ItemName' => current_cart.items_name,
       'ReturnURL' => 'http://localhost:5000//orders/return',
-      'ClientBackURL' => 'http://localhost:5000/',
+      'ClientBackURL' => 'http://localhost:5000/orders',
       'ChoosePayment' => 'Credit',
       'EncryptType' => '1',
     }

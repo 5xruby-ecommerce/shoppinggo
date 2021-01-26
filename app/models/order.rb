@@ -3,6 +3,7 @@
 class Order < ApplicationRecord
   belongs_to :user
   has_many :sub_orders
+  has_many :shops, through: :shop_orders
   has_many :shop_orders
   before_create :order_number
 

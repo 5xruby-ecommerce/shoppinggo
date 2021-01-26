@@ -1,28 +1,59 @@
 <section class="classification">
   <div class="bg-white w-full h-full shadow">
     <div class="p-4 text-lg text-gray-400">分類</div>
-    <div class="grid grid-cols-10 gap-0.5 bg-gray-50 pt-0.5">
+    <div class="grid grid-cols-5 md:grid-cols-10 gap-0.5 bg-gray-50 pt-0.5">
       <div>
         <%= form_tag search_path, method: :get do %> 
-          <%= submit_tag "電玩", name: :search ,class:'h-36 w-full bg-white' %>
+          <%= submit_tag "電玩", name: :search ,class:'h-36 w-full bg-white class_search' %>
         <% end %>
       </div>
       <div>
         <%= form_tag search_path, method: :get do %> 
-          <%= submit_tag "衣服", name: :search ,class:'h-36 w-full bg-white' %>
+          <%= submit_tag "衣服", name: :search ,class:'h-36 w-full bg-white class_search' %>
         <% end %>
       </div>
       <div>
         <%= form_tag search_path, method: :get do %> 
-          <%= submit_tag "書本", name: :search ,class:'h-36 w-full bg-white' %>
+          <%= submit_tag "書本", name: :search ,class:'h-36 w-full bg-white class_search' %>
+        <% end %>
+      </div>
+      <div>
+        <%= form_tag search_path, method: :get do %> 
+          <%= submit_tag "美食", name: :search ,class:'h-36 w-full bg-white' %>
+        <% end %>
+      </div>
+      <div>
+        <%= form_tag search_path, method: :get do %> 
+          <%= submit_tag "服務,票卷", name: :search ,class:'h-36 w-full bg-white' %>
+        <% end %>
+      </div>
+      <div>
+        <%= form_tag search_path, method: :get do %> 
+          <%= submit_tag "寵物", name: :search ,class:'h-36 w-full bg-white' %>
+        <% end %>
+      </div>
+      <div>
+        <%= form_tag search_path, method: :get do %> 
+          <%= submit_tag "家電影音", name: :search ,class:'h-36 w-full bg-white' %>
+        <% end %>
+      </div>
+      <div>
+        <%= form_tag search_path, method: :get do %> 
+          <%= submit_tag "居家生活", name: :search ,class:'h-36 w-full bg-white' %>
+        <% end %>
+      </div>
+      <div>
+        <%= form_tag search_path, method: :get do %> 
+          <%= submit_tag "模型", name: :search ,class:'h-36 w-full bg-white' %>
         <% end %>
       </div>
       <div>
         <%= form_tag search_path, method: :get do %> 
           <%= submit_tag "其他", name: :search ,class:'h-36 w-full bg-white' %>
         <% end %>
-      </div>
-      
+      </div>      
     </div>
   </div>
 </section>
+
+
