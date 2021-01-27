@@ -6,8 +6,11 @@
         @apply w-6/12 md:w-4/12 lg:w-2/12 p-0.5;
       }
      }
+  .findsame {
+     @apply py-2 w-full bg-red-500 text-white rounded-b-sm ;
+  }
   .cardstyle {
-     @apply rounded-sm p-0.5 bg-white shadow-sm relative;
+     @apply rounded-sm p-0.5 bg-white shadow-sm relative z-0;
     
      .picture {
         width:100%;
@@ -39,15 +42,15 @@
 }
 .cardhover {
    @apply border border-red-500;
-   &:after {
-      content: '找相似';
-      position: absolute;
-      left: -1px;
-      // transform: translateX(-50%);
-      padding: 8px 0;
-      width: 101%;
-      text-align: center;
-      @apply bg-red-500 text-white  rounded-b-sm;
-      z-index: 10;
-   }
+   // &:after {
+   //    content: '找相似';
+   //    position: absolute;
+   //    left: -1px;
+   //    // transform: translateX(-50%);
+   //    padding: 8px 0;
+   //    width: 101%;
+   //    text-align: center;
+   //    @apply bg-red-500 text-white  rounded-b-sm;
+   //    z-index: 0;
+   // }
 }
