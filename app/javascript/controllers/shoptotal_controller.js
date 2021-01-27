@@ -46,12 +46,12 @@ export default class extends Controller {
                 }
               })            
             } else {
-              console.log('該優惠卷已經被領取完')
-              alert('該優惠卷已經被領取完')
+              console.log('該優惠券已經被領取完')
+              alert('該優惠券已經被領取完')
             }
           } else {
-            console.log('你已經擁有此優惠卷')
-            alert('你已經擁有此優惠卷')
+            console.log('你已經擁有此優惠券')
+            alert('你已經擁有此優惠券')
           }
         },
         error: (err) => {
@@ -145,12 +145,12 @@ export default class extends Controller {
               alert('未達使用Coupon條件')
             }
           } else {
-            console.log('你已經使用過該優惠卷')
-            alert('你已經使用過該優惠卷')
+            console.log('你已經使用過該優惠券')
+            alert('你已經使用過該優惠券')
           }
         } else if (status == "used") {
-          console.log('你還未領取該優惠卷')
-          alert('你還未領取該優惠卷')
+          console.log('你還未領取該優惠券')
+          alert('你還未領取該優惠券')
         }
       },
       error: (err) => {
@@ -239,12 +239,12 @@ export default class extends Controller {
                 })
               }
             } else {
-              console.log('你尚未使用此優惠卷')
-              alert('你尚未使用此優惠卷')
+              console.log('你尚未使用此優惠券')
+              alert('你尚未使用此優惠券')
             }
           } else {
-            console.log('你尚未擁有此優惠卷')
-            alert('你尚未擁有此優惠卷')
+            console.log('你尚未擁有此優惠券')
+            alert('你尚未擁有此優惠券')
           }
         },
         error: (err) => {

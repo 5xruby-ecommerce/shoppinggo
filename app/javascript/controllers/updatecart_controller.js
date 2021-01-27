@@ -166,10 +166,10 @@ export default class extends Controller {
                 }
               })            
             } else {
-              console.log('該優惠卷已經被領取完')
+              console.log('該優惠券已經被領取完')
             }
           } else {
-            console.log('你已經擁有此優惠卷')
+            console.log('你已經擁有此優惠券')
           }
         },
         error: (err) => {
