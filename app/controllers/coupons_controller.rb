@@ -17,7 +17,7 @@ class CouponsController < ApplicationController
     respond_to do |format|
       if @coupon.save
         format.html {
-          redirect_to shops_path, notice: 'Coupon was successfully created'
+          redirect_to list_coupons_path
         }
         # format.json { render :show, status: :create, location: @coupon}
       else

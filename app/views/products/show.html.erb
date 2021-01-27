@@ -61,13 +61,17 @@
       </div>
       <div class="pl-4 flex space-x-2 items-center" >
       <% @product.shop.coupons.each do |coupon| %>
-        <% userOwnCoupon = user_own_coupon?(coupon) %>
-          <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
-        <% if userOwnCoupon %>
-          <span href="#">已領取</span>
-        <% else %>
-          <span>領取</span>
-        <% end %>
+          <% userOwnCoupon = user_own_coupon?(coupon) %>
+          <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> 
+            <% min= coupon.min_consumption %>
+            <% rule= coupon.discount_rule %>
+            <% discount= coupon.amount %>
+            <% if rule == '金額'%>
+              <%= "滿#{min}折#{discount}元" %>
+            <% elsif rule == '折扣' %>
+              <%= "滿#{min}折#{discount}%" %>
+            <% end %>
+          </a>
       <% end %>
     </div>
     <div>

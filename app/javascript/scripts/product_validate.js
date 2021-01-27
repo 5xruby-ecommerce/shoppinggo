@@ -40,7 +40,6 @@ document.addEventListener('turbolinks:load', () => {
       })  
     }
   })
-
   if (formbtn) {
     formbtn.addEventListener('click', (e)=> {
       e.preventDefault()
