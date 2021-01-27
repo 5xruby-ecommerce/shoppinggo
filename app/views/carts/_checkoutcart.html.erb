@@ -1,7 +1,7 @@
 <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
-  <% temp = items.group_by { |item| item.product.shop_id.itself} %>
+<% temp = items.group_by { |item| item.product.shop_id.itself} %>
+    
   <% temp.values.each do |items|%>
-    <div class="md:w-3/5 w-full">
       <div data-controller="shoptotal" data-shoptotal-id="<%= items[0].shop_id %>" class="flex flex-col">
       <!-- 店家名稱 -->
         <div class="py-2 border-b border-gray-800 text-gray-800"><i class="fas fa-store mr-2"></i><%= items[0].product.shop.name %></div>
@@ -17,31 +17,31 @@
           </div>
           <div class="flex flex-col justify-between w-full pl-4 py-2">
           <!-- 商品名稱 -->
-          <div class="flex justify-between">
-            <div class='text-xl'>
-              <%= item.product.name %>
+            <div class="flex justify-between">
+              <div class='text-xl'>
+                <%= item.product.name %>
+              </div>
+              <div>
+                <a href="#" data-action="click->updatecart#destroy">&#x292C;</a>
+              </div>
             </div>
-            <div>
-              <a href="#" data-action="click->updatecart#destroy">&#x292C;</a>
+            <div class="flex flex-row items-end justify-between h-full pr-5">
+              <!-- 數量 -->
+              <div class="amount flex border border-gray-300 rounded-sm px-2 h-8 w-24">
+                <button class="minu border-r border-gray-300 pr-2 focus:outline-none" data-action="click->updatecart#minusbtn">-</button>
+                <input type="number" class="input_amount w-12 text-center" data-updatecart-target="amount" data-action="input->updatecart#changequantity">
+                <button class="plus border-l border-gray-300 pl-2 focus:outline-none" data-action="click->updatecart#plusbtn">+</button>  
+              </div>
+              <!-- 價錢 -->
+              <div data-updatecart-target="price" class="self-start">
+                $<%= item.product.price %>
+              </div>
+            </div>
+            <!-- 商品小計hidden -->
+            <div class="item_total_price hidden" data-updatecart-target="totalprice" data-shopid="<%= item.product.shop_id %>">
+              <%= item.total_price %>
             </div>
           </div>
-          <div class="flex flex-row items-end justify-between h-full pr-5">
-            <!-- 數量 -->
-            <div class="amount flex border border-gray-300 rounded-sm px-2 h-8 w-24">
-              <button class="minu border-r border-gray-300 pr-2 focus:outline-none" data-action="click->updatecart#minusbtn">-</button>
-              <input type="number" class="input_amount w-12 text-center" data-updatecart-target="amount" data-action="input->updatecart#changequantity">
-              <button class="plus border-l border-gray-300 pl-2 focus:outline-none" data-action="click->updatecart#plusbtn">+</button>  
-            </div>
-            <!-- 價錢 -->
-            <div data-updatecart-target="price" class="self-start">
-              $<%= item.product.price %>
-            </div>
-          </div>
-          <!-- 商品小計hidden -->
-          <div class="item_total_price hidden" data-updatecart-target="totalprice" data-shopid="<%= item.product.shop_id %>">
-            <%= item.total_price %>
-          </div>
-        </div>
       </div>
       <% end %>
       </div>
@@ -56,30 +56,7 @@
         <% end %>
         </span>
       </div>
-   </div>
-
-    <!-- 右邊 -->
-  <div class="flex-1 flex-col space-y-4 ml-5 h-56 pt-2 flex w-full relative">
-    <h2 class="text-xl">訂單資料</h2>
-    <div class='bg-white h-full px-4 py-2'>
-    <%= form_for @order do |f| %>
-      <div class="flex flex-col py-2">
-        <%= f.label :receiver, "收件者姓名" %>
-        <%= f.text_field :receiver, class:'border-b border-gray-200' %>
-      </div>
-      <div class="flex flex-col py-2">
-        <%= f.label :tel, "聯絡電話" %>
-        <%= f.text_field :tel, class:'border-b border-gray-200' %>
-      </div>
-      <div class="flex flex-col py-2">
-        <%= f.label :address, "收件地址" %>
-        <%= f.text_field :address, class:'border-b border-gray-200' %>
-      </div>
-      <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm focus:outline-none absolute right-0 -bottom-20">
-        <%= f.submit "付款", id: "btn" ,style:"background-color:transparent"%>
-      </button>
-    <% end %>
     </div>
-  </div>
-  </div>
-</div>
+
+  
+  
