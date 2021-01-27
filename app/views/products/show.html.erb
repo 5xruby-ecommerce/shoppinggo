@@ -1,8 +1,8 @@
 <div data-controller="addtocart" data-addtocart-id="<%= @product.id %>" data-addtocart-number-value=1 >
-<section class='flex justify-center pt-36 lg:px-10'>
+<section class='flex justify-center pt-36 lg:px-10 '>
   <div class='flex w-full flex-wrap max-w-screen-xl px-8 shadow bg-white'>
     <!-- 商品圖片 -->
-    <div class='md:w-2/5 pb-10 pt-8 pb-16'>
+    <div class='md:w-2/6 pb-10 pt-8 pb-16'>
       <% if @product.image_url.present? %>
         <div class='mb-4' style='width:100%;padding-top:100%;position:relative'>
           <%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%>
@@ -28,7 +28,7 @@
           <span><i class="fab fa-pinterest"></i></span>
           <span><%= image_tag 'twitter.svg' %></span>
         </div>
-        <div class='w-2/5 text-center'>
+        <div class='w-2/5 text-center flex justify-around items-center'>
           <span data-controller="favorite" data-favorite-id="<%= @product.id %>">
             <% if user_signed_in? %>
               <%= link_to '#', data: { action: 'favorite#go' } do %>
@@ -43,23 +43,26 @@
                 <i class='far fa-heart'></i>
               <% end %>
             <% end %>
-        </span>
+          </span>
+          <div>
+            <% if user_signed_in? %>
+                <%= link_to '聊聊', rooms_path(with: @product.shop.user.id),method: 'POST', id:'getchat',remote: true, class:'bg-red-100 bg-opacity-80 p-1 border border-red-500 text-red-500 text-center rounded-sm focus:outline-none py m-2 block' if @product.shop.user.id != current_user.id %>
+            <% else %>
+              <%= link_to '聊天', new_user_session_path, class:'w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2 block' %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
     <!-- 右側商品品名數量尺寸等 -->
-    <div class='md:w-3/5 md:pl-12 md:pt-8 flex flex-col justify-between'>
-      <div class="text-4xl mb-4 font-semibold"><%= @product.name %></div>
-      <div class="w-full flex h-10 items-center text-base my-2">
-        <div class="border-r border-gray-400 pr-4 text-red-500"><a href="#">5.0</a><span>&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</span></div>
-        <div class="border-r border-gray-400 px-4"><a href="#">0</a><span>評價</span></div>
-        <div class="px-4"><a href="#">0</a><span>已出售</span></div>
-      </div>
+    <div class='md:w-3/5 md:pl-12 md:pt-8 flex flex-col space-y-4'>
+      <div class="text-4xl font-semibold"><%= @product.name %></div>
       <!-- 商品名稱 -->
       <div class=" bg-gray-50 w-full p-4">
         <h2 class="text-4xl text-red-500">$<%= @product.price %></h2>
       </div>
-      <div class="pl-4 flex space-x-2 items-center" >
+      
+      <div class="pl-4 flex space-x-2 items-center py-2" >
       <% @product.shop.coupons.each do |coupon| %>
         <% userOwnCoupon = user_own_coupon?(coupon) %>
           <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
@@ -70,39 +73,9 @@
         <% end %>
       <% end %>
     </div>
-    <div>
-      <% if user_signed_in? %>
-          <%= link_to '聊聊', rooms_path(with: @product.shop.user.id),method: 'POST', id:'getchat',remote: true, class:'w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2 block' if @product.shop.user.id != current_user.id %>
-      <% else %>
-        <%= link_to '聊天', new_user_session_path, class:'w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2 block' %>
-      <% end %>
-    </div>
-      <div class="flex py-4">
-          <span class="text-gray-400 text-base pl-4 w-32">運送</span>
-          <ul class="space-y-2">
-            <li><i class="far fa-calendar-minus pr-2"></i>較長備貨(出貨天數20 天)</li>
-            <li class="flex justify-between">
-              <i class="fas fa-shipping-fast"><span class="font-normal">運費</span></i>
-              <span>$0~80<i class="fas fa-chevron-down pl-2"></i></span>
-            </li>
-          </ul>
-      </div>
-      <div class="flex py-4">
-          <span class="text-gray-400 text-base pl-4 w-32">顏色</span>
-          <div class="flex space-x-2">
-            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">紅</a></div>
-            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">紅</a></div>
-            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">紅</a></div>
-          </div>
-      </div>
-      <div class="flex py-4">
-          <span class="text-gray-400 text-base pl-4 w-32">尺寸</span>
-          <div class="flex space-x-2">
-            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">S</a></div>
-            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">M</a></div>
-            <div class="border border-gray-300 px-4 py-1 rounded-sm text-base"><a href="#">L</a></div>
-          </div>
-      </div>
+    
+      
+  
       <div class="amount flex items-center py-4">
         <span class="text-gray-400 text-base pl-4 w-32">數量</span>
         <div class="flex border border-gray-300 rounded-sm px-2 h-8">
@@ -111,7 +84,7 @@
           <button class="plus border-l border-gray-300 pl-2 focus:outline-none" data-action="click->addtocart#plusbtn">&#x2b;</button>
         </div>
       </div>
-      <div class="py-4 pl-4 space-x-2 ">
+      <div class="py-4 pl-4 space-x-2 pt-16">
         <button data-action="click->addtocart#add_item" class="border border-red-300 rounded-sm md:w-44 w-28 py-3 bg-red-100 bg-opacity-80 text-red-500 focus:outline-none"><i class="fas fa-cart-plus pr-2"></i>加入購物車</button>
         <button data-action="click->addtocart#add_item" class="md:w-44 w-28 py-3 bg-red-500 text-white rounded-sm focus:outline-none">直接購買</button>
       </div>
@@ -125,27 +98,7 @@
 <!-- 商品規格 -->
 <section class='flex flex-wrap justify-center lg:px-10'>
   <div class=' bg-white w-full max-w-screen-xl pt-4 px-8 shadow mt-4'>
-    <div class=" bg-gray-50 w-full p-2">
-      <h2 class="text-lg">商品規格</h2>
-    </div>
-    <div class="py-8 px-2 space-y-2">
-      <div class="flex items-center">
-        <span class="text-gray-400 text-base w-32">材質</span>
-        <span>品牌</span>
-      </div>
-      <div class="flex items-center">
-        <span class="text-gray-400 text-base w-32">品牌</span>
-        <span>品牌</span>
-      </div>
-      <div class="flex items-center">
-        <span class="text-gray-400 text-base w-32">商品數量</span>
-        <span>品牌helloworld</span>
-      </div>
-      <div class="flex items-center">
-        <span class="text-gray-400 text-base w-32">出貨地</span>
-        <span>品牌</span>
-      </div>
-    </div>
+ 
     <div class=" bg-gray-50 w-full p-2">
       <h2 class="text-lg">商品詳情</h2>
     </div>
@@ -154,25 +107,3 @@
     </div>
   </div>
 </section>
-<!-- 商品評價 -->
-<section class='flex flex-wrap justify-center mt-4 pb-14 h-96 lg:px-10'>
-  <div class=' bg-white w-full max-w-screen-xl pt-4 px-8 shadow'>
-    <h2 class="text-lg pb-4">商品評價</h2>
-    <div class="px-4 bg-red-100  border-red-100 border rounded-sm w-full h-28 flex items-center justify-around bg-opacity-30	">
-        <div class="text-center">
-          <div class="text-3xl text-red-500"> 5/5 </div>
-          <div class="text-2xl text-red-500 font-black">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
-        </div>
-        <div class="w-5/6 flex justify-between flex-wrap">
-          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">全部</a>
-          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">5星<span>(0)</span></a>
-          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">4星<span>(0)</span></a>
-          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">3星<span>(0)</span></a>
-          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">2星<span>(0)</span></a>
-          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">1星<span>(0)</span></a>
-          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">附上評論<span>(0)</span></a>
-          <a href="#" class="text-gray-800 md:px-6 md:py-2 rounded border border-gray-200 bg-gray-50 bg-opacity-80">附上照片/影片<span>(0)</span></a>
-        </div>
-    </div>
-  </div>
-</section> 

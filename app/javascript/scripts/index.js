@@ -11,4 +11,4 @@ import './nav.js'
 import './login.js'
 import './modal.js'
 import './similar.js'
-
+import './find.js'

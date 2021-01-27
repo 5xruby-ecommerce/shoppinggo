@@ -1,6 +1,6 @@
 # ShoppingGo 電商平台
 
-## Website 網站:https://shoppinggo.site/
+## Website 網站: https://shoppinggo.site/
 
 <!-- Demo video 示範影片: -->
 
@@ -35,14 +35,15 @@ Feel free to [open an issue](https://github.com/5xruby-ecommerce/shoppinggo/issu
 #### 鄭元喬
 - Responsibility負責項目
   - 會員系統
-  - 
-  - 
-- Github: https://github.com/
+  - 即時通訊
+  - 會員系統優化
+- Github: https://github.com/Saika3569
+
 #### 謝家銘
 - Responsibility負責項目
-  - 優惠券功能
-  - 
-  - 
+  - 優惠卷功能
+  - 購物車機制
+  - 商品排程上架
 - Github: https://github.com/XieJiaming
 
 #### 簡君倪
@@ -50,14 +51,16 @@ Feel free to [open an issue](https://github.com/5xruby-ecommerce/shoppinggo/issu
   - rontend Design 前端設計
   - search bar 商品搜尋功能
   - 第三方登入
-- Github: https://github.com/
-#### 邱俞芳 Yui kyu
+- Github: https://github.com/barpa00
+
+#### 邱俞芳
 - Responsibility負責項目
   - Deployment 網站部署
   - AWS S3 、 Picture Upload 圖片
-  - 會員系統優化
+  - 收藏商品
 - Github: https://github.com/kyuyui
-#### 黃平宸 Henry Huang
+
+#### 黃平宸
 - Responsibility負責項目
   - API Integration 串接綠界 API 金流服務
   - 訂單系統功能
