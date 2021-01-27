@@ -10,6 +10,6 @@
   @apply h-36 w-full bg-white text-7xl text-red-100 text-center leading-loose;
 }
 .text {
-  @apply h-36 w-full absolute top-0 bg-transparent text-lg font-medium mb-auto;
+  @apply h-36 w-full absolute top-0 bg-transparent text-lg font-medium mb-auto cursor-pointer
 }
 }
