@@ -13,7 +13,7 @@ ShoppingGO 是向電商平台 Shopee 致敬的產品，是一個網路拍賣平�
 3. 訂單系統：支援多店家同時結帳
 ## 賣家
 1. 上架商品：可上傳商品圖片及介紹
-2. 優惠卷機制：店家定義優惠卷折扣
+2. 優惠券機制：店家定義優惠券折扣
 3. 客製化商店：上架自己想賣的商品
 
 ## Technologies 使用技術
@@ -40,7 +40,7 @@ Feel free to [open an issue](https://github.com/5xruby-ecommerce/shoppinggo/issu
 - Github: https://github.com/
 #### 謝家銘
 - Responsibility負責項目
-  - 優惠卷功能
+  - 優惠券功能
   - 
   - 
 - Github: https://github.com/XieJiaming
