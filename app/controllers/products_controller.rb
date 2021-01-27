@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
     if params[:search]
       if Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%").present?
         @product = Product.where('name LIKE ?OR content LIKE ?', "%#{params[:search]}%",  "%#{params[:search]}%") 
-      else 
+      else
         @product = Product.tagged_with(params[:search], wild: true)
       end
     else
@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
 
     if @product.schedule_start.nil?
       @product.schedule_start = Time.now
-    end 
+    end
 
     if @product.schedule_start > Time.now 
       @product.status = 1
@@ -56,13 +56,13 @@ class ProductsController < ApplicationController
 
     if @product.schedule_start.nil?
       @product.schedule_start = Time.now
-    end 
+    end
 
-    if @product.schedule_start > Time.now 
+    if @product.schedule_start > Time.now
       @product.status = 1
     end
     if @product.update(product_params)
-      if @product.schedule_start > Time.now 
+      if @product.schedule_start > Time.now
         ScheduleWorker.perform_at(@product.schedule_start, @product.id)
       end
       redirect_to shops_path
