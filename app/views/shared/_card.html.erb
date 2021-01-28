@@ -1,7 +1,7 @@
 <section class="cards">
     <div class="content max-auto">
       <% @products.each do |product|%>
-        <div>
+        <div class='onecard'>
           <div class="cardstyle">
             <%= link_to product_path(product) do %>
             <div>
@@ -20,11 +20,9 @@
             </div>
           </div>
         <% end %>
-          <div class='relative'>
-            <%= form_tag search_path, method: :get do %> 
-              <% submit_tag product.name, name: :search, class:'block relative w-full z-50 opacity-0' %>
-            <% end %>
-          </div>
+          <%= form_tag({ controller: "products", action: "search" }, method: "get", class: "z-1") %>
+          <%= submit_tag '找相似',class:'searchsame opacity-0' %>
+          <%= text_field_tag 'search', product.name, class:'opacity-0' %>
         </div>
       <% end %>
     </div>

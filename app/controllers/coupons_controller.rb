@@ -28,6 +28,7 @@ class CouponsController < ApplicationController
   end
 
   def edit
+    render layout: "store"
   end
 
   def update
@@ -55,7 +56,7 @@ class CouponsController < ApplicationController
   def destroy
     @coupon.destroy
     respond_to do |format|
-      format.html {redirect_to list_coupons_path, notice: 'Coupon was successfully destroyed'}
+      format.html {redirect_to list_coupons_path}
       format.json { head :no_content}
     end
   end
