@@ -1,39 +1,44 @@
 <div data-controller="addtocart" data-addtocart-id="<%= @product.id %>" data-addtocart-number-value=1 >
-<section class='flex justify-center pt-36 lg:px-10 '>
-  <div class='flex w-full flex-wrap max-w-screen-xl px-8 shadow bg-white'>
-    <!-- 商品圖片 -->
-    <div class='md:w-2/6 pb-10 pt-8 pb-16'>
-      <% if @product.image_url.present? %>
-        <div class='mb-4' style='width:100%;padding-top:100%;position:relative'>
+  <section class='flex justify-center pt-36 lg:px-10 '>
+
+    <div class='flex w-full flex-wrap max-w-screen-xl px-8 shadow bg-white'>
+      <!-- 商品圖片 -->
+      <div class='md:w-2/6 pb-10 pt-8 pb-16'>
+        <% if @product.image_url.present? %>
+          <div class='mb-4' style='width:100%;padding-top:100%;position:relative'>
           <%= image_tag @product.image_url ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%>
-        </div>
-      <% else %>
-        <div class='mb-4' style='width:100%;padding-top:100%;position:relative'>
+          </div>
+        <% else %>
+          <div class='mb-4' style='width:100%;padding-top:100%;position:relative'>
           <%= image_tag 'bag.png' ,style:'width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0'%>
-        </div>
-      <% end %>
-      <div class="flex flex-wrap -mx-2">
-        <% @product.images.each do |image| %>
-          <div class="w-1/3 px-2">
-            <%= image_tag(image.url, class:"px-2") %>
           </div>
         <% end %>
-      </div>
-      <div class="flex pt-4 text-base justify-center items-center">
-        <div class='w-3/5 border-r-2 border-gray-200 icons text-center pr-4'>
-          <div class='hidden md:contents vertiacle'>分享:</div>
-          <span><i class="fab fa-facebook-messenger"></i></span>
-          <span><i class="fab fa-facebook"></i></span>
-          <span><i class="fab text-red-600"></i></span>
-          <span><i class="fab fa-pinterest"></i></span>
-          <span><%= image_tag 'twitter.svg' %></span>
+
+        <div class="flex flex-wrap -mx-2">
+          <% @product.images.each do |image| %>
+            <div class="w-1/3 px-2">
+              <%= image_tag(image.url, class:"px-2") %>
+            </div>
+          <% end %>
         </div>
+
+        <div class="flex pt-4 text-base justify-center items-center">
+          <div class='w-3/5 border-r-2 border-gray-200 icons text-center pr-4'>
+            <div class='hidden md:contents vertiacle'>分享:</div>
+            <span><i class="fab fa-facebook-messenger"></i></span>
+            <span><i class="fab fa-facebook"></i></span>
+            <span><i class="fab text-red-600"></i></span>
+            <span><i class="fab fa-pinterest"></i></span>
+            <span><%= image_tag 'twitter.svg' %></span>
+          </div>
+
         <div class='w-2/5 text-center flex justify-around items-center'>
           <span data-controller="favorite" data-favorite-id="<%= @product.id %>">
             <% if user_signed_in? %>
               <%= link_to '#', data: { action: 'favorite#go' } do %>
                 <% if current_user.favorite?(@product) %>
-                  <i class='fas fa-heart' data-target='favorite.icon'><span id='fav'>已喜歡</span></i>
+                  <i class='fas fa-heart' data-target='favorite.icon'>
+                  <span id='fav'>已喜歡</span></i>
                 <% else %>
                   <i class='far fa-heart' data-target='favorite.icon'><span id='fav'>喜歡</span></i>
                 <% end %>
@@ -44,38 +49,47 @@
               <% end %>
             <% end %>
           </span>
-          <div>
-            <% if user_signed_in? %>
-                <%= link_to '聊聊', rooms_path(with: @product.shop.user.id),method: 'POST', id:'getchat',remote: true, class:'bg-red-100 bg-opacity-80 p-1 border border-red-500 text-red-500 text-center rounded-sm focus:outline-none py m-2 block' if @product.shop.user.id != current_user.id %>
-            <% else %>
-              <%= link_to '聊天', new_user_session_path, class:'w-28 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2 block' %>
-            <% end %>
-          </div>
-        </div>
+        <div>
+
+        <% if user_signed_in? %>
+          <%= link_to '聊聊', rooms_path(with: @product.shop.user.id),method: 'POST', id:'getchat',remote: true, class:'bg-red-100 bg-opacity-80 p-1 border border-red-500 text-red-500 text-center rounded-sm focus:outline-none py m-2 block' if @product.shop.user.id != current_user.id %>
+        <% else %>
+          <%= link_to '聊聊', new_user_session_path, class:'w-20 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2 block' %>
+        <% end %>
+      </div>
       </div>
     </div>
+    </div>
+
     <!-- 右側商品品名數量尺寸等 -->
     <div class='md:w-3/5 md:pl-12 md:pt-8 flex flex-col space-y-4'>
       <div class="text-4xl font-semibold"><%= @product.name %></div>
+
       <!-- 商品名稱 -->
       <div class=" bg-gray-50 w-full p-4">
         <h2 class="text-4xl text-red-500">$<%= @product.price %></h2>
       </div>
-      
+
       <div class="pl-4 flex space-x-2 items-center py-2" >
-      <% @product.shop.coupons.each do |coupon| %>
-        <% userOwnCoupon = user_own_coupon?(coupon) %>
+        <span class="text-gray-400 text-base w-32">賣場折價券</span>
+        <% @product.shop.coupons.each do |coupon| %>
+          <% userOwnCoupon = user_own_coupon?(coupon) %>
           <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
-        <% if userOwnCoupon %>
-          <span href="#">已領取</span>
-        <% else %>
-          <span>領取</span>
+          <% if userOwnCoupon %>
+            <span href="#">已領取</span>
+          <% else %>
+            <span>領取</span>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-    
-      
-  
+      </div>
+
+      <div class=" bg-gray-50 w-full p-2">
+        <h2 class="text-gray-400 text-base pl-2 w-32">商品介紹</h2>
+      </div>
+      <div class="py-8 px-2 space-y-2">
+        <p class='pl-2'><%= @product.content %></p>
+      </div>
+
       <div class="amount flex items-center py-4">
         <span class="text-gray-400 text-base pl-4 w-32">數量</span>
         <div class="flex border border-gray-300 rounded-sm px-2 h-8">
@@ -84,26 +98,18 @@
           <button class="plus border-l border-gray-300 pl-2 focus:outline-none" data-action="click->addtocart#plusbtn">&#x2b;</button>
         </div>
       </div>
-      <div class="py-4 pl-4 space-x-2 pt-16">
+
+      <div class="py-4 pl-4 space-x-2 pt-0">
         <button data-action="click->addtocart#add_item" class="border border-red-300 rounded-sm md:w-44 w-28 py-3 bg-red-100 bg-opacity-80 text-red-500 focus:outline-none"><i class="fas fa-cart-plus pr-2"></i>加入購物車</button>
         <button data-action="click->addtocart#add_item" class="md:w-44 w-28 py-3 bg-red-500 text-white rounded-sm focus:outline-none">直接購買</button>
       </div>
+
       <div class="pt-4 text-gray-500 pb-8 border-t w-full text-center border-gray-200">
         <a href="#"><i class="fas fa-dog"></i><span class="text-black pr-4">shoppinggo承諾</span>保障你的交易安全：我們只會在買家確認收到貨款，才會撥款給賣家！</a>
       </div>
+
+      </div>
     </div>
-  </div>  
-</section>
+
+  </section>
 </div>
-<!-- 商品規格 -->
-<section class='flex flex-wrap justify-center lg:px-10'>
-  <div class=' bg-white w-full max-w-screen-xl pt-4 px-8 shadow mt-4'>
- 
-    <div class=" bg-gray-50 w-full p-2">
-      <h2 class="text-lg">商品詳情</h2>
-    </div>
-    <div class="py-8 px-2 space-y-2">
-      <%= @product.content %>
-    </div>
-  </div>
-</section>
