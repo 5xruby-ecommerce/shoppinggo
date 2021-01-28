@@ -13,6 +13,8 @@
             <%= link_to product_path(item.product) do %>
               <% if item.product.image_url.present? %>
               <div class='w-24 h-24'><%= image_tag item.product.image_url ,style:'width:100%;height:100%;object-fit:cover' %></div>
+              <% else %>
+              <div class="picture  w-24 h-24 dark"><%= image_tag 'bag.png' %></div>
               <% end %>
             <% end %>
           </div>
@@ -48,11 +50,13 @@
       </div>
 
       <div>
+      <div class='flex text-lg'>
         總金額 : 
         <span data-shoptotal-target="shoptotal" data-shopid="<%= items.first.product.shop_id %>">
         <%= current_cart.subtotals.filter {|subtotal, shopid| shopid == items.first.shop_id}[0][0] %> 
         <% end %>
         </span>
+      </div>
       </div>
     </div>
 

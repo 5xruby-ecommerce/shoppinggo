@@ -22,6 +22,8 @@
               <td class='flex justify-center items-center w-full h-24 px-4'>
                 <% if product.image_url.present? %>
                   <div class='w-20 h-20'><%= image_tag product.image_url, style:'width:100%;height:100%;object-fit:cover' %></div>
+                <% else %>
+                  <div class="picture dark"><%= image_tag 'bag.png' %></div>
                 <% end %>
               </td>
               <td class='w-1/12'><%= product.name %></td>
