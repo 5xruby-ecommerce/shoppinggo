@@ -12,17 +12,18 @@ ShoppingGO 是向電商平台 Shopee 致敬的產品，是一個網路拍賣平�
 2. 購物車機制：將喜歡商品放入購物車在結帳
 3. 訂單系統：支援多店家同時結帳
 ## 賣家
-1. 上架商品：可上傳商品圖片及介紹
+1. 上架商品：可上傳商品圖片及介紹，以及可排程上架
 2. 優惠券機制：店家定義優惠券折扣
 3. 客製化商店：上架自己想賣的商品
 
 ## Technologies 使用技術
-- **Frontend前端** : HTML / CSS / JavaScript
+- **Frontend前端** : HTML / JavaScript / Tailwind CSS / Stimulus
 - **Backend後端** : Ruby on Rails
-- **Database資料庫** : PostgreSQL
+- **Database資料庫** : PostgreSQL / Redis
 - **Deployment部署** : Capistrano Version Control: Git / GitHub
 - **Third-Party Login第三方登入** :  Google / Facebook / GitHub
 - **Other Technologies其他技術** : AWS S3 / Heroku
+- **API Integration 串接API** : ECPay
 
 ## Contributing
 
@@ -62,7 +63,7 @@ Feel free to [open an issue](https://github.com/5xruby-ecommerce/shoppinggo/issu
 
 #### 黃平宸
 - Responsibility負責項目
-  - API Integration 串接綠界 API 金流服務
+  - 串接綠界 API 金流服務
   - 訂單系統功能
   - ER diagram ER圖
 - Github: https://github.com/henry9779
