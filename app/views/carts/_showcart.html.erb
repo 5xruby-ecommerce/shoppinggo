@@ -91,7 +91,10 @@
         <span class="cart_total"><%= cart.cal_cart_total %></span>
       <% end %>
     <!-- <%= link_to '清空購物車', empty_carts_path, method: "delete" %> -->
-    <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none"><%= link_to '結帳', new_order_path if not current_cart.empty? %></button>
+    <% if not current_cart.empty? %>
+    <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none">
+    <%= link_to '結帳', new_order_path %></button>
+    <% end %>
     </div>
   </div>
 </div>
