@@ -1,3 +1,4 @@
+<div>
 <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
 <% temp = items.group_by { |item| item.product.shop_id.itself} %>
     
