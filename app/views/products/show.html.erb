@@ -54,7 +54,7 @@
         <% if user_signed_in? %>
           <%= link_to '聊聊', rooms_path(with: @product.shop.user.id),method: 'POST', id:'getchat',remote: true, class:'bg-red-100 bg-opacity-80 p-1 border border-red-500 text-red-500 text-center rounded-sm focus:outline-none py m-2 block' if @product.shop.user.id != current_user.id %>
         <% else %>
-          <%= link_to '聊聊', new_user_session_path, class:'w-20 bg-red-500 text-white text-center rounded-sm focus:outline-none py-3 m-2 block' %>
+          <%= link_to '聊聊', new_user_session_path, class:'bg-red-100 bg-opacity-80 p-1 border border-red-500 text-red-500 text-center rounded-sm focus:outline-none py m-2 block' %>
         <% end %>
       </div>
       </div>

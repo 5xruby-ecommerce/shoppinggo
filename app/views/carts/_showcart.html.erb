@@ -99,7 +99,7 @@
       <% end %>
     <!-- <%= link_to '清空購物車', empty_carts_path, method: "delete" %> -->
     <% if not current_cart.empty? %>
-    <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none">
+    <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none hover:bg-red-600">
     <%= link_to '結帳', new_order_path %></button>
     <% end %>
     </div>

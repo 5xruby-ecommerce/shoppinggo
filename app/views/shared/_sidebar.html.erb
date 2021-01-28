@@ -27,5 +27,9 @@
       <%= link_to '賣場設定', edit_shop_path(current_user.shop) if current_user.shop.present?%>
     </div>
 
+    <div class='pl-7'>
+      <%= link_to '回首頁', root_path if current_user.shop.present?%>
+    </div>
+
   </div>
 </div>
