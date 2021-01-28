@@ -1,11 +1,15 @@
 import { resetWarningCache } from "prop-types"
 
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+
 document.addEventListener('turbolinks:load', function(){
-  const hello = document.cookie
-  const h = hello.split(';')
-  const o = h[1] ? h[1].split('=') : []
-  console.log(o)
-  if (o.length > 0 && o[1] == 1) {
+  const modal = getCookie('modal')
+  if (modal) {
     document.querySelector('.modal').remove()
     return
   }
