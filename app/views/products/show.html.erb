@@ -76,7 +76,7 @@
           <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> 
             <% min= coupon.min_consumption %>
             <% rule= coupon.discount_rule %>
-            <% discount= coupon.amount %>
+            <% discount= coupon.discount_amount %>
             <% if rule == '金額'%>
               <%= "滿#{min}折#{discount}元" %>
             <% elsif rule == '折扣' %>
