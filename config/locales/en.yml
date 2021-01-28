@@ -1,5 +1,5 @@
 en:
   order_status:
-    pending: 'pending'
-    paid: 'paid'
-    cancelled: 'cancelled'
+    pending: "pending"
+    paid: "paid"
+    cancelled: "cancelled"

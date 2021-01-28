@@ -1,3 +1,4 @@
+<div>
 <% items = (cart.items.sort_by {|item| item.product.shop_id})%>
 <% temp = items.group_by { |item| item.product.shop_id.itself} %>
     
@@ -45,10 +46,7 @@
       </div>
       <% end %>
       </div>
-      <div>
-        總價:
-        <span class="cart_total"><%= cart.total %></span>
-      </div>
+
       <div>
         總金額 : 
         <span data-shoptotal-target="shoptotal" data-shopid="<%= items.first.product.shop_id %>">

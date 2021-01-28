@@ -15,8 +15,9 @@ export default class extends Controller {
       e.preventDefault()
     } else {
       const couponID = e.currentTarget.getAttribute('data-couponid');
-      const totalPrice= e.currentTarget.parentNode.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.querySelector('.item_total_price');
-      const shopID = totalPrice.getAttribute('data-shopid');
+      // console.log(e.currentTarget.parentNode)
+      // const totalPrice= e.currentTarget.parentNode.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.querySelector('.item_total_price');
+      // const shopID = totalPrice.getAttribute('data-shopid');
   
       magicRails.ajax({
         url: `/carts/get_coupon_info/${couponID}`,
@@ -30,8 +31,8 @@ export default class extends Controller {
           if (occupy === false ) {
             if (amount > counterCatch) {
               // change backgroun color after clicked
-              document.querySelector(`span[data-couponid="${couponID}"]`).classList.add('occupy')
-      
+              // document.querySelector(`div[data-couponid="${couponID}"]`).nextElementSibling.classList.add('occupy')
+              document.querySelector(`div[data-couponid="${couponID}"]`).parentNode.classList.add('occupy')
               const key = { coupon_key: couponID }
               magicRails.ajax({
                 url: `/users/add_coupon`,
@@ -63,12 +64,9 @@ export default class extends Controller {
   }
 
   usecoupon(e) {
-    // const itemTotalPrice = e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price');    
     const shopID = this.data.get('id') // the shop ID of the select coupon 
     const couponID = e.currentTarget.getAttribute('data-couponid'); // the coupon ID of the select coupon
-    // const itemsTotalPrice = e.currentTarget.parentNode.parentNode.parentNode.nextElementSibling.querySelectorAll('span'); // select all product's total price of the shop
-    // console.log(itemsTotalPrice)
-    const shoptotal = e.currentTarget.parentNode.parentNode.nextElementSibling.querySelector('span').textContent
+    const shoptotal = e.currentTarget.parentNode.parentNode.parentNode.nextElementSibling.querySelector('span').textContent
     const coupons = (e.currentTarget.parentNode.parentNode.querySelectorAll('span')); // select all coupons of the shop
     const clickedbtn = e.currentTarget; // select the clicked coupon
     magicRails.ajax({
@@ -84,33 +82,24 @@ export default class extends Controller {
         const discountAmount = resp['discount_amount']
         const occupy = resp['occupy']
         const usercoupon_id = resp['usercoupon_id'][0]
-
         if (occupy == true) {
           const status = resp['status'][0]
           if (status == 'unused') {
-
-            // calculate the total price of the shop
-            // let cartShopTotalprice = 0;
-            // itemsTotalPrice.forEach((e) =>{
-            //   cartShopTotalprice += Number(e.innerHTML)
-            // })
             let cartShopTotalprice = shoptotal
-
             // First check whether it satisfy the rule of the coupon
             if (counterCatch < amount && cartShopTotalprice > minConsumption) {
               // check which rule it is
-              if (rule == "dollor") {
+              if (rule == "金額") {
                 // direct minus the discountAmount of the coupon to the cart total price 
                 document.querySelector('.cart_total').textContent -= discountAmount
-                // document.querySelector('.cartTotalPrice').textContent -= discountAmount
-              } else if (rule == 'percent') {
+              } else if (rule == '折扣') {
                 // if its rule is percent, first calculate the discount dollar based on the total price of the shop(note: not the cart total price, is the shop total price)
                 // then minus the discount dollar to the cart total price
                 let discountDollor = Math.floor(cartShopTotalprice * discountAmount * 0.01)
                 document.querySelector('.cart_total').textContent = Number(document.querySelector('.cart_total').textContent) - discountDollor
               }
               // if the coupon is used, then add class tag to it to ensure it is not clickable
-              clickedbtn.classList.add('occupy')
+              // clickedbtn.classList.add('use')
 
               // change usercoupon state to 'used'
               const usercouponID = {usercouponID: usercoupon_id}
@@ -160,13 +149,12 @@ export default class extends Controller {
   }
 
   unusecoupon(e) {
-    const coupon = e.currentTarget.parentNode.querySelector('div')
+    // const coupon = e.currentTarget.parentNode.querySelector('div')
+    const coupon = e.currentTarget.previousElementSibling
     if (coupon.textContent.trim() == "使用中") {
-
       const shopID = coupon.getAttribute('data-shopid')
       // const itemTotalPrice= e.currentTarget.parentNode.parentNode.parentNode.querySelectorAll('.item_total_price');   // select all product's total price of the shop        
-      const shoptotal = e.currentTarget.parentNode.parentNode.nextElementSibling.querySelector('span').textContent
-      console.log(shoptotal)
+      const shoptotal = e.currentTarget.parentNode.parentNode.parentNode.nextElementSibling.querySelector('span').textContent
       const couponID = coupon.getAttribute('data-couponid')
       magicRails.ajax({
         url: `/carts/get_coupon_info/${couponID}`,
@@ -182,31 +170,26 @@ export default class extends Controller {
           const occupy = resp['occupy']
           const status = resp['status'][0]
           const usercoupon_id = resp['usercoupon_id'][0]
-          console.log(resp)
           if (occupy == true) {
             if (status === 'used') {
                 // query all products of the shop
               const cartShopProductsNumber = document.querySelectorAll(`div[data-updatecart-target="totalprice"]`); 
                 // calculate the total price of the shop
-              let cartShopTotalprice = shoptotal
-              // let cartShopTotalprice = 0;
-              // itemTotalPrice.forEach((e) =>{
-              //   cartShopTotalprice += Number(e.innerHTML)
-              // })
-
+              let cartShopTotalprice = parseInt(shoptotal)
                 // First check whether it satisfy the rule of the coupon
               if (counterCatch < amount && cartShopTotalprice > minConsumption) {
                   // check which rule it is
-                if (rule == "dollor") {
+                if (rule == "金額") {
                   // direct minus the discountAmount of the coupon to the cart total price 
                   document.querySelector('.cart_total').textContent = Number(document.querySelector('.cart_total').textContent) + discountAmount
-                  document.querySelector('.cartTotalPrice').textContent = Number(document.querySelector('.cartTotalPrice').textContent) + discountAmount
-                } else if (rule == 'percent') {
+                } else if (rule == '折扣') {
                   // if its rule is percent, first calculate the discount dollar based on the total price of the shop(note: not the cart total price, is the shop total price)
                     // then minus the discount dollar to the cart total price
-                  let discountDollor = Math.floor(cartShopTotalprice * discountAmount * 0.01)
-                  document.querySelector('.cart_total').textContent = Number(document.querySelector('.cart_total').textContent) + discountDollor
-                  document.querySelector('.cartTotalPrice').textContent = Number(document.querySelector('.cartTotalPrice').textContent) +  discountDollor
+                  console.log(document.querySelector('.cart_total'))
+                  // let discountDollor = Math.floor(cartShopTotalprice * discountAmount * 0.01)
+                  // document.querySelector('.cart_total').textContent = Number(document.querySelector('.cart_total').textContent) + discountDollor
+                  let discountDollor = Math.floor(cartShopTotalprice) / (1- discountAmount * 0.01)
+                  document.querySelector('.cart_total').textContent = discountDollor
                 }
 
                   // change usercoupon state to 'unused'
@@ -216,7 +199,7 @@ export default class extends Controller {
                   type: 'get',
                   data: JSON.stringify(usercouponID),
                   success: (resp) => {
-                    coupon.classList.remove('occupy')
+                    // coupon.classList.remove('use')
                     coupon.textContent = "未使用"
                     const cart_total = resp['cart_total']
                     let shop_total = resp['shop_total']

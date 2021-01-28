@@ -42,9 +42,9 @@ class Cart
       discount_amount = coupon.discount_amount.to_i
       min_consumption = coupon.min_consumption.to_i
       if min_consumption < sum
-        if discount_rule == 'percent'
+        if discount_rule == '折扣'
           discount = (sum * discount_amount * 0.01).floor()
-        elsif discount_rule == 'dollor'
+        elsif discount_rule == '金額'
           discount = discount_amount
         end
       else
@@ -99,9 +99,9 @@ class Cart
       coupon = Coupon.find_by(id: couponid)
       discount_amount = coupon.discount_amount
       discount_rule = coupon.discount_rule
-      if discount_rule == 'dollor'
+      if discount_rule == '金額'
         shoptotal -= discount_amount
-      elsif discount_rule == 'percent'
+      elsif discount_rule == '折扣'
         shoptotal = (shoptotal * (1 - 0.01 * discount_amount.to_i)).floor()
       end 
     end

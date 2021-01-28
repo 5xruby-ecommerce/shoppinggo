@@ -47,30 +47,37 @@
             </div>
           <% end %>
           <!-- coupon -->
-          <div class="flex space-x-4">
+          <div class=" space-x-4">
+            <div>請點選優惠券領取</div>
             <% Coupon.where(shop_id: items[0].product.shop_id).pluck(:title, :id).each do |title, coupon_id| %>
               <div class="flex py-2 items-center space-x-2">
-                <span class='coupon' data-action="click->shoptotal#getcoupon" data-couponid="<%= coupon_id %>" class="<%= user_own_coupon?(coupon_id) ? 'occupy' : '' %>">
-                  <% information = Coupon.where(id: coupon_id).pluck(:min_consumption, :discount_rule, :discount_amount) %>
-                  <% min= information[0][0] %>
-                  <% rule= information[0][1] %>
-                  <% discount= information[0][2] %>
-                  <% if rule == 'dollor'%>
-                    <%= "滿#{min}折#{discount}元" %>
-                  <% elsif rule == 'percent' %>
-                    <%= "滿#{min}折#{discount}%" %>
-                  <% end %>
-                </span>
-                <% if user_use_coupon?(coupon_id) %>
-                  <div data-couponid="<%= coupon_id %>" data-shopid="<%= items[0].product.shop_id %>" data-action="click->shoptotal#usecoupon" class="occupy">
-                    使用中
+                <div class="coupon <%= user_own_coupon?(coupon_id) ? 'occupy' : '' %>">
+                  <div class='<%= user_own_coupon?(coupon_id) ? 'occupy' : '' %> cursor-pointer' data-action="click->shoptotal#getcoupon" data-couponid="<%= coupon_id %>">
+                    <% information = Coupon.where(id: coupon_id).pluck(:min_consumption, :discount_rule, :discount_amount) %>
+                    <% min= information[0][0] %>
+                    <% rule= information[0][1] %>
+                    <% discount= information[0][2] %>
+                    <% if rule == '金額'%>
+                      <%= "滿#{min}折#{discount}元" %>
+                    <% elsif rule == '折扣' %>
+                      <%= "滿#{min}折#{discount}%" %>
+                    <% end %>
+                  </div>
+                  <div class='cursor-pointer <%= user_own_coupon?(coupon_id) ? 'occupy' : '' %> cursor-pointer' data-action="click->shoptotal#getcoupon" data-couponid="<%= coupon_id %>">
+                    
+                  </div>
+                  <% if user_use_coupon?(coupon_id) %>
+                  <div data-couponid="<%= coupon_id %>" data-shopid="<%= items[0].product.shop_id %>" data-action="click->shoptotal#usecoupon" class="cursor-pointer usage">
+                      使用中
                   </div>
                 <% else %>
-                  <div data-couponid="<%= coupon_id %>" data-shopid="<%= items[0].product.shop_id %>" data-action="click->shoptotal#usecoupon">
+                  <div data-couponid="<%= coupon_id %>" data-shopid="<%= items[0].product.shop_id %>" data-action="click->shoptotal#usecoupon" class="cursor-pointer usage">
                     未使用
                   </div>
                 <% end %>
-                <a data-action="click->shoptotal#unusecoupon" class="self-start -mt-1">&#x292C;</a>
+                <a data-action="click->shoptotal#unusecoupon" class="cursor-pointer">&#x292C;</a>
+
+                </div>
               </div>
             <% end %>
           </div>
@@ -91,7 +98,10 @@
         <span class="cart_total"><%= cart.cal_cart_total %></span>
       <% end %>
     <!-- <%= link_to '清空購物車', empty_carts_path, method: "delete" %> -->
-    <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none hover:bg-red-600"><%= link_to '結帳', new_order_path if not current_cart.empty? %></button>
+    <% if not current_cart.empty? %>
+    <button class="px-8 py-2 bg-red-500 text-white w-36 rounded-sm absolute right-0 -bottom-0 focus:outline-none hover:bg-red-600">
+    <%= link_to '結帳', new_order_path %></button>
+    <% end %>
     </div>
   </div>
 </div>
