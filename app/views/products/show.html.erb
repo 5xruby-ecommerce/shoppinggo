@@ -69,19 +69,22 @@
       <div class=" bg-gray-50 w-full p-4">
         <h2 class="text-4xl text-red-500">$<%= @product.price %></h2>
       </div>
-
-      <div class="pl-4 flex space-x-2 items-center py-2" >
-        <span class="text-gray-400 text-base w-32">賣場折價券</span>
-        <% @product.shop.coupons.each do |coupon| %>
+      <div class="pl-4 flex space-x-2 items-center" >
+      <span class="text-gray-400 text-base w-32">賣場折價券</span>
+      <% @product.shop.coupons.each do |coupon| %>
           <% userOwnCoupon = user_own_coupon?(coupon) %>
-          <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> <%= coupon.title %> </a>
-          <% if userOwnCoupon %>
-            <span href="#">已領取</span>
-          <% else %>
-            <span>領取</span>
-          <% end %>
-        <% end %>
-      </div>
+          <a class="coupon bg-red-500 px-2 <%= userOwnCoupon ? 'occupy' : '' %>" data-action="click->addtocart#getcoupon" data-key="<%= coupon.id %>" data-couponid="<%= coupon.id %>"> 
+            <% min= coupon.min_consumption %>
+            <% rule= coupon.discount_rule %>
+            <% discount= coupon.discount_amount %>
+            <% if rule == '金額'%>
+              <%= "滿#{min}折#{discount}元" %>
+            <% elsif rule == '折扣' %>
+              <%= "滿#{min}折#{discount}%" %>
+            <% end %>
+          </a>
+      <% end %>
+    </div>
 
       <div class=" bg-gray-50 w-full p-2">
         <h2 class="text-gray-400 text-base pl-2 w-32">商品介紹</h2>

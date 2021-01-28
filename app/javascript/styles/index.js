@@ -1,3 +1,3 @@
 import './shops'
 import './swiper'
-import './carts'
+import './carts.scss'

@@ -24,6 +24,7 @@ document.addEventListener('turbolinks:load', () => {
           item.nextElementSibling.textContent = ''
           item.nextElementSibling.classList.remove('error')
         }
+        item.classList.remove('focus')
       })  
     }
   });
@@ -40,7 +41,6 @@ document.addEventListener('turbolinks:load', () => {
       })  
     }
   })
-
   if (formbtn) {
     formbtn.addEventListener('click', (e)=> {
       e.preventDefault()

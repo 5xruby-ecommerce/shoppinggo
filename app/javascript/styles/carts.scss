@@ -6,3 +6,23 @@ input[class="input_amount"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.occupy {
+  background-color: rgb(167, 163, 163);
+}
+
+.coupon:hover {
+  background-color: rgb(167, 163, 163);
+}
+
+.usage {
+  margin: 0 5px 0 15px;
+  color: #f87171;
+  outline: 2px solid #f87171;
+  background-color: #fff;
+}
+
+.use {
+  background-color: #A7F3D0;
+  outline: #A7F3D0;
+}
