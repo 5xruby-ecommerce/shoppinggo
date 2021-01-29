@@ -78,9 +78,6 @@ export default class extends Controller {
                 data: JSON.stringify(key),
                 success: (resp) => {
                   if (!coupon.classList.contains('occupy')) {
-                    console.log('get it')
-                    console.log(coupon.nextElementSibling)
-                    coupon.nextElementSibling.textContent = '已領取'
                     coupon.classList.add('occupy')
                   } else {
                     console.log('already get it')

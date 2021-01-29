@@ -25,10 +25,7 @@
         top:0;
         left:0;
      }
-     .dark{
-        -webkit-filter:grayscale(1);
-        opacity: 0.3;
-     }
+     
      .item {
         @apply flex h-16 md:h-20 content-between flex-wrap;
      }
@@ -39,6 +36,10 @@
 }
 .cardstyle:hover .cardhover:after {
    visibility: visible;
+}
+.dark{
+   -webkit-filter:grayscale(1);
+   opacity: 0.3;
 }
 .cardhover {
    @apply border border-red-500;
